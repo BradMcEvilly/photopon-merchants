@@ -2,6 +2,7 @@
 
 then preview:  
 http://localhost/src/
+http://localhost/src/material.html
 http://localhost/src/#/music/home
 http://localhost/html/index.html
 http://localhost/landing/index.html

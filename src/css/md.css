@@ -1498,7 +1498,7 @@
 .md-navbar {
   position: relative;
   z-index: 50;
-  min-height: 60px;
+  min-height: 60px !important;
 }
 
 .md-navbar .navbar-header {

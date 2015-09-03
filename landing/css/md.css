@@ -1498,7 +1498,7 @@
 .md-navbar {
   position: relative;
   z-index: 50;
-  min-height: 60px;
+  min-height: 60px !important;
 }
 
 .md-navbar .navbar-header {
@@ -1554,6 +1554,9 @@
   .off-screen.md-content + * {
     z-index: 30;
     padding-top: 60px;
+  }
+  .off-screen.md-content + * > .md-content {
+    overflow: hidden;
   }
 }
 

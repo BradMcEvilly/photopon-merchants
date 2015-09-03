@@ -1324,6 +1324,10 @@ html.bg {
 }
 
 @media (max-width: 767px) {
+  html,
+  body {
+    overflow-x: hidden !important;
+  }
   .app {
     overflow-x: hidden;
   }
@@ -2692,7 +2696,8 @@ fieldset[disabled] .i-checks input + i:before {
   z-index: 0;
 }
 
-#flotTip {
+#flotTip,
+.flotTip {
   z-index: 100;
   padding: 4px 10px;
   font-size: 12px;

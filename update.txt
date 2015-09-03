@@ -1,3 +1,17 @@
+## Release v2.0.3
+
+### Features:
+
+ - Add bootstrap.js
+ - Add Swig files for generate the html
+ - Update AngularJS to 1.4.3
+ - Update Angular Material to 0.10.0
+
+#### Bugfixes:
+
+ - Fixed material.html menu on mobile
+ 
+
 ## Release v2.0.2:
 
 #### Features:

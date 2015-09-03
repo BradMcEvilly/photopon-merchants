@@ -10,7 +10,7 @@ module.exports = function(grunt) {
 
     // We need our bower components in order to develop
     gtx.alias('build:angular', ['recess:less', 'clean:angular', 'copy:libs', 'copy:angular', 'recess:angular', 'concat:angular', 'uglify:angular']);
-    gtx.alias('build:angulardev', ['recess:less', 'clean:angular', 'copy:libs', 'copy:angulardev', 'recess:angulardev', 'concat:angular']);
+    gtx.alias('build:dev', ['recess:less', 'clean:angular', 'copy:libs', 'copy:angulardev', 'recess:angulardev', 'concat:angular']);
     gtx.alias('build:html', ['clean:html', 'copy:html', 'recess:html', 'swig:html', 'concat:html', 'uglify:html']);
     gtx.alias('build:landing', ['copy:landing', 'swig:landing']);
 

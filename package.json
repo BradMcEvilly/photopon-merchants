@@ -1,6 +1,6 @@
 {
   "name": "BootstrapAngularAdminWebApp",
-  "version": "2.0.2",
+  "version": "2.0.3",
   "description": "Admin web application template with Bootstrap 3 and AngularJS.",
   "scripts": {
     "start": "node node_modules/http-server/bin/http-server -o"
@@ -47,6 +47,7 @@
     "grunt-swig": "^0.2.1",
     "gruntfile-gtx": "^0.3.0",
     "http-server": "^0.6.1",
+    "parse": "^1.5.0",
     "require-directory": "^2.0.0"
   }
 }

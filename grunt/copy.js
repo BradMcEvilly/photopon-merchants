@@ -29,7 +29,6 @@ module.exports = {
                     'angular-ui-select/dist/**',
                     'angular-ui-utils/ui-utils.js',
                     'angular-xeditable/dist/**',
-                    'angular-local-storage/dist/**',
                     'angularjs-toaster/toaster.js',
                     'angularjs-toaster/toaster.css',
                     'angular-skycons/angular-skycons.min.js',
@@ -48,7 +47,7 @@ module.exports = {
                     'videogular-poster/poster.min.js',
                     'videogular-ima-ads/ima-ads.min.js'
                 ],
-                dest: 'libs/angular',
+                dest: 'angular/libs/angular',
                 cwd:  'bower_components',
                 expand: true
             },
@@ -89,7 +88,7 @@ module.exports = {
                     'bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
                     'jquery_appear/jquery.appear.js'
                 ],
-                dest: 'libs/jquery',
+                dest: 'angular/libs/jquery',
                 cwd:  'bower_components',
                 expand: true
             },
@@ -101,10 +100,20 @@ module.exports = {
                     'simple-line-icons/css/**',
                     'simple-line-icons/fonts/**'
                 ],
-                dest: 'libs/assets',
+                dest: 'angular/libs/assets',
                 cwd:  'bower_components',
                 expand: true
             },
+
+            {
+                src:  [
+                    'parse/build/parse-latest.js'
+                ],
+                dest: 'angular/libs/parse',
+                cwd:  'node_modules',
+                expand: true
+            },
+
             {src: '**', cwd: 'bower_components/bootstrap/dist/fonts', dest: 'src/fonts', expand: true}
         ]
     },

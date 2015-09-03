@@ -67,6 +67,11 @@ angular.module('app')
         $scope.lang.isopen = !$scope.lang.isopen;
       };
 
+
+      Parse.$ = jQuery;
+      Parse.initialize("qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN", "vJIGuBlr7sPADL5PUISygvp55PbGXtrdhst3w3Jv");
+
+
       function isSmartDevice( $window )
       {
           // Adapted from http://www.detectmobilebrowsers.com

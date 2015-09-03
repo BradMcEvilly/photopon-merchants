@@ -2,26 +2,31 @@ angular.module('app')
 
 .factory('acsManager', ['$http', function($http) {
 
-	var userInfo = JSON.parse(localStorage.getItem("userInfo"));
+	var userInfo = null;
 
 	var cache = {};
 
 
 	var AcsLogin = function(username, password, callback) {
-		return $http.post('api/login.php', {
-			username: username, 
-			password: password
-		}).then(function(response) {
+		
 
-			if (response.data.meta.status != "ok") {
-				callback(new Error('Email or Password not right'));
-			} else {
-				userInfo = response.data.response.users[0];
-				localStorage.setItem("userInfo", JSON.stringify(userInfo));
-				callback(null, userInfo);
-			}
+		Parse.User.logIn(username, password, {
+		  success: function(user) {
+	  		userInfo = user;
+			//localStorage.setItem("userInfo", JSON.stringify(userInfo));
+			callback(null, userInfo);
+		    
+		  },
+		  error: function(user, error) {
+			callback(new Error('Invalid username or password. Please try again.'));
+
+		  }
 		});
 	};
+
+
+
+
 
 	var AcsGetInfo = function() {
 		return userInfo;

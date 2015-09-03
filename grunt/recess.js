@@ -16,6 +16,7 @@ module.exports = {
         files: {
             'angular/css/app.min.css': [
                 'libs/jquery/bootstrap/dist/css/bootstrap.css',
+                'src/css/md.css',
                 'src/css/*.css'
             ]
         },
@@ -23,10 +24,11 @@ module.exports = {
             compress: true
         }
     },
-    angulardev: {
+        angulardev: {
         files: {
             'angular/css/app.css': [
                 'libs/jquery/bootstrap/dist/css/bootstrap.css',
+                'src/css/md.css',
                 'src/css/*.css'
             ]
         },
