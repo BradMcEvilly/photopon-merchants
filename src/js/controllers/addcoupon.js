@@ -16,11 +16,12 @@ angular.module('app')
 
     acsManager.getCoupons(function(err, coupons) {
         $scope.coupons = coupons;
+        $scope.$apply();
     });
 
     acsManager.getLocations(function(err, locations) {
-        console.log(locations);
         $scope.locations = locations;
+        $scope.$apply();
     });
 
 
@@ -61,6 +62,28 @@ angular.module('app')
     };
 
     $scope.format = 'dd-MMMM-yyyy';
+
+
+
+    $scope.addCoupon = function() {
+      var locations = [];
+      if (!$scope.alllocations) {
+        for (var i = 0; i < $scope.coupon.locations.length; i++) {
+          locations.push($scope.coupon.locations[i].id);
+        };
+      }
+
+      acsManager.addCoupon({
+        title: $scope.coupon.title,
+        body: $scope.coupon.body,
+        locations: locations,
+        expiration: $scope.coupon.expiration
+      }, function() {
+        $state.go($state.current, {}, {
+          reload: true
+        });
+      });
+    };
 
 }]);
 

@@ -86451,12 +86451,20 @@ angular.module('app')
 								resolve: load(['ui.select', 'js/services/acs.js', 'js/controllers/addlocation.js'])
 							})
 
-							.state('app.addcoupon', {
-								url: '/coupon/add',
-								templateUrl: 'tpl/form_add_coupon.html',
-								controller: 'AddCouponCtrl',
-								resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
-							})
+              .state('app.addcoupon', {
+                url: '/coupon/add',
+                templateUrl: 'tpl/form_add_coupon.html',
+                controller: 'AddCouponCtrl',
+                resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
+              })
+
+
+              .state('app.companyinfo', {
+                url: '/company',
+                templateUrl: 'tpl/form_company_info.html',
+                controller: 'CompanyInfoCtrl',
+                resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/companyinfo.js'])
+              })
 
 
 			
@@ -87329,8 +87337,6 @@ angular.module('app')
 
 	var userInfo = null;
 
-	var cache = {};
-
 
 	var AcsLogin = function(username, password, callback) {
 		
@@ -87362,57 +87368,188 @@ angular.module('app')
 		//localStorageService.remove("userInfo");
 	};
 
+/*
+ ######   #######  ##     ## ########   #######  ##    ## 
+##    ## ##     ## ##     ## ##     ## ##     ## ###   ## 
+##       ##     ## ##     ## ##     ## ##     ## ####  ## 
+##       ##     ## ##     ## ########  ##     ## ## ## ## 
+##       ##     ## ##     ## ##        ##     ## ##  #### 
+##    ## ##     ## ##     ## ##        ##     ## ##   ### 
+ ######   #######   #######  ##         #######  ##    ## 
+*/
+
+
 	var AcsGetCoupons = function(callback) {
+		AcsGetLocations(function(err, allLocations) {
+
 		
-		if (cache.coupons) {
-			callback(null, cache.coupons);
-			return null;
-		}
+			var query = new Parse.Query("Coupon");
+			query.include("company");
+			query.equalTo("owner", Parse.User.current());
+			query.find({
+				success: function(results) {
+					for (var i = 0; i < results.length; i++) {
 
+						results[i].getLocationTitleFull = function() {
+							var locs = this.get("locations");
+							var locString = "";
+							
 
-		return $http.get('api/coupons.php').then(function(response) {
+							if (locs.length == 0) {
+								for (var j = 0; j < allLocations.length; j++) {
+									locs.push(allLocations[j].id);
+								}
+							} 
 
-			if (response.data.meta.status != "ok") {
-				callback(new Error('Failed to get coupons'));
-			} else {
-				var coupons = response.data.response.Coupon;
-				cache.coupons = coupons;
-				callback(null, coupons);
-			}
+							for (var i = 0; i < locs.length; i++) {
+
+								for (var j = 0; j < allLocations.length; j++) {
+									if (allLocations[j].id == locs[i]) {
+										locString += allLocations[j].get("name");
+										if (locs.length - 1 != i) {
+											locString += ", ";
+										}
+									}
+								};
+
+							};
+
+							return locString;
+						};
+
+						results[i].getLocationTitle = function() {
+							var locs = this.get("locations");
+							if (locs.length == 0) {
+								return "All Locations";
+							} else if (locs.length > 3) {
+								return "3+ Locations";
+							} else {
+
+								var locString = "";
+								for (var i = 0; i < locs.length; i++) {
+
+									for (var j = 0; j < allLocations.length; j++) {
+										if (allLocations[j].id == locs[i]) {
+											locString += allLocations[j].get("name");
+											if (locs.length - 1 != i) {
+												locString += ", ";
+											}
+										}
+									};
+
+								};
+
+								return locString;
+							}
+
+							return "Error!!!";
+						};
+
+					};
+					
+					callback(null, results);			
+				},
+
+				error: function(error) {
+				// error is an instance of Parse.Error.
+					callback(new Error('Failed to get coupons'));
+				}
+			});
 		});
+
 	};
+
+
+
+	var AcsAddCoupon = function(data, callback) {
+		
+		AcsGetCompany(function(error, company) {
+			if (error) {
+				alert("Can not get company info");
+				return;
+			}
+
+			var CouponClass = Parse.Object.extend("Coupon");
+			var coupon = new CouponClass();
+
+			coupon.set("title", data.title);
+			coupon.set("description", data.body);
+			coupon.set("company", company);
+			coupon.set("expiration", data.expiration);
+			coupon.set("locations", data.locations);
+
+			coupon.set("owner", Parse.User.current());
+
+
+			coupon.save(null, {
+				success: function(coupon) {
+					callback();
+				},
+				error: function(coupon, error) {
+					alert("Failed to save object.");
+				}
+			});
+
+		});
+		
+	};
+
+
+
+/*
+##        #######   ######     ###    ######## ####  #######  ##    ## 
+##       ##     ## ##    ##   ## ##      ##     ##  ##     ## ###   ## 
+##       ##     ## ##        ##   ##     ##     ##  ##     ## ####  ## 
+##       ##     ## ##       ##     ##    ##     ##  ##     ## ## ## ## 
+##       ##     ## ##       #########    ##     ##  ##     ## ##  #### 
+##       ##     ## ##    ## ##     ##    ##     ##  ##     ## ##   ### 
+########  #######   ######  ##     ##    ##    ####  #######  ##    ## 
+*/
+	
 
 
 	var AcsGetLocations = function(callback) {
 		
-		if (cache.locations) {
-			callback(null, cache.locations);
-			return null;
-		}
+		var query = new Parse.Query("Location");
+		query.equalTo("owner", Parse.User.current());
+		query.find({
+			success: function(results) {
+				callback(null, results);			
+			},
 
-
-		return $http.get('api/locations.php').then(function(response) {
-
-			if (response.data.meta.status != "ok") {
-				callback(new Error('Failed to get locations'));
-			} else {
-				var locations = response.data.response.places;
-				cache.locations = locations;
-				callback(null, locations);
+			error: function(error) {
+			// error is an instance of Parse.Error.
+				callback(new Error('Failed to get coupons'));
 			}
 		});
+
 	};
 
 	var AcsAddLocation = function(data, callback) {
-		return $http.post('api/addlocation.php', data).then(function(response) {
+		
+		var point = new Parse.GeoPoint({
+			latitude: data.latitude, 
+			longitude: data.longitude
+		});
 
-			if (response.data.meta.status != "ok") {
-				callback(new Error('Failed to add location'));
-			} else {
-				cache.locations = null;
-				callback(null, response.data.response);
+		var LocationClass = Parse.Object.extend("Location");
+		var location = new LocationClass();
+
+		location.set("name", data.name);
+		location.set("address", data.address);
+		location.set("location", point);
+		location.set("owner", Parse.User.current());
+
+
+		location.save(null, {
+			success: function(location) {
+				callback();
+			},
+			error: function(location, error) {
+				alert("Failed to save object.");
 			}
 		});
+
 	};
 
 	var AcsRemoveLocation = function(id, callback) {
@@ -87423,11 +87560,67 @@ angular.module('app')
 			if (response.data.meta.status != "ok") {
 				callback(new Error('Failed to remove location'));
 			} else {
-				cache.locations = null;
 				callback(null, response.data.response);
 			}
 		});
 	};
+
+
+/*
+ ######   #######  ##     ## ########     ###    ##    ## ##    ## 
+##    ## ##     ## ###   ### ##     ##   ## ##   ###   ##  ##  ##  
+##       ##     ## #### #### ##     ##  ##   ##  ####  ##   ####   
+##       ##     ## ## ### ## ########  ##     ## ## ## ##    ##    
+##       ##     ## ##     ## ##        ######### ##  ####    ##    
+##    ## ##     ## ##     ## ##        ##     ## ##   ###    ##    
+ ######   #######  ##     ## ##        ##     ## ##    ##    ##    
+*/
+
+
+	var AcsGetCompany = function(callback) {
+		
+		var query = new Parse.Query("Company");
+		query.equalTo("merchant", Parse.User.current());
+		query.first().then(function(results) {
+			callback(null, results);			
+		});
+
+	};
+
+	var AcsSaveCompanyInfo = function(name, file, callback) {
+		var base64 = file;
+		var image = new Parse.File("logo.png", { base64: base64 });	
+		AcsGetCompany(function(err, company) {
+			company.set("name", name);
+			company.set("image", image);
+
+
+			company.save(null, {
+				success: function(company) {
+					callback();
+				},
+				error: function(company, error) {
+					alert("Failed to save object.");
+				}
+			});
+
+		});
+
+		
+	}
+
+	var AcsRemoveCompanyLogo = function(callback) {
+
+		var query = new Parse.Query("Company");
+		query.equalTo("merchant", Parse.User.current());
+		query.first().then(function(results) {
+			results.unset("image");
+			results.save();
+			if (callback) callback(null);			
+		});
+
+	};
+
 
 
 
@@ -87435,10 +87628,18 @@ angular.module('app')
 		login: AcsLogin,
 		logout: AcsLogout,
 		info: AcsGetInfo,
+		
 		getCoupons: AcsGetCoupons,
+		addCoupon: AcsAddCoupon,
+
 		getLocations: AcsGetLocations,
 		addLocation: AcsAddLocation,
-		removeLocation: AcsRemoveLocation
+		removeLocation: AcsRemoveLocation,
+
+
+		getCompany: AcsGetCompany,
+		removeCompanyLogo: AcsRemoveCompanyLogo,
+		saveCompanyInfo: AcsSaveCompanyInfo
 	};
 }]);
 

@@ -15,9 +15,6 @@ angular.module('app')
     	photo: file.url()
     };
 
-    console.log($scope.user);
-    console.log(user);
-
 
 
 }]);

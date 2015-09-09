@@ -59,98 +59,94 @@
 
 
       <!-- tasks -->
-        <div class="row">
+      <div class="row">
 
           <div class="col-md-6">            
-          <div class="panel no-border">
-            
-            <div class="panel-heading wrapper b-b b-light">
-              <h4 class="font-thin m-t-none m-b-none text-muted">Locations</h4>              
-            </div>            
+            <div class="panel no-border">
+              
+              <div class="panel-heading wrapper b-b b-light">
+                <h4 class="font-thin m-t-none m-b-none text-muted">Locations</h4>              
+              </div>            
 
-            <ul class="list-group list-group-lg m-b-none">
+              <ul class="list-group list-group-lg m-b-none">
 
-              <li class="list-group-item" ng-hide="locations.length">
-                <a href class="thumb-sm m-r">
+                <li class="list-group-item" ng-hide="locations.length">
+                  <a href class="thumb-sm m-r">
+                    
+                    <i class="icon-bell fa-fw" style="
+                        font-size: 26px;
+                        vertical-align: middle;
+                    "></i>
+
+                  </a>
                   
-                  <i class="icon-bell fa-fw" style="
-                      font-size: 26px;
-                      vertical-align: middle;
-                  "></i>
-
-                </a>
+                  <a href style="display: inline-block; vertical-align: middle;">
+                    <span>You have no locations yet.</span>
+                  </a>
+                </li>
                 
-                <a href style="display: inline-block; vertical-align: middle;">
-                  <span>You have no locations yet.</span>
-                </a>
-              </li>
+
+
+
+                <li class="list-group-item" ng-repeat="l in locations">
+                  <a href class="thumb-sm m-r">
+                    
+                    <i class="icon-pointer fa-fw" style="
+                        font-size: 26px;
+                        vertical-align: middle;
+                    "></i>
+
+                  </a>
+
+                  <span class="pull-right label bg-danger inline m-t-sm">{{l.get('location').latitude}}, {{l.get('location').longitude}}</span>
+
+                  <a href style="display: inline-block; vertical-align: middle;">
+                    <span>{{l.get("name")}}</span>
+                    <br>
+                    <span class="text-muted">{{l.get("address")}}</span>
+                  </a>
+                </li>
+                
+
+              </ul>
               
-
-
-
-              <li class="list-group-item" ng-repeat="l in locations">
-                <a href class="thumb-sm m-r">
-                  
-                  <i class="icon-pointer fa-fw" style="
-                      font-size: 26px;
-                      vertical-align: middle;
-                  "></i>
-
-                </a>
-
-                <span class="pull-right label bg-danger inline m-t-sm">{{l.latitude}}, {{l.longitude}}</span>
-
-                <a href style="display: inline-block; vertical-align: middle;">
-                  <span>{{l.name}}</span>
-                  <br>
-                  <span class="text-muted">{{l.address}}</span>
-                </a>
-              </li>
-              
-
-            </ul>
-            
-            <div class="panel-footer">
-              <button class="btn btn-primary btn-addon btn-sm" ui-sref="app.addlocation"><i class="fa fa-plus"></i>Add Location</button>
-          </div>
-
-        </div>
-
-
-
-      </div>
-
-
-
-
-        <div class="col-md-6">
-          <div class="panel no-border">
-            <div class="panel-heading wrapper b-b b-light">
-              <span class="text-xs text-muted pull-right">
-                <i class="fa fa-circle text-primary m-r-xs"></i> 12
-                <i class="fa fa-circle text-info m-r-xs m-l-sm"></i> 30
-                <i class="fa fa-circle text-warning m-r-xs m-l-sm"></i> 98
-              </span>
-              <h4 class="font-thin m-t-none m-b-none text-muted">Coupons</h4>              
+              <div class="panel-footer">
+                <button class="btn btn-primary btn-addon btn-sm" ui-sref="app.addlocation"><i class="fa fa-plus"></i>Add Location</button>
+              </div>
             </div>
-            <ul class="list-group list-group-lg m-b-none">
-              
-              <li class="list-group-item" ng-repeat="c in coupons">
-                <a href class="thumb-sm m-r">
-                  <img src="img/a1.jpg" class="r r-2x">
-                </a>
-                <span class="pull-right label bg-primary inline m-t-sm">Admin</span>
-                <a href>{{c.title}}</a>
-              </li>
-
-
-            </ul>
-            <div class="panel-footer">
-              <span class="pull-right badge badge-bg m-t-xs">32</span>
-              <button class="btn btn-primary btn-addon btn-sm"><i class="fa fa-plus"></i>Add Coupon</button>
-        </div>
           </div>
-        </div>
+
+
+
+
+          <div class="col-md-6">
+            <div class="panel no-border">
+              <div class="panel-heading wrapper b-b b-light">
+                <!--<span class="text-xs text-muted pull-right">
+                  <i class="fa fa-circle text-primary m-r-xs"></i> 12
+                  <i class="fa fa-circle text-info m-r-xs m-l-sm"></i> 30
+                  <i class="fa fa-circle text-warning m-r-xs m-l-sm"></i> 98
+                </span>-->
+                <h4 class="font-thin m-t-none m-b-none text-muted">Coupons</h4>              
+              </div>
+              <ul class="list-group list-group-lg m-b-none">
+                
+                <li class="list-group-item" ng-repeat="c in coupons">
+                  <a href class="thumb-sm m-r">
+                    <img src=" {{c.get('company').get('image').url() }} " class="r r-2x">
+                  </a>
+                  <span class="pull-right label bg-primary inline m-t-sm" title="{{c.getLocationTitleFull()}}">{{c.getLocationTitle()}}</span>
+                  <a href>{{c.get('title')}}</a>
+                </li>
+
+
+              </ul>
+              <div class="panel-footer">
+                <span class="pull-right badge badge-bg m-t-xs">{{coupons.length}}</span>
+                <button class="btn btn-primary btn-addon btn-sm" ui-sref="app.addcoupon"><i class="fa fa-plus"></i>Add Coupon</button>
+              </div>
+            </div>
+          </div>
 
       </div>
       <!-- / tasks -->

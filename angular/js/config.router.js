@@ -46,12 +46,20 @@ angular.module('app')
 								resolve: load(['ui.select', 'js/services/acs.js', 'js/controllers/addlocation.js'])
 							})
 
-							.state('app.addcoupon', {
-								url: '/coupon/add',
-								templateUrl: 'tpl/form_add_coupon.html',
-								controller: 'AddCouponCtrl',
-								resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
-							})
+              .state('app.addcoupon', {
+                url: '/coupon/add',
+                templateUrl: 'tpl/form_add_coupon.html',
+                controller: 'AddCouponCtrl',
+                resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
+              })
+
+
+              .state('app.companyinfo', {
+                url: '/company',
+                templateUrl: 'tpl/form_company_info.html',
+                controller: 'CompanyInfoCtrl',
+                resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/companyinfo.js'])
+              })
 
 
 			

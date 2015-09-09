@@ -65,59 +65,63 @@
           </div>
         </form>
       </div>
-      <div class="col-sm-6">
-        
+
+
+
+
+
+      <div class="col-md-6">            
         <div class="panel no-border">
-            <div class="panel-heading wrapper b-b b-light">
-              <h4 class="font-thin m-t-none m-b-none text-muted">Locations</h4>              
-            </div>
+          
+          <div class="panel-heading wrapper b-b b-light">
+            <h4 class="font-thin m-t-none m-b-none text-muted">Locations</h4>              
+          </div>            
 
-            <ul class="list-group list-group-lg m-b-none">
+          <ul class="list-group list-group-lg m-b-none">
 
-              <li class="list-group-item" ng-hide="locations.length">
-                <a href class="thumb-sm m-r">
-                  
-                  <i class="icon-bell fa-fw" style="
-                      font-size: 26px;
-                      vertical-align: middle;
-                  "></i>
-
-                </a>
+            <li class="list-group-item" ng-hide="locations.length">
+              <a href class="thumb-sm m-r">
                 
-                <a href style="display: inline-block; vertical-align: middle;">
-                  <span>You have no locations yet.</span>
-                </a>
-              </li>
+                <i class="icon-bell fa-fw" style="
+                    font-size: 26px;
+                    vertical-align: middle;
+                "></i>
+
+              </a>
               
-
-
-
-              <li class="list-group-item" ng-repeat="l in locations">
-                <a href class="thumb-sm m-r">
-                  
-                  <i class="icon-pointer fa-fw" style="
-                      font-size: 26px;
-                      vertical-align: middle;
-                  "></i>
-
-                </a>
-                <span class="pull-right label inline m-t-sm">
-                  <button class="btn m-b-xs btn-sm btn-danger btn-addon" ng-click="removeLocation()"><i class="fa fa-trash-o"></i>Remove</button>
-                </span>
-
-                <a href style="display: inline-block; vertical-align: middle;">
-                  <span>{{l.name}}</span>
-                  <br>
-                  <span class="text-muted">{{l.address}}</span>
-                </a>
-              </li>
-              
-
-            </ul>
+              <a href style="display: inline-block; vertical-align: middle;">
+                <span>You have no locations yet.</span>
+              </a>
+            </li>
             
-          </div>
 
+
+
+            <li class="list-group-item" ng-repeat="l in locations">
+              <a href class="thumb-sm m-r">
+                
+                <i class="icon-pointer fa-fw" style="
+                    font-size: 26px;
+                    vertical-align: middle;
+                "></i>
+
+              </a>
+
+              <span class="pull-right label bg-danger inline m-t-sm">{{l.get('location').latitude}}, {{l.get('location').longitude}}</span>
+
+              <a href style="display: inline-block; vertical-align: middle;">
+                <span>{{l.get("name")}}</span>
+                <br>
+                <span class="text-muted">{{l.get("address")}}</span>
+              </a>
+            </li>
+            
+
+          </ul>
+          
+        </div>
       </div>
+
     </div>
 
   </div>

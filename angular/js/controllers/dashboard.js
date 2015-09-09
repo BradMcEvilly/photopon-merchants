@@ -8,16 +8,18 @@ angular.module('app')
    	$scope.locations = [];
 
     if ($scope.user == null) {
+
     	$state.go('access.signin');
     	return;
     }
 
-
     acsManager.getCoupons(function(err, coupons) {
     	$scope.coupons = coupons;
+        $scope.$apply();
     });
     acsManager.getLocations(function(err, locations) {
-    	$scope.locations = locations;
+        $scope.locations = locations;
+        $scope.$apply();
     });
 
 }]);

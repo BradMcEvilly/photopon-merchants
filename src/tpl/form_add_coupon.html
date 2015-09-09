@@ -60,57 +60,12 @@
                          theme="bootstrap"
                          ng-disabled="disabled"
                          reset-search-input="false">
-                  <ui-select-match placeholder="Choose location...">{{$item.name}}</ui-select-match>
+                  <ui-select-match placeholder="Choose location...">{{$item.get('name')}}</ui-select-match>
                   <ui-select-choices repeat="loc in locations track by $index">
-                    <div ng-bind-html="loc.name | highlight: $select.search"></div>
+                    <div ng-bind-html="loc.get('name') | highlight: $select.search"></div>
                   </ui-select-choices>
                 </ui-select>
               </div>
-
-
-              <div class="form-group">
-
-                <label>Choose Logo for Coupon</label>
-
-                <div class="m-b">
-                  <input ui-jq="filestyle" type="file" data-icon="false" data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s" id="fileInput">
-                  <!--<input type="file" id="fileInput" />-->
-                </div>
-              </div>
-
-
-
-
-              <div class="form-group" ng-show='fileselected'>
-                <label>Please crop your logo</label>
-                <div class="hbox hbox-auto-xs">
-
-                  <div class="col">
-                    <div class="wrapper-sm b-a bg-white m-r-xs m-b-xs">
-                      <div class="bg-light" style="height:320px">
-                        <img-crop 
-                          image="myImage" 
-                          result-image="myCroppedImage"
-                          result-image-size="160"
-                          area-type="{{cropType}}"
-                        ></img-crop>
-                      </div>
-                    </div>
-                  </div>
-
-
-                  <div class="col">
-                    <div class="inline bg-white wrapper-sm b-a">
-                      <div class="bg-light">
-                        <img ng-src="{{myCroppedImage}}" />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-
-
-              </div>
-
 
 
             </div>
@@ -121,34 +76,35 @@
           </div>
         </form>
       </div>
-      <div class="col-sm-6">
-        
+
+
+
+      <div class="col-md-6">
         <div class="panel no-border">
-            <div class="panel-heading wrapper b-b b-light">
-              <h4 class="font-thin m-t-none m-b-none text-muted">Coupons</h4>              
-            </div>
-            <ul class="list-group list-group-lg m-b-none">
-              
-              <li class="list-group-item" ng-repeat="c in coupons">
-                <a href class="thumb-sm m-r">
-                  <img src="img/a1.jpg" class="r r-2x">
-                </a>
-                <span class="pull-right label bg-primary inline m-t-sm">Admin</span>
-
-                <a href style="display: inline-block; vertical-align: middle;">
-                  <span>{{c.title}}</span>
-                  <br>
-                  <span class="text-muted">{{c.body}}</span>
-                </a>
-                
-              </li>
-
-
-            </ul>
+          <div class="panel-heading wrapper b-b b-light">
+            <!--<span class="text-xs text-muted pull-right">
+              <i class="fa fa-circle text-primary m-r-xs"></i> 12
+              <i class="fa fa-circle text-info m-r-xs m-l-sm"></i> 30
+              <i class="fa fa-circle text-warning m-r-xs m-l-sm"></i> 98
+            </span>-->
+            <h4 class="font-thin m-t-none m-b-none text-muted">Coupons</h4>              
           </div>
+          <ul class="list-group list-group-lg m-b-none">
+            
+            <li class="list-group-item" ng-repeat="c in coupons">
+              <a href class="thumb-sm m-r">
+                <img src=" {{c.get('company').get('image').url() }} " class="r r-2x">
+              </a>
+              <span class="pull-right label bg-primary inline m-t-sm" title="{{c.getLocationTitleFull()}}">{{c.getLocationTitle()}}</span>
+              <a href>{{c.get('title')}}</a>
+            </li>
 
 
+          </ul>
+        </div>
       </div>
+
+
     </div>
 
   </div>

@@ -1,72 +1,84 @@
 <div class="bg-light lter b-b wrapper-md">
-  <h1 class="m-n font-thin h3">Add Location</h1>
+  <h1 class="m-n font-thin h3">Company Info</h1>
 </div>
 <div class="wrapper-md">
   <div>
     <div class="row">
       <div class="col-sm-6">
-        <form name="form" class="form-validation" ng-submit="addLocation()">
+        <form name="form" class="form-validation" ng-submit="saveInfo()" ng-show="company">
           <div class="panel panel-default">
             <div class="panel-heading">
-              <span class="h4">Location info</span>
+              <span class="h4">Comapny info</span>
             </div>
             <div class="panel-body">
 
-              <p class="text-muted">Please fill the information to continue</p>
-
               <div class="form-group">
-                <label>Name</label>
-                <input type="text" class="form-control" ng-model="location_title" required >
+                <label>Comapny Name</label>
+                <input type="text" class="form-control" ng-model="companyInfo.name" required >
               </div>
 
-              <div class="form-group">
-                <label>Address</label>
+              <div class="form-group" ng-show="companyInfo.image">
+                <label>Comapny Logo</label>
+                <div>
+                  <a href class="thumb-sm m-r">
+                    <img src=" {{ companyInfo.image }} " class="r r-2x">
+                  </a>
+                  <a ng-click="removeImage()">&nbsp;&nbsp;&nbsp;<i class="icon-trash fa-fw" style="vertical-align: middle;"></i> Remove Logo</a>
+                </div>
+              </div>
 
-                <ui-select ng-model="address.selected"
-                         theme="bootstrap"
-                         ng-disabled="disabled"
-                         reset-search-input="false">
-                  <ui-select-match placeholder="Enter an address...">{{$select.selected.formatted_address}}</ui-select-match>
-                  <ui-select-choices repeat="address in addresses track by $index"
-                           refresh="refreshAddresses($select.search)"
-                           refresh-delay="0">
-                    <div ng-bind-html="address.formatted_address | highlight: $select.search"></div>
-                  </ui-select-choices>
-                </ui-select>
+         
+              <div class="form-group" ng-hide='companyInfo.image'>
+
+                <label>Choose Logo for Comapny</label>
+
+                <div class="m-b">
+                  <input ui-jq="filestyle" type="file" data-icon="false" data-classButton="btn btn-default" data-classInput="form-control inline v-middle input-s" id="fileInput">
+                </div>
               </div>
 
 
-              <div class="form-group"  ng-show="address.selected.formatted_address">
-                <label>Selected address</label>
-                <p class="form-control-static">{{address.selected.formatted_address}}</p>
-              </div>
-                
-              <div class="form-group"  ng-show="address.selected.formatted_address">
-                <label>Coordinates</label>
-                <p class="form-control-static">Latitude: {{address.selected.geometry.location.lat}}, Longitude: {{address.selected.geometry.location.lng}}</p>
-              </div>                
 
-              
-              <div class="form-group"  ng-show="address.selected.formatted_address">
-                <label ng-show="address.selected.formatted_address">Map</label>
-                <iframe
-                  width="100%"
-                  height="450"
-                  frameborder="0" style="border:0"
-                  src="{{trustSrc(address.selected.mapurl)}}" allowfullscreen>
-                </iframe>
+
+              <div class="form-group" ng-show='fileselected'>
+                <label>Please crop your logo</label>
+                <div class="hbox hbox-auto-xs">
+
+                  <div class="col">
+                    <div class="wrapper-sm b-a bg-white m-r-xs m-b-xs">
+                      <div class="bg-light" style="height:320px">
+                        <img-crop 
+                          image="myImage" 
+                          result-image="myCroppedImage"
+                          result-image-size="160"
+                          area-type="{{cropType}}"
+                        ></img-crop>
+                      </div>
+                    </div>
+                  </div>
+
+
+                  <div class="col">
+                    <div class="inline bg-white wrapper-sm b-a">
+                      <div class="bg-light">
+                        <img ng-src="{{myCroppedImage}}" />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+
               </div>
+
 
             </div>
 
             <footer class="panel-footer text-right bg-light lter">
-              <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">Add Location</button>
+              <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">Save Information</button>
             </footer>
           </div>
         </form>
       </div>
-
-
 
 
 
@@ -121,6 +133,8 @@
           
         </div>
       </div>
+
+
 
     </div>
 
