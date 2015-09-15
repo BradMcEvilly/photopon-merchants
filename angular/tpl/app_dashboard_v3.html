@@ -100,7 +100,7 @@
 
                   <span class="pull-right label bg-danger inline m-t-sm">{{l.get('location').latitude}}, {{l.get('location').longitude}}</span>
 
-                  <a href style="display: inline-block; vertical-align: middle;">
+                  <a href style="display: inline-block; vertical-align: middle;" ui-sref="app.editlocation({ id: '{{l.id}}' })">
                     <span>{{l.get("name")}}</span>
                     <br>
                     <span class="text-muted">{{l.get("address")}}</span>
@@ -136,7 +136,7 @@
                     <img src=" {{c.get('company').get('image').url() }} " class="r r-2x">
                   </a>
                   <span class="pull-right label bg-primary inline m-t-sm" title="{{c.getLocationTitleFull()}}">{{c.getLocationTitle()}}</span>
-                  <a href>{{c.get('title')}}</a>
+                  <a ui-sref="app.editcoupon({ id: '{{c.id}}' })">{{c.get('title')}}</a>
                 </li>
 
 

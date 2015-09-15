@@ -26,27 +26,6 @@ angular.module('app')
 
 
 
-// Image cropping
-    $scope.myImage = '';
-    $scope.myCroppedImage = '';
-    $scope.cropType = "square";
-
-    var handleFileSelect = function(evt) {
-      var file = evt.currentTarget.files[0];
-      var reader = new FileReader();
-      reader.onload = function (evt) {
-        $scope.$apply(function($scope){
-          $scope.myImage=evt.target.result;
-          $scope.fileselected = true;
-        });
-      };
-      reader.readAsDataURL(file);
-    };
-    angular.element(document.querySelector('#fileInput')).on('change',handleFileSelect);
-// Expiration date
-
-
-
     $scope.open = function($event) {
       $event.preventDefault();
       $event.stopPropagation();
@@ -76,6 +55,7 @@ angular.module('app')
       acsManager.addCoupon({
         title: $scope.coupon.title,
         body: $scope.coupon.body,
+        code: $scope.coupon.code,
         locations: locations,
         expiration: $scope.coupon.expiration
       }, function() {
@@ -86,6 +66,111 @@ angular.module('app')
     };
 
 }]);
+
+
+
+
+
+
+
+
+
+angular.module('app')
+.controller('EditCouponCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', '$stateParams', function($scope, $http, $state, acsManager, $sce, $modal, $filter, $stateParams) {
+ 
+    var id = $stateParams.id;
+    $scope.user = acsManager.info();
+
+    $scope.isEditing = true;
+
+
+    if ($scope.user == null) {
+      $state.go('access.signin');
+      return;
+    }
+
+    $scope.coupon = {
+        locations: []
+    };
+
+
+    acsManager.getLocations(function(err, locations) {
+        $scope.locations = locations;
+        
+        acsManager.getCoupon(id, function(err, coupon) {
+            $scope.coupon.title = coupon.get("title");
+            $scope.coupon.body = coupon.get("description");
+            $scope.coupon.expiration = coupon.get("expiration");
+            $scope.coupon.code = coupon.get("code");
+
+            
+            var locs = coupon.get("locations");
+            $scope.coupon.alllocations = (locs.length == 0);
+
+            for (var i = 0; i < locs.length; i++) {
+              for (var j = 0; j < locations.length; j++) {
+                if (locations[j].id == locs[i]) {
+                  $scope.coupon.locations.push(locations[j]);
+                }
+              };
+
+            };
+
+            $scope.$apply();
+        });
+    });
+
+
+
+
+
+    $scope.open = function($event) {
+      $event.preventDefault();
+      $event.stopPropagation();
+
+      $scope.minDate = new Date();
+      $scope.opened = true;
+    };
+
+    $scope.dateOptions = {
+      formatYear: 'yy',
+      startingDay: 1,
+      class: 'datepicker'
+    };
+
+    $scope.format = 'dd-MMMM-yyyy';
+
+
+
+    $scope.addCoupon = function() {
+      console.log("Edit coupon");
+      
+      var locations = [];
+      if (!$scope.alllocations) {
+        for (var i = 0; i < $scope.coupon.locations.length; i++) {
+          locations.push($scope.coupon.locations[i].id);
+        };
+      }
+
+      acsManager.editCoupon(id, {
+        title: $scope.coupon.title,
+        body: $scope.coupon.body,
+        code: $scope.coupon.code,
+        locations: locations,
+        expiration: $scope.coupon.expiration
+      }, function() {
+        $state.go("app.dashboard-v3", {}, {
+          reload: true
+        });
+      });
+    };
+
+}]);
+
+
+
+
+
 
 
 

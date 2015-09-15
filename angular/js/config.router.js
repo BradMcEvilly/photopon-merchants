@@ -38,6 +38,13 @@ angular.module('app')
 								resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js'])
               })
 
+      
+              .state('app.editlocation', {
+                url: '/location/edit/:id',
+                templateUrl: 'tpl/form_add_location.html',
+                controller: 'EditLoctionCtrl',
+                resolve: load(['ui.select', 'js/services/acs.js', 'js/controllers/addlocation.js'])
+              })
 			
 							.state('app.addlocation', {
 								url: '/location/add',
@@ -53,6 +60,14 @@ angular.module('app')
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
               })
 
+              .state('app.editcoupon', {
+                url: '/coupon/edit/:id',
+                templateUrl: 'tpl/form_add_coupon.html',
+                controller: 'EditCouponCtrl',
+                resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
+              })
+
+
 
               .state('app.companyinfo', {
                 url: '/company',
@@ -60,7 +75,6 @@ angular.module('app')
                 controller: 'CompanyInfoCtrl',
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/companyinfo.js'])
               })
-
 
 			
 

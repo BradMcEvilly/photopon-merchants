@@ -1,5 +1,5 @@
 <div class="bg-light lter b-b wrapper-md">
-  <h1 class="m-n font-thin h3">Add Coupon</h1>
+  <h1 class="m-n font-thin h3">{{isEditing ? "Edit Coupon" : "Add Coupon"}}</h1>
 </div>
 <div class="wrapper-md">
   <div>
@@ -24,6 +24,11 @@
                 <textarea class="form-control" rows="6" ng-model="coupon.body" placeholder="Type your message" required></textarea>
               </div>
 
+
+              <div class="form-group">
+                <label>Code</label>
+                <input type="text" class="form-control" ng-model="coupon.code" required >
+              </div>
 
 
 
@@ -71,7 +76,7 @@
             </div>
 
             <footer class="panel-footer text-right bg-light lter">
-              <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">Add Coupon</button>
+              <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">{{isEditing ? "Edit Coupon" : "Add Coupon"}}</button>
             </footer>
           </div>
         </form>
@@ -79,7 +84,7 @@
 
 
 
-      <div class="col-md-6">
+      <div class="col-md-6" ng-hide="isEditing">
         <div class="panel no-border">
           <div class="panel-heading wrapper b-b b-light">
             <!--<span class="text-xs text-muted pull-right">

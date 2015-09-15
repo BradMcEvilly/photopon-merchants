@@ -86443,6 +86443,13 @@ angular.module('app')
 								resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js'])
               })
 
+      
+              .state('app.editlocation', {
+                url: '/location/edit/:id',
+                templateUrl: 'tpl/form_add_location.html',
+                controller: 'EditLoctionCtrl',
+                resolve: load(['ui.select', 'js/services/acs.js', 'js/controllers/addlocation.js'])
+              })
 			
 							.state('app.addlocation', {
 								url: '/location/add',
@@ -86458,6 +86465,14 @@ angular.module('app')
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
               })
 
+              .state('app.editcoupon', {
+                url: '/coupon/edit/:id',
+                templateUrl: 'tpl/form_add_coupon.html',
+                controller: 'EditCouponCtrl',
+                resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
+              })
+
+
 
               .state('app.companyinfo', {
                 url: '/company',
@@ -86465,7 +86480,6 @@ angular.module('app')
                 controller: 'CompanyInfoCtrl',
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/companyinfo.js'])
               })
-
 
 			
 
@@ -87379,6 +87393,25 @@ angular.module('app')
 */
 
 
+	var AcsGetCoupon = function(id, callback) {
+	
+		var query = new Parse.Query("Coupon");
+		query.include("company");
+
+		query.get(id, {
+			success: function(object) {
+				callback(null, object);			
+			},
+
+			error: function(object, error) {
+				callback(new Error("Failed to get coupon"), null);
+			}
+		});
+		
+	};
+
+
+
 	var AcsGetCoupons = function(callback) {
 		AcsGetLocations(function(err, allLocations) {
 
@@ -87386,8 +87419,12 @@ angular.module('app')
 			var query = new Parse.Query("Coupon");
 			query.include("company");
 			query.equalTo("owner", Parse.User.current());
+			
 			query.find({
 				success: function(results) {
+
+
+
 					for (var i = 0; i < results.length; i++) {
 
 						results[i].getLocationTitleFull = function() {
@@ -87396,6 +87433,7 @@ angular.module('app')
 							
 
 							if (locs.length == 0) {
+								locs = [];
 								for (var j = 0; j < allLocations.length; j++) {
 									locs.push(allLocations[j].id);
 								}
@@ -87419,6 +87457,8 @@ angular.module('app')
 
 						results[i].getLocationTitle = function() {
 							var locs = this.get("locations");
+
+	
 							if (locs.length == 0) {
 								return "All Locations";
 							} else if (locs.length > 3) {
@@ -87474,6 +87514,7 @@ angular.module('app')
 
 			coupon.set("title", data.title);
 			coupon.set("description", data.body);
+			coupon.set("code", data.code);
 			coupon.set("company", company);
 			coupon.set("expiration", data.expiration);
 			coupon.set("locations", data.locations);
@@ -87494,6 +87535,38 @@ angular.module('app')
 		
 	};
 
+	var AcsEditCoupon = function(id, data, callback) {
+		var query = new Parse.Query("Coupon");
+		query.include("company");
+
+		query.get(id, {
+			success: function(object) {
+
+				object.set("title", data.title);
+				object.set("description", data.body);
+				object.set("code", data.code);
+				object.set("expiration", data.expiration);
+				object.set("locations", data.locations);
+
+				object.save(null, {
+					success: function(coupon) {
+						callback();
+					},
+					error: function(coupon, error) {
+						alert("Failed to save object.");
+					}
+				});
+			},
+
+			error: function(object, error) {
+				callback(new Error("Failed to get coupon"), null);
+			}
+		});
+
+		
+		
+	};
+
 
 
 /*
@@ -87505,8 +87578,22 @@ angular.module('app')
 ##       ##     ## ##    ## ##     ##    ##     ##  ##     ## ##   ### 
 ########  #######   ######  ##     ##    ##    ####  #######  ##    ## 
 */
-	
 
+	var AcsGetLocation = function(id, callback) {
+	
+		var query = new Parse.Query("Location");
+
+		query.get(id, {
+			success: function(object) {
+				callback(null, object);			
+			},
+
+			error: function(object, error) {
+				callback(new Error("Failed to get object"), null);
+			}
+		});
+		
+	};
 
 	var AcsGetLocations = function(callback) {
 		
@@ -87550,6 +87637,41 @@ angular.module('app')
 			}
 		});
 
+	};
+
+	var AcsEditLocation = function(id, data, callback) {
+		var query = new Parse.Query("Location");
+
+		query.get(id, {
+			success: function(object) {
+
+
+
+				var point = new Parse.GeoPoint({
+					latitude: data.latitude, 
+					longitude: data.longitude
+				});
+
+				object.set("name", data.name);
+				object.set("address", data.address);
+				object.set("location", point);
+
+
+				object.save(null, {
+					success: function(coupon) {
+						callback();
+					},
+					error: function(coupon, error) {
+						alert("Failed to save object.");
+					}
+				});
+			},
+
+			error: function(object, error) {
+				callback(new Error("Failed to get object"), null);
+			}
+		});
+		
 	};
 
 	var AcsRemoveLocation = function(id, callback) {
@@ -87630,10 +87752,14 @@ angular.module('app')
 		info: AcsGetInfo,
 		
 		getCoupons: AcsGetCoupons,
+		getCoupon: AcsGetCoupon,
 		addCoupon: AcsAddCoupon,
+		editCoupon: AcsEditCoupon,
 
 		getLocations: AcsGetLocations,
+		getLocation: AcsGetLocation,
 		addLocation: AcsAddLocation,
+		editLocation: AcsEditLocation,
 		removeLocation: AcsRemoveLocation,
 
 
