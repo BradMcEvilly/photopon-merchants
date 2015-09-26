@@ -80,6 +80,13 @@ angular.module('app')
 
 					for (var i = 0; i < results.length; i++) {
 
+						results[i].getShareRato = function() {
+							var numShared = this.get('numShared');
+							var numRedeemed = this.get('numRedeemed');
+
+							return Math.floor(100 * numRedeemed / numShared) + "%";
+						};
+
 						results[i].getLocationTitleFull = function() {
 							var locs = this.get("locations");
 							var locString = "";
@@ -398,6 +405,36 @@ angular.module('app')
 
 
 
+	var AcsGetCompanyStats = function(callback) {
+		var query = new Parse.Query("Coupon");
+		query.equalTo("owner", Parse.User.current());
+		
+		query.find({
+			success: function(results) {
+				var stats = {
+					numShares: 0,
+					numRedeems: 0
+				};
+
+				for (var i = 0; i < results.length; i++) {
+					var ns = results[i].get("numShared");
+					var nr = results[i].get("numRedeemed");
+					ns = ns || "0";
+					nr = nr || "0";
+					stats.numShares += parseInt(ns, 10);
+					stats.numRedeems += parseInt(nr, 10);
+				};
+				callback(null, stats);			
+			},
+
+			error: function(error) {
+				callback(new Error('Failed to get coupons'));
+			}
+		});
+
+	};
+
+
 
 	return {
 		login: AcsLogin,
@@ -418,6 +455,7 @@ angular.module('app')
 
 		getCompany: AcsGetCompany,
 		removeCompanyLogo: AcsRemoveCompanyLogo,
-		saveCompanyInfo: AcsSaveCompanyInfo
+		saveCompanyInfo: AcsSaveCompanyInfo,
+		getCompanyStats: AcsGetCompanyStats
 	};
 }]);

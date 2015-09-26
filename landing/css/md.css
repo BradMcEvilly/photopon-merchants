@@ -1555,9 +1555,6 @@
     z-index: 30;
     padding-top: 60px;
   }
-  .off-screen.md-content + * > .md-content {
-    overflow: hidden;
-  }
 }
 
 .md-form-group {

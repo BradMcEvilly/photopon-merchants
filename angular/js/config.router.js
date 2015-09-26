@@ -76,6 +76,13 @@ angular.module('app')
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/companyinfo.js'])
               })
 
+              .state('app.statistics', {
+                url: '/stats',
+                templateUrl: 'tpl/company_statistics.html',
+                controller: 'CompanyStatsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/companystats.js'])
+              })
+
 			
 
 

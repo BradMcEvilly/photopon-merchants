@@ -6,12 +6,12 @@
         <button class="btn btn-link visible-xs pull-right m-r" type="button" data-toggle="collapse" data-target=".navbar-collapse">
           <i class="fa fa-bars"></i>
         </button>
-        <a href="#" class="navbar-brand m-r-lg"><img src="img/logo.png" class="m-r-sm hide"><span class="h3 font-bold">Angulr</span></a>
+        <a href="#" class="navbar-brand m-r-lg"><img src="img/logo.png" class="m-r-sm hide"><span class="h3 font-bold">Photopon</span></a>
       </div>
       <div class="collapse navbar-collapse">
         <ul class="nav navbar-nav font-bold">
           <li>
-            <a href="#what" data-ride="scroll">What is Angulr</a>
+            <a href="#what" data-ride="scroll">What is Photopon</a>
           </li>
           <li>
             <a href="#why" data-ride="scroll">Why</a>
@@ -26,8 +26,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li>
             <div class="m-t-sm">
-              <a href="../angular/#/access/signin" class="btn btn-link btn-sm">Sign in</a> or 
-              <a href="../angular/#/access/signup" class="btn btn-sm btn-success btn-rounded m-l"><strong>Sign up</strong></a>
+              <a href="../angular/#/access/signin" class="btn btn-sm btn-success btn-rounded m-l"><strong>Merchant Login</strong></a>
             </div>
           </li>
         </ul>     

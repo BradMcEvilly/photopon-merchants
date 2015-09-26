@@ -22,4 +22,9 @@ angular.module('app')
         $scope.$apply();
     });
 
+    acsManager.getCompanyStats(function(err, stats) {
+        $scope.stats = stats;
+        $scope.$apply();
+    });
+
 }]);
