@@ -159,7 +159,7 @@ angular.module('app')
         locations: locations,
         expiration: $scope.coupon.expiration
       }, function() {
-        $state.go("app.dashboard-v3", {}, {
+        $state.go("app.dashboard-merchant", {}, {
           reload: true
         });
       });

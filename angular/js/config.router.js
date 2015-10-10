@@ -21,7 +21,7 @@ angular.module('app')
 					}
 					
             $urlRouterProvider
-              .otherwise('/app/dashboard-v3');
+              .otherwise('/access/signin');
           
           $stateProvider
               .state('app', {
@@ -30,10 +30,20 @@ angular.module('app')
 								templateUrl: layout,
 								resolve: load(['js/services/acs.js', 'js/controllers/header.js'])
               })
+
+
+              
+              .state('app.dashboard-super', {
+                  url: '/dashboard-super',
+                  templateUrl: 'tpl/app_dashboard_super.html',
+                controller: 'DashboardSuperCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboardsuper.js', 'js/controllers/header.js'])
+              })
+
 							
-              .state('app.dashboard-v3', {
-                  url: '/dashboard-v3',
-                  templateUrl: 'tpl/app_dashboard_v3.html',
+              .state('app.dashboard-merchant', {
+                  url: '/dashboard-merchant',
+                  templateUrl: 'tpl/app_dashboard_merchant.html',
 								controller: 'DashboardCtrl',
 								resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js'])
               })
@@ -86,12 +96,33 @@ angular.module('app')
 			
 
 
+              .state('access', {
+                  url: '/access',
+                  template: '<div ui-view class="fade-in-right-big smooth"></div>'
+              })
+              .state('access.signin', {
+                  url: '/signin',
+                  templateUrl: 'tpl/page_signin.html',
+                  resolve: load( ['js/services/acs.js', 'js/controllers/signin.js'] )
+              })
+              .state('access.signup', {
+                  url: '/signup',
+                  templateUrl: 'tpl/page_signup.html',
+                  resolve: load( ['js/controllers/signup.js'] )
+              })
+              .state('access.forgotpwd', {
+                  url: '/forgotpwd',
+                  templateUrl: 'tpl/page_forgotpwd.html'
+              })
+              .state('access.404', {
+                  url: '/404',
+                  templateUrl: 'tpl/page_404.html'
+              })
 
 
 
 
-
-
+/*
               .state('app.ui', {
                   url: '/ui',
                   template: '<div ui-view class="fade-in-up"></div>'
@@ -287,28 +318,7 @@ angular.module('app')
                   url: '/lockme',
                   templateUrl: 'tpl/page_lockme.html'
               })
-              .state('access', {
-                  url: '/access',
-                  template: '<div ui-view class="fade-in-right-big smooth"></div>'
-              })
-              .state('access.signin', {
-                  url: '/signin',
-                  templateUrl: 'tpl/page_signin.html',
-									resolve: load( ['js/services/acs.js', 'js/controllers/signin.js'] )
-              })
-              .state('access.signup', {
-                  url: '/signup',
-                  templateUrl: 'tpl/page_signup.html',
-                  resolve: load( ['js/controllers/signup.js'] )
-              })
-              .state('access.forgotpwd', {
-                  url: '/forgotpwd',
-                  templateUrl: 'tpl/page_forgotpwd.html'
-              })
-              .state('access.404', {
-                  url: '/404',
-                  templateUrl: 'tpl/page_404.html'
-              })
+              
 
               // fullCalendar
               .state('app.calendar', {
@@ -483,6 +493,8 @@ angular.module('app')
                   url: '/ngmaterial',
                   templateUrl: 'tpl/material/ngmaterial.html'
                 });
+
+*/
 
           function load(srcs, callback) {
             return {

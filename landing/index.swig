@@ -200,7 +200,7 @@
     <div class="bg-white-only">
       <div class="container">
         <div class="row m-t-xl m-b-xxl">
-          <div class="col-sm-6" data-ride="animated" data-animation="fadeInLeft" data-delay="300">
+          <div class="col-sm-6" >
             <div class="m-t-xxl text-center">
               <p>
               <a href="http://themeforest.net/user/Flatfull/portfolio?ref=flatfull" target="_blank" class="text-sm btn btn-lg btn-rounded btn-default m-sm">

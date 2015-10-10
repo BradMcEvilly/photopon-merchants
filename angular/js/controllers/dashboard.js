@@ -4,6 +4,7 @@ angular.module('app')
 .controller('DashboardCtrl', ['$scope', '$state', 'acsManager', function($scope, $state, acsManager) {
     $scope.user = acsManager.info();
 
+
    	$scope.coupons = [];
    	$scope.locations = [];
 

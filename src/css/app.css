@@ -897,8 +897,8 @@ body {
 
 .navbar-brand img {
   display: inline;
-  max-height: 20px;
-  margin-top: -4px;
+  max-height: 50px;
+  margin-top: 0;
   vertical-align: middle;
 }
 

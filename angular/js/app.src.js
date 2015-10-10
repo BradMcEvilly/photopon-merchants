@@ -86426,7 +86426,7 @@ angular.module('app')
 					}
 					
             $urlRouterProvider
-              .otherwise('/app/dashboard-v3');
+              .otherwise('/access/signin');
           
           $stateProvider
               .state('app', {
@@ -86435,10 +86435,20 @@ angular.module('app')
 								templateUrl: layout,
 								resolve: load(['js/services/acs.js', 'js/controllers/header.js'])
               })
+
+
+              
+              .state('app.dashboard-super', {
+                  url: '/dashboard-super',
+                  templateUrl: 'tpl/app_dashboard_super.html',
+                controller: 'DashboardSuperCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboardsuper.js', 'js/controllers/header.js'])
+              })
+
 							
-              .state('app.dashboard-v3', {
-                  url: '/dashboard-v3',
-                  templateUrl: 'tpl/app_dashboard_v3.html',
+              .state('app.dashboard-merchant', {
+                  url: '/dashboard-merchant',
+                  templateUrl: 'tpl/app_dashboard_merchant.html',
 								controller: 'DashboardCtrl',
 								resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js'])
               })
@@ -86491,12 +86501,33 @@ angular.module('app')
 			
 
 
+              .state('access', {
+                  url: '/access',
+                  template: '<div ui-view class="fade-in-right-big smooth"></div>'
+              })
+              .state('access.signin', {
+                  url: '/signin',
+                  templateUrl: 'tpl/page_signin.html',
+                  resolve: load( ['js/services/acs.js', 'js/controllers/signin.js'] )
+              })
+              .state('access.signup', {
+                  url: '/signup',
+                  templateUrl: 'tpl/page_signup.html',
+                  resolve: load( ['js/controllers/signup.js'] )
+              })
+              .state('access.forgotpwd', {
+                  url: '/forgotpwd',
+                  templateUrl: 'tpl/page_forgotpwd.html'
+              })
+              .state('access.404', {
+                  url: '/404',
+                  templateUrl: 'tpl/page_404.html'
+              })
 
 
 
 
-
-
+/*
               .state('app.ui', {
                   url: '/ui',
                   template: '<div ui-view class="fade-in-up"></div>'
@@ -86692,28 +86723,7 @@ angular.module('app')
                   url: '/lockme',
                   templateUrl: 'tpl/page_lockme.html'
               })
-              .state('access', {
-                  url: '/access',
-                  template: '<div ui-view class="fade-in-right-big smooth"></div>'
-              })
-              .state('access.signin', {
-                  url: '/signin',
-                  templateUrl: 'tpl/page_signin.html',
-									resolve: load( ['js/services/acs.js', 'js/controllers/signin.js'] )
-              })
-              .state('access.signup', {
-                  url: '/signup',
-                  templateUrl: 'tpl/page_signup.html',
-                  resolve: load( ['js/controllers/signup.js'] )
-              })
-              .state('access.forgotpwd', {
-                  url: '/forgotpwd',
-                  templateUrl: 'tpl/page_forgotpwd.html'
-              })
-              .state('access.404', {
-                  url: '/404',
-                  templateUrl: 'tpl/page_404.html'
-              })
+              
 
               // fullCalendar
               .state('app.calendar', {
@@ -86888,6 +86898,8 @@ angular.module('app')
                   url: '/ngmaterial',
                   templateUrl: 'tpl/material/ngmaterial.html'
                 });
+
+*/
 
           function load(srcs, callback) {
             return {
@@ -87376,17 +87388,24 @@ angular.module('app')
 		});
 	};
 
+	var AcsIsLoggedIn = function() {
+		if (Parse.User.current()) {
+			return true;
+		}
+		return false;
+	};
 
 
 
 
 	var AcsGetInfo = function() {
-		return userInfo;
+		return Parse.User.current();
 	};
 
 	var AcsLogout = function() {
-		userInfo = null;
-		//localStorageService.remove("userInfo");
+		Parse.User.logOut();
+		console.log("Logging out from parse");
+		
 	};
 
 /*
@@ -87398,6 +87417,21 @@ angular.module('app')
 ##    ## ##     ## ##     ## ##        ##     ## ##   ### 
  ######   #######   #######  ##         #######  ##    ## 
 */
+
+
+	var AcsNumAllCoupons = function(callback) {
+		var query = new Parse.Query("Coupon");
+
+		query.count({
+			success: function(count) {
+				callback(null, count);			
+			},
+
+			error: function(error) {
+				callback(new Error("Failed to get coupons"), null);
+			}
+		});
+	};
 
 
 	var AcsGetCoupon = function(id, callback) {
@@ -87723,6 +87757,82 @@ angular.module('app')
 
 	};
 
+
+	var AcsGetCompanies = function(callback, uiupdater) {
+		
+		var query = new Parse.Query("Company");
+		query.find({
+			success: function(results) {
+
+				for (var i = 0; i < results.length; i++) {
+					results[i].fetchEverything = function() {
+						//return merchant.id;
+						var obj = this;
+						var merchant = obj.get('merchant');
+
+						obj.numLocations = "Loading...";
+						obj.numCoupons = "Loading...";
+						obj.numShared = "Loading...";
+						obj.numRedeemed = "Loading...";
+
+						// Load locations
+						var query1 = new Parse.Query("Location");
+						query1.equalTo("owner", merchant);
+
+						query1.count({
+							success: function(count) {
+								obj.numLocations = count;
+								uiupdater();		
+							},
+							error: function(error) {
+								obj.numLocations = "Error";
+								uiupdater();
+							}
+						});
+
+
+
+						// Load coupons
+						var query2 = new Parse.Query("Coupon");
+						query2.equalTo("owner", merchant);
+
+						query2.find({
+							success: function(coupons) {
+								obj.numCoupons = coupons.length;
+								obj.numShared = 0;
+								obj.numRedeemed = 0;
+
+								for (var i = 0; i < coupons.length; i++) {
+									obj.numShared += coupons[i].get('numShared') || 0;
+									obj.numRedeemed += coupons[i].get('numRedeemed') || 0;
+								};
+
+
+								obj.shareRatio = Math.floor(100 * obj.numRedeemed / obj.numShared) + "%";
+								uiupdater();		
+							},
+							error: function(error) {
+								obj.numCoupons = "Error";
+								uiupdater();
+							}
+						});
+
+
+
+
+					}
+
+					results[i].fetchEverything();
+				};
+				callback(null, results);			
+			},
+			error: function() {
+				callback(new Error('Failed to get coupons'));
+			}
+		});
+
+	};
+
 	var AcsSaveCompanyInfo = function(name, file, callback) {
 		var base64 = file;
 		var image = new Parse.File("logo.png", { base64: base64 });	
@@ -87790,11 +87900,43 @@ angular.module('app')
 
 
 
+
+	var AcsGetTotalStats = function(callback) {
+		var query = new Parse.Query("Coupon");
+		
+		query.find({
+			success: function(results) {
+				var stats = {
+					numShares: 0,
+					numRedeems: 0
+				};
+
+				for (var i = 0; i < results.length; i++) {
+					var ns = results[i].get("numShared");
+					var nr = results[i].get("numRedeemed");
+					ns = ns || "0";
+					nr = nr || "0";
+					stats.numShares += parseInt(ns, 10);
+					stats.numRedeems += parseInt(nr, 10);
+				};
+				callback(null, stats);			
+			},
+
+			error: function(error) {
+				callback(new Error('Failed to get coupons'));
+			}
+		});
+
+	};
+
+
 	return {
+		loggedIn: AcsIsLoggedIn,
 		login: AcsLogin,
 		logout: AcsLogout,
 		info: AcsGetInfo,
 		
+		numAllCoupons: AcsNumAllCoupons,
 		getCoupons: AcsGetCoupons,
 		getCoupon: AcsGetCoupon,
 		addCoupon: AcsAddCoupon,
@@ -87808,9 +87950,12 @@ angular.module('app')
 
 
 		getCompany: AcsGetCompany,
+		getCompanies: AcsGetCompanies,
 		removeCompanyLogo: AcsRemoveCompanyLogo,
 		saveCompanyInfo: AcsSaveCompanyInfo,
-		getCompanyStats: AcsGetCompanyStats
+		getCompanyStats: AcsGetCompanyStats,
+
+		getTotalStats: AcsGetTotalStats
 	};
 }]);
 

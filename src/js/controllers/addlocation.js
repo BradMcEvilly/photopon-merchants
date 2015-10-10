@@ -158,7 +158,7 @@ angular.module('app')
             latitude: $scope.address.selected.geometry.location.lat,
             longitude: $scope.address.selected.geometry.location.lng
         }, function() {
-            $state.go("app.dashboard-v3", {}, {
+            $state.go("app.dashboard-merchant", {}, {
                 reload: true
             });
         });
