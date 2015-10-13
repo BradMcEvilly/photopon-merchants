@@ -28,7 +28,7 @@ angular.module('app')
                   abstract: true,
                   url: '/app',
 								templateUrl: layout,
-								resolve: load(['js/services/acs.js', 'js/controllers/header.js'])
+								resolve: load(['js/services/acs.js', 'js/controllers/header.js', 'js/controllers/aside.js'])
               })
 
 
@@ -37,7 +37,7 @@ angular.module('app')
                   url: '/dashboard-super',
                   templateUrl: 'tpl/app_dashboard_super.html',
                 controller: 'DashboardSuperCtrl',
-                resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboardsuper.js', 'js/controllers/header.js'])
+                resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboardsuper.js', 'js/controllers/header.js', 'js/controllers/aside.js'])
               })
 
 							
@@ -45,7 +45,7 @@ angular.module('app')
                   url: '/dashboard-merchant',
                   templateUrl: 'tpl/app_dashboard_merchant.html',
 								controller: 'DashboardCtrl',
-								resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js'])
+								resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js', 'js/controllers/aside.js'])
               })
 
       
@@ -119,6 +119,33 @@ angular.module('app')
                   templateUrl: 'tpl/page_404.html'
               })
 
+
+
+              // Merchant Pages
+              .state('app.allcoupons', {
+                url: '/allcoupons',
+                templateUrl: 'tpl/admin_items_list.html',
+                controller: 'AllCouponsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/adminlists.js'])
+              })
+              .state('app.alllocations', {
+                url: '/alllocations',
+                templateUrl: 'tpl/admin_items_list.html',
+                controller: 'AllLocationsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/adminlists.js'])
+              })
+              .state('app.allphotopons', {
+                url: '/allphotopons',
+                templateUrl: 'tpl/admin_items_list.html',
+                controller: 'AllPhotoponsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/adminlists.js'])
+              })
+              .state('app.managemerchants', {
+                url: '/managemerchants',
+                templateUrl: 'tpl/merchant_item_list.html',
+                controller: 'ManageMerchantsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/managemerchants.js'])
+              })
 
 
 

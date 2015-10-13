@@ -100,6 +100,53 @@
       </div>
 
 
+      <div class="row">
+          <div class="col-md-6">
+            <div class="panel no-border">
+              <div class="panel-heading wrapper b-b b-light">
+                <h4 class="font-thin m-t-none m-b-none text-muted">Merchant requests</h4>              
+              </div>
+              <ul class="list-group list-group-lg m-b-none">
+
+
+                <li class="list-group-item" ng-hide="requests.length">
+                  <a href class="thumb-sm m-r">
+                    
+                    <i class="icon-bell fa-fw" style="
+                        font-size: 26px;
+                        vertical-align: middle;
+                    "></i>
+
+                  </a>
+                  
+                  <a href style="display: inline-block; vertical-align: middle;">
+                    <span>You have no merchant requests.</span>
+                  </a>
+                </li>
+                
+
+
+                
+                <li class="list-group-item" ng-repeat="r in requests">
+                  <a href class="thumb-sm m-r">
+                    <img src=" {{r.get('user').get('image').url() }} " class="r r-2x">
+                  </a>
+                  <!--<span class="pull-right label bg-primary inline m-t-sm">{{r.get('user').get('username')}}</span>-->
+                  <a>{{r.get('user').get('email')}}</a>
+
+                  <button class="pull-right btn btn-danger btn-addon btn-sm m-l-xs" ng-click="denyRequest()"> <i class="fa fa-minus"></i>Deny</button>
+                  
+                  <button class="pull-right btn btn-success btn-addon btn-sm" ng-click="acceptRequest()"> <i class="fa fa-plus"></i>Accept</button>
+                </li>
+
+
+              </ul>
+              
+            </div>
+          </div>
+
+      </div>
+
 
 
     </div>

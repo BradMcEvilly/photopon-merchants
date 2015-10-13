@@ -1,7 +1,6 @@
 'use strict';
 
-angular.module('app')
-.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', function($scope, $state, acsManager) {
+app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', function($scope, $state, acsManager) {
     $scope.user = acsManager.info();
 
 
@@ -13,6 +12,28 @@ angular.module('app')
     	$state.go('access.signin');
     	return;
     }
+
+
+    $scope.denyRequest = function() {
+        acsManager.denyMerchantRequest(this.r.id, function() {
+
+            acsManager.getMerchantRequests(function(err, requests) {
+                $scope.requests = requests;
+            });
+
+        });
+    };
+
+    $scope.acceptRequest = function() {
+
+        acsManager.acceptMerchantRequest(this.r.id, function() {
+
+            acsManager.getMerchantRequests(function(err, requests) {
+                $scope.requests = requests;
+            });
+            
+        });
+    };
 
 
 
@@ -33,6 +54,11 @@ angular.module('app')
     acsManager.getTotalStats(function(err, stats) {
         $scope.stats = stats;
         $scope.$apply();
+    });
+
+
+    acsManager.getMerchantRequests(function(err, requests) {
+        $scope.requests = requests;
     });
 
 }]);

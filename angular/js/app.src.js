@@ -86433,7 +86433,7 @@ angular.module('app')
                   abstract: true,
                   url: '/app',
 								templateUrl: layout,
-								resolve: load(['js/services/acs.js', 'js/controllers/header.js'])
+								resolve: load(['js/services/acs.js', 'js/controllers/header.js', 'js/controllers/aside.js'])
               })
 
 
@@ -86442,7 +86442,7 @@ angular.module('app')
                   url: '/dashboard-super',
                   templateUrl: 'tpl/app_dashboard_super.html',
                 controller: 'DashboardSuperCtrl',
-                resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboardsuper.js', 'js/controllers/header.js'])
+                resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboardsuper.js', 'js/controllers/header.js', 'js/controllers/aside.js'])
               })
 
 							
@@ -86450,7 +86450,7 @@ angular.module('app')
                   url: '/dashboard-merchant',
                   templateUrl: 'tpl/app_dashboard_merchant.html',
 								controller: 'DashboardCtrl',
-								resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js'])
+								resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js', 'js/controllers/aside.js'])
               })
 
       
@@ -86524,6 +86524,33 @@ angular.module('app')
                   templateUrl: 'tpl/page_404.html'
               })
 
+
+
+              // Merchant Pages
+              .state('app.allcoupons', {
+                url: '/allcoupons',
+                templateUrl: 'tpl/admin_items_list.html',
+                controller: 'AllCouponsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/adminlists.js'])
+              })
+              .state('app.alllocations', {
+                url: '/alllocations',
+                templateUrl: 'tpl/admin_items_list.html',
+                controller: 'AllLocationsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/adminlists.js'])
+              })
+              .state('app.allphotopons', {
+                url: '/allphotopons',
+                templateUrl: 'tpl/admin_items_list.html',
+                controller: 'AllPhotoponsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/adminlists.js'])
+              })
+              .state('app.managemerchants', {
+                url: '/managemerchants',
+                templateUrl: 'tpl/merchant_item_list.html',
+                controller: 'ManageMerchantsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/managemerchants.js'])
+              })
 
 
 
@@ -87453,13 +87480,17 @@ angular.module('app')
 
 
 
-	var AcsGetCoupons = function(callback) {
+	var AcsGetCoupons = function(callback, allCoupons) {
 		AcsGetLocations(function(err, allLocations) {
 
 		
 			var query = new Parse.Query("Coupon");
 			query.include("company");
-			query.equalTo("owner", Parse.User.current());
+			query.include("company.merchant");
+
+			if (!allCoupons) {
+				query.equalTo("owner", Parse.User.current());
+			}
 			
 			query.find({
 				success: function(results) {
@@ -87643,12 +87674,47 @@ angular.module('app')
 		
 	};
 
-	var AcsGetLocations = function(callback) {
+	var AcsGetLocations = function(callback, allLocations, uiupdater) {
 		
 		var query = new Parse.Query("Location");
-		query.equalTo("owner", Parse.User.current());
+		query.include("owner");
+
+		if (!allLocations) {
+			query.equalTo("owner", Parse.User.current());
+		}
+
 		query.find({
 			success: function(results) {
+
+				for (var i = 0; i < results.length; i++) {
+					results[i].fetchEverything = function() {
+						var obj = this;
+						var merchant = obj.get('owner');
+
+						obj.companyName = "Loading...";
+
+						var query2 = new Parse.Query("Company");
+						query2.equalTo("merchant", merchant);
+
+						query2.find({
+							success: function(company) {
+								obj.companyName = company[0].get("name");
+								if (uiupdater) uiupdater();		
+							},
+							error: function(error) {
+								obj.companyName = "Not Found!";
+								if (uiupdater) uiupdater();		
+							}
+						});
+
+
+
+
+					}
+
+					results[i].fetchEverything();
+				};
+
 				callback(null, results);			
 			},
 
@@ -87930,17 +87996,138 @@ angular.module('app')
 	};
 
 
+	var AcsGetMerchantRequests = function(callback) {
+		var query = new Parse.Query("MerchantRequests");
+		query.include("user");
+		
+		query.find({
+			success: function(results) {
+				callback(null, results);			
+			},
+
+			error: function(error) {
+				callback(new Error('Failed to get merchant requests'));
+			}
+		});
+
+	};
+
+
+
+
+
+	var AcsDenyMerchantRequest = function(id, callback) {
+		var MerchantRequest = Parse.Object.extend("MerchantRequests");
+		var query = new Parse.Query(MerchantRequest);
+
+		query.get(id, {
+			success: function(obj) {
+				obj.destroy();
+				callback();
+			},
+			error: function(object, error) {
+				callback(new Error('Failed to deny merchant request'));
+			}
+		});
+	};
+
+	var AcsAcceptMerchantRequest = function(id, callback) {
+		
+		var MerchantRequest = Parse.Object.extend("MerchantRequests");
+		var query = new Parse.Query(MerchantRequest);
+
+		query.get(id, {
+			success: function(obj) {
+				var user = obj.get("user");
+
+				user.set("isMerchant", true);
+				user.save();
+				obj.destroy();
+				callback();
+
+			},
+			error: function(object, error) {
+				callback(new Error('Failed to accept merchant request'));
+			}
+		});
+	};
+
+
+	var AcsGetAllLocations = function(callback, uiupdater) {
+		AcsGetLocations(callback, true, uiupdater);
+	};
+
+	var AcsGetAllCoupons = function(callback) {
+		AcsGetCoupons(callback, true);
+	};
+
+	var AcsGetAllPhotopons = function(callback, uiupdater) {
+		var query = new Parse.Query("Photopon");
+
+		query.include("creator");
+		query.include("coupon");
+		query.include("coupon.company");
+
+		query.find({
+			success: function(results) {
+				for (var i = 0; i < results.length; i++) {
+					results[i].fetchEverything = function() {
+						var obj = this;
+						var users = obj.get("users");
+
+						obj.userList = "Loading...";
+
+						var query2 = new Parse.Query("User");
+						console.log(users);
+						query2.containedIn("objectId", users);
+
+						query2.find({
+							success: function(users) {
+								obj.userList = "";
+								console.log(users);
+
+								for (var i = 0; i < users.length; i++) {
+									obj.userList += users[i].get("username") + ((i == users.length - 1) ? "" : ", ")
+								};
+								if (uiupdater) uiupdater();		
+							},
+							error: function(error) {
+								obj.userList = "Not Found!";
+								if (uiupdater) uiupdater();		
+							}
+						});
+
+
+
+
+					}
+
+					results[i].fetchEverything();
+				};
+
+				callback(null, results);
+			}
+		});
+	};
+
+
+
+
 	return {
 		loggedIn: AcsIsLoggedIn,
 		login: AcsLogin,
 		logout: AcsLogout,
 		info: AcsGetInfo,
+
+
 		
 		numAllCoupons: AcsNumAllCoupons,
 		getCoupons: AcsGetCoupons,
 		getCoupon: AcsGetCoupon,
 		addCoupon: AcsAddCoupon,
 		editCoupon: AcsEditCoupon,
+
+
 
 		getLocations: AcsGetLocations,
 		getLocation: AcsGetLocation,
@@ -87949,15 +88136,30 @@ angular.module('app')
 		removeLocation: AcsRemoveLocation,
 
 
+
 		getCompany: AcsGetCompany,
 		getCompanies: AcsGetCompanies,
 		removeCompanyLogo: AcsRemoveCompanyLogo,
 		saveCompanyInfo: AcsSaveCompanyInfo,
 		getCompanyStats: AcsGetCompanyStats,
 
-		getTotalStats: AcsGetTotalStats
+
+
+		getTotalStats: AcsGetTotalStats,
+		getMerchantRequests: AcsGetMerchantRequests,
+		denyMerchantRequest: AcsDenyMerchantRequest,
+		acceptMerchantRequest: AcsAcceptMerchantRequest,
+		
+		getAllLocations: AcsGetAllLocations,
+		getAllCoupons: AcsGetAllCoupons,
+		getAllPhotopons: AcsGetAllPhotopons
+
 	};
 }]);
+
+
+
+
 
 'use strict';
 

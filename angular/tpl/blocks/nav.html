@@ -1,5 +1,6 @@
 <!-- list -->
-<ul class="nav">
+
+<ul class="nav" ng-hide="{{user.get('isSuperUser')}}">
   <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
     <span translate="aside.nav.HEADER">Navigation</span>
   </li>
@@ -31,6 +32,46 @@
       <span class="font-bold">Statistics</span>
     </a>
   </li>
+</ul>
+
+
+
+
+<ul class="nav" ng-show="{{user.get('isSuperUser')}}">
+  <li class="hidden-folded padder m-t m-b-sm text-muted text-xs">
+    <span translate="aside.nav.HEADER">Navigation</span>
+  </li>
+  
+  <li ui-sref-active="active">
+    <a ui-sref="app.allcoupons">
+      <i class="glyphicon glyphicon-list icon text-info-dker"></i>
+      <span class="font-bold">All Coupons</span>
+    </a>
+  </li>
+
+  <li ui-sref-active="active">
+    <a ui-sref="app.alllocations">
+      <i class="glyphicon glyphicon-map-marker icon text-info-dker"></i>
+      <span class="font-bold">All Locations</span>
+    </a>
+  </li>
+
+  <li ui-sref-active="active">
+    <a ui-sref="app.allphotopons">
+      <i class="glyphicon glyphicon-info-sign icon text-info-lter"></i>
+      <span class="font-bold">All Photopons</span>
+    </a>
+  </li>
+
+  <li ui-sref-active="active">
+    <a ui-sref="app.managemerchants">
+      <i class="glyphicon glyphicon-stats icon text-info-lter"></i>
+      <span class="font-bold">Manage Merchants</span>
+    </a>
+  </li>
+</ul>
+
+
 <!--
 
   <li>
@@ -414,5 +455,4 @@
     </a>
   </li>
 -->
-</ul>
 <!-- / list -->

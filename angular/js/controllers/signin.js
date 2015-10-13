@@ -8,7 +8,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', 'acsManager
 
 
 	var GoToDashboard = function() {
-		var userInfo = Parse.User.current();
+		var userInfo = acsManager.info();
 
 	  	if (userInfo.get("isSuperUser")) {
 			$state.go('app.dashboard-super');
