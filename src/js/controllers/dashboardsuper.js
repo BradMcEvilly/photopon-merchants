@@ -13,12 +13,18 @@ app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', function
     	return;
     }
 
+    if (!$scope.user.get("isSuperUser")) {
+        $state.go('app.dashboard-merchant');
+        return;
+    }
+
 
     $scope.denyRequest = function() {
         acsManager.denyMerchantRequest(this.r.id, function() {
 
             acsManager.getMerchantRequests(function(err, requests) {
                 $scope.requests = requests;
+                $scope.$apply();
             });
 
         });
@@ -27,11 +33,13 @@ app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', function
     $scope.acceptRequest = function() {
 
         acsManager.acceptMerchantRequest(this.r.id, function() {
-
-            acsManager.getMerchantRequests(function(err, requests) {
-                $scope.requests = requests;
-            });
-            
+            $scope.requests = [];
+            setTimeout(function() {
+                acsManager.getMerchantRequests(function(err, requests) {
+                    $scope.requests = requests;
+                    $scope.$apply();
+                });
+            }, 1000);
         });
     };
 

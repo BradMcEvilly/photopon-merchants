@@ -93,6 +93,14 @@ angular.module('app')
                 resolve: load(['js/services/acs.js', 'js/controllers/companystats.js'])
               })
 
+      
+              .state('app.invoices', {
+                url: '/invoices',
+                templateUrl: 'tpl/company_invoices.html',
+                controller: 'CompanyInvoicesCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/companyinvoices.js'])
+              })
+
 			
 
 

@@ -150,7 +150,6 @@ angular.module('app')
 							} else if (locs.length > 3) {
 								return "3+ Locations";
 							} else {
-
 								var locString = "";
 								for (var i = 0; i < locs.length; i++) {
 
@@ -181,7 +180,7 @@ angular.module('app')
 					callback(new Error('Failed to get coupons'));
 				}
 			});
-		});
+		}, allCoupons);
 
 	};
 
@@ -407,6 +406,27 @@ angular.module('app')
 			}
 		});
 	};
+
+
+	var AcsGetBills = function(callback) {
+
+		var query = new Parse.Query("Bills");
+		query.include("user");
+
+		query.equalTo("user", Parse.User.current());
+		query.descending("generation");
+
+		query.find({
+			success: function(results) {
+
+				callback(null, results);			
+			},
+
+			error: function(error) {
+				callback(new Error('Failed to get bills'));
+			}
+		});
+	}
 
 
 /*
@@ -645,11 +665,8 @@ angular.module('app')
 
 		query.get(id, {
 			success: function(obj) {
-				var user = obj.get("user");
-
-				user.set("isMerchant", true);
-				user.save();
-				obj.destroy();
+				obj.set("isAccepted", true);
+				obj.save();
 				callback();
 
 			},
@@ -749,6 +766,7 @@ angular.module('app')
 		removeCompanyLogo: AcsRemoveCompanyLogo,
 		saveCompanyInfo: AcsSaveCompanyInfo,
 		getCompanyStats: AcsGetCompanyStats,
+		getCompanyInvoices: AcsGetBills,
 
 
 

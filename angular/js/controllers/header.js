@@ -16,12 +16,7 @@ angular.module('app')
         acsManager.logout();
     	$state.go('access.signin');
     };
-/*
-     {
-    	username: user.getUsername(),
-    	photo: file.url()
-    };
-*/
+
 
 
 }]);

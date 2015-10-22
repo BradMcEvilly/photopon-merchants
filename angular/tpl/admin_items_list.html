@@ -117,7 +117,7 @@
                   <td>{{c.get('creator').get('username')}}</td>
                   <td>{{c.get('coupon').get('title')}}</td>
                   <td>{{c.get('coupon').get('company').get('name')}}</td>
-                  <td>{{c.get('coupon').get('numRedeemed')}}</td>
+                  <td>{{c.get('numRedeemed') || 0}}</td>
                   <td>{{c.userList}}</td>
                   <td><button class="btn m-b-xs btn-sm btn-info btn-addon"><i class="fa fa-photo"></i>Show Picture</button></td>                  
                   
