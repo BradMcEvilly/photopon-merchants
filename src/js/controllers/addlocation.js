@@ -20,7 +20,7 @@ angular.module('app')
     		address: address + ", United States", 
     		sensor: false
     	};
-    	return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
+    	return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
     		params: params
     	}).then(function(response) {
       		$scope.addresses = response.data.results;

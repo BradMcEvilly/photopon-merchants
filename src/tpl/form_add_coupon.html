@@ -64,7 +64,7 @@
                 <ui-select multiple ng-model="coupon.locations"
                          theme="bootstrap"
                          ng-disabled="disabled"
-                         reset-search-input="false">
+                         reset-search-input="true">
                   <ui-select-match placeholder="Choose location...">{{$item.get('name')}}</ui-select-match>
                   <ui-select-choices repeat="loc in locations track by $index">
                     <div ng-bind-html="loc.get('name') | highlight: $select.search"></div>

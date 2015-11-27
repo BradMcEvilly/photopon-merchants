@@ -24,8 +24,7 @@
               <td>{{c.createdAt}}</td>
               <td>{{c.get('billItems').join(", ")}}</td>
               <td>${{c.get('amount') / 100}}</td>
-              <td><button class="btn btn-primary btn-addon btn-sm"><i class="fa fa-paypal"></i>Pay</button></td>
-              
+              <td><button class="btn btn-primary btn-addon btn-sm" ng-click="payInvoice(this)"><i class="fa fa-paypal"></i>Pay</button></td>
               
             </tr>
 

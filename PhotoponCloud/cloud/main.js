@@ -11,6 +11,66 @@ Parse.Cloud.afterSave("MerchantRequests", function(request) {
 });
 
 
+Parse.Cloud.beforeSave("Photopon", function(request, response) {
+
+	request.object.set("creator", request.user);
+	request.object.set("installationId", request.installationId);
+	
+    var groupACL = new Parse.ACL();
+    groupACL.setPublicReadAccess(true);
+    groupACL.setWriteAccess(request.user, true);
+    request.object.setACL(groupACL);
+ 
+    response.success();
+});
+
+
+Parse.Cloud.afterSave("Notifications", function(request) {
+
+	var user = request.object.get("to");
+	var assocUser = request.object.get("assocUser");
+	
+	var notificationType = request.object.get("type");
+	var channelName = "User_" + user.id;
+
+	assocUser.fetch({
+		success: function(assocUser) {
+			console.log(assocUser);
+
+			var message = "";
+			if (notificationType == "PHOTOPON") {
+
+				message = "User " + assocUser.get("username") + " sent you Photopon!"
+
+			} else if (notificationType == "MESSAGE") {
+				message = assocUser.get("username") + ": " + request.object.get("content");
+
+			}
+
+			Parse.Push.send({
+				channels: [ channelName ],
+				data: {
+					alert: message
+				}
+			}, {
+				success: function() {
+
+				},
+				error: function(error) {
+				// Handle error
+				}
+			});
+
+
+		},
+		error: function(error) {
+		// Handle error
+		}
+	});
+
+});
+
+
 Parse.Cloud.job("CreateBills", function(request, response) {
 		var WhenBillsGenerated = function(merchantCouponMap) {
 			var numMerchants = Object.keys(merchantCouponMap).length;
