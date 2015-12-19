@@ -11,6 +11,36 @@ Parse.Cloud.afterSave("MerchantRequests", function(request) {
 });
 
 
+Parse.Cloud.beforeSave("Verifications", function(request, response) {
+	var numTried = request.object.get("numTried") || 0;
+	request.object.set("numTried", numTried + 1);
+
+
+	var client = require('twilio')('AC6f3de552366477ab74c138ff3e519a49', 'aff9e7b6b26f82034d1b64afd1d0ef07');
+
+	
+	// Send an SMS message
+	client.sendSms({
+	    to:'+1' + request.object.get("phoneNumber"),
+	    from: '+19292297109',
+	    url:'https://demo.twilio.com/welcome/sms/reply/',
+	    body: 'Your verification code: ' + request.object.get("code")
+	  }, function(err, responseData) {
+	    if (err) {
+			console.log(err);
+	    } else {
+			console.log(responseData.from);
+			console.log(responseData.body);
+
+    		response.success();
+	    }
+	  }
+	);
+
+    //response.success();
+});
+
+
 Parse.Cloud.beforeSave("Photopon", function(request, response) {
 
 	request.object.set("creator", request.user);
@@ -32,6 +62,7 @@ Parse.Cloud.afterSave("Notifications", function(request) {
 	
 	var notificationType = request.object.get("type");
 	var channelName = "User_" + user.id;
+
 
 	assocUser.fetch({
 		success: function(assocUser) {

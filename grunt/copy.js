@@ -389,13 +389,13 @@ module.exports = {
 
     merchanthelpbin: {
         files: [
-            {expand: true, src: "**", cwd: 'merchanthelp/',   dest: "bin/merchant/"}
+            {expand: true, src: "**", cwd: 'merchanthelp/',   dest: "bin/merchants/"}
         ]
     },
     
     merchantbin: {
         files: [
-            {expand: true, src: "**", cwd: 'angular/',   dest: "bin/merchant/admin/"}
+            {expand: true, src: "**", cwd: 'angular/',   dest: "bin/merchants/admin/"}
         ]
     }
 
