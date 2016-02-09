@@ -20,6 +20,7 @@ module.exports = function(grunt) {
     
 
     gtx.alias('build', ['build:dev', 'build:landing', 'build:merchanthelp', 'copy:landingbin', 'copy:merchanthelpbin', 'copy:merchantbin', 'compress:createpackage', 'exec:uploadpackage']);
+    gtx.alias('buildnu', ['build:dev', 'build:landing', 'build:merchanthelp', 'copy:landingbin', 'copy:merchanthelpbin', 'copy:merchantbin']);
 
     gtx.alias('release', ['bower-install-simple', 'bump-commit']);
     gtx.alias('release-patch', ['bump-only:patch', 'release']);

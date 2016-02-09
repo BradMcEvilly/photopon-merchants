@@ -526,6 +526,36 @@ angular.module('app')
 
 	};
 
+	var AcsNewCompany = function(name, file, userId, callback) {
+		var base64 = file;
+		var image = new Parse.File("logo.png", { base64: base64 });	
+		AcsGetCompany(function(err, company) {
+
+			var CompanyClass = Parse.Object.extend("Company");
+			var company = new CompanyClass();
+
+			var tuser = new Parse.User();
+			tuser.id = userId;
+
+
+
+			company.set("name", name);
+			company.set("image", image);
+			company.set("merchant", tuser);
+
+
+			company.save(null, {
+				success: function(company) {
+					callback(company);
+				},
+				error: function(company, error) {
+					alert("Failed to save object.");
+				}
+			});
+
+		});
+	};
+
 	var AcsSaveCompanyInfo = function(name, file, callback) {
 		var base64 = file;
 		var image = new Parse.File("logo.png", { base64: base64 });	
@@ -536,7 +566,7 @@ angular.module('app')
 
 			company.save(null, {
 				success: function(company) {
-					callback();
+					callback(company);
 				},
 				error: function(company, error) {
 					alert("Failed to save object.");
@@ -762,6 +792,7 @@ angular.module('app')
 
 
 		getCompany: AcsGetCompany,
+		newCompany: AcsNewCompany,
 		getCompanies: AcsGetCompanies,
 		removeCompanyLogo: AcsRemoveCompanyLogo,
 		saveCompanyInfo: AcsSaveCompanyInfo,

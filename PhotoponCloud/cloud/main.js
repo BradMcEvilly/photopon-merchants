@@ -16,13 +16,13 @@ Parse.Cloud.beforeSave("Verifications", function(request, response) {
 	request.object.set("numTried", numTried + 1);
 
 
-	var client = require('twilio')('AC6f3de552366477ab74c138ff3e519a49', 'aff9e7b6b26f82034d1b64afd1d0ef07');
+	var client = require('twilio')('AC411575f00f763f4fbaf602173db1c518', '8537400eebcb197b068110ffb552df44');
 
 	
 	// Send an SMS message
 	client.sendSms({
 	    to:'+1' + request.object.get("phoneNumber"),
-	    from: '+19292297109',
+	    from: '+12015100525',
 	    url:'https://demo.twilio.com/welcome/sms/reply/',
 	    body: 'Your verification code: ' + request.object.get("code")
 	  }, function(err, responseData) {
@@ -67,20 +67,26 @@ Parse.Cloud.afterSave("Notifications", function(request) {
 	assocUser.fetch({
 		success: function(assocUser) {
 			console.log(assocUser);
+			var photoponId;
 
 			var message = "";
 			if (notificationType == "PHOTOPON") {
 
 				message = "User " + assocUser.get("username") + " sent you Photopon!"
+				photoponId = request.object.get("assocPhotopon").id;
 
 			} else if (notificationType == "MESSAGE") {
 				message = assocUser.get("username") + ": " + request.object.get("content");
 
 			}
 
+
 			Parse.Push.send({
 				channels: [ channelName ],
 				data: {
+					type: notificationType,
+					notificationId: request.object.id,
+					badge: "Increment",
 					alert: message
 				}
 			}, {

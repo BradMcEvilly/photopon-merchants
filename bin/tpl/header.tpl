@@ -28,7 +28,7 @@
         <ul class="nav navbar-nav navbar-right">
           <li>
             <div class="m-t-sm">
-              <a href="../angular/#/access/signin" class="btn btn-sm btn-success btn-rounded m-l"><strong>Merchant Login</strong></a>
+              <a href="/merchants" class="btn btn-sm btn-success btn-rounded m-l"><strong>Merchant</strong></a>
             </div>
           </li>
         </ul>     
