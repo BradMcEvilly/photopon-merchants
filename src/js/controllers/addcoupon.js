@@ -20,6 +20,13 @@ angular.module('app')
     });
 
     acsManager.getLocations(function(err, locations) {
+        
+        $scope.locationNames = [];
+        
+        for (var i = 0; i < locations.length; i++) {
+          $scope.locationNames[i] = locations[i].get("name");
+        }
+
         $scope.locations = locations;
         $scope.$apply();
     });
@@ -45,10 +52,20 @@ angular.module('app')
 
 
     $scope.addCoupon = function() {
-      var locations = [];
+
+
+      var locationIds = [];
+      var allLocationObjects = $scope.locations;
+
       if (!$scope.alllocations) {
+
         for (var i = 0; i < $scope.coupon.locations.length; i++) {
-          locations.push($scope.coupon.locations[i].id);
+          for (var j = 0; j < allLocationObjects.length; j++) {
+
+            if (allLocationObjects[j].get("name") == $scope.coupon.locations[i]) {
+              locationIds.push(allLocationObjects[j].id);
+            }
+          };
         };
       }
 
@@ -56,7 +73,7 @@ angular.module('app')
         title: $scope.coupon.title,
         body: $scope.coupon.body,
         code: $scope.coupon.code,
-        locations: locations,
+        locations: locationIds,
         expiration: $scope.coupon.expiration
       }, function() {
         $state.go($state.current, {}, {
@@ -95,6 +112,12 @@ angular.module('app')
 
 
     acsManager.getLocations(function(err, locations) {
+        $scope.locationNames = [];
+        
+        for (var i = 0; i < locations.length; i++) {
+          $scope.locationNames[i] = locations[i].get("name");
+        }
+
         $scope.locations = locations;
         
         acsManager.getCoupon(id, function(err, coupon) {
@@ -108,9 +131,10 @@ angular.module('app')
             $scope.coupon.alllocations = (locs.length == 0);
 
             for (var i = 0; i < locs.length; i++) {
+
               for (var j = 0; j < locations.length; j++) {
                 if (locations[j].id == locs[i]) {
-                  $scope.coupon.locations.push(locations[j]);
+                  $scope.coupon.locations.push(locations[j].get("name"));
                 }
               };
 
@@ -145,10 +169,18 @@ angular.module('app')
     $scope.addCoupon = function() {
       console.log("Edit coupon");
       
-      var locations = [];
+      var locationIds = [];
+      var allLocationObjects = $scope.locations;
+
       if (!$scope.alllocations) {
+
         for (var i = 0; i < $scope.coupon.locations.length; i++) {
-          locations.push($scope.coupon.locations[i].id);
+          for (var j = 0; j < allLocationObjects.length; j++) {
+
+            if (allLocationObjects[j].get("name") == $scope.coupon.locations[i]) {
+              locationIds.push(allLocationObjects[j].id);
+            }
+          };
         };
       }
 
@@ -156,7 +188,7 @@ angular.module('app')
         title: $scope.coupon.title,
         body: $scope.coupon.body,
         code: $scope.coupon.code,
-        locations: locations,
+        locations: locationIds,
         expiration: $scope.coupon.expiration
       }, function() {
         $state.go("app.dashboard-merchant", {}, {

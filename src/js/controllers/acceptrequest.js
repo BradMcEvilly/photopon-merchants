@@ -9,7 +9,7 @@ angular.module('app')
       return;
     }
 
-    $scope.provided = JSON.parse($stateParams.id);
+    $scope.provided = $stateParams.obj;
 
 
     $scope.pageTitle = "Accept Request";
@@ -80,8 +80,8 @@ angular.module('app')
 
     $scope.acceptRequest = function() {
       
-      acsManager.newCompany($scope.companyInfo.name, $scope.myCroppedImage, $scope.provided.user.objectId, function(c) {
-        acsManager.acceptMerchantRequest($scope.provided.objectId, function() {
+      acsManager.newCompany($scope.companyInfo.name, $scope.myCroppedImage, $scope.provided.get("user").id, function(c) {
+        acsManager.acceptMerchantRequest($scope.provided.id, function() {
           $state.go("app.dashboard-super", {}, {
             reload: true
           });

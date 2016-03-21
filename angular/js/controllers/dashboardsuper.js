@@ -31,16 +31,7 @@ app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', function
     };
 
     $scope.acceptRequest = function() {
-
-        acsManager.acceptMerchantRequest(this.r.id, function() {
-            $scope.requests = [];
-            setTimeout(function() {
-                acsManager.getMerchantRequests(function(err, requests) {
-                    $scope.requests = requests;
-                    $scope.$apply();
-                });
-            }, 1000);
-        });
+        $state.go("app.acceptrequest", { obj: this.r });
     };
 
 

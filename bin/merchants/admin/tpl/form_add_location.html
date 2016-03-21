@@ -109,7 +109,7 @@
 
               <span class="pull-right label bg-danger inline m-t-sm">{{l.get('location').latitude}}, {{l.get('location').longitude}}</span>
 
-              <a href style="display: inline-block; vertical-align: middle;">
+              <a href style="display: inline-block; vertical-align: middle;" ui-sref="app.editlocation({ id: '{{l.id}}' })">
                 <span>{{l.get("name")}}</span>
                 <br>
                 <span class="text-muted">{{l.get("address")}}</span>

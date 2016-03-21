@@ -115,7 +115,7 @@
               <a href style="display: inline-block; vertical-align: middle;">
                 <span>Business name</span>
                 <br>
-                <span class="text-muted">{{provided.businessName}}</span>
+                <span class="text-muted">{{provided.get("businessName")}}</span>
               </a>
             </li>
 
@@ -130,7 +130,7 @@
               <a href style="display: inline-block; vertical-align: middle;">
                 <span>Phone number</span>
                 <br>
-                <span class="text-muted">{{provided.phoneNumber}}</span>
+                <span class="text-muted">{{provided.get("phoneNumber")}}</span>
               </a>
             </li>
 
@@ -145,7 +145,7 @@
               <a href style="display: inline-block; vertical-align: middle;">
                 <span>Email</span>
                 <br>
-                <span class="text-muted">{{provided.user.email}}</span>
+                <span class="text-muted">{{provided.get("user").get("email")}}</span>
               </a>
             </li>
 
@@ -160,7 +160,7 @@
               <a href style="display: inline-block; vertical-align: middle;">
                 <span>Tax ID</span>
                 <br>
-                <span class="text-muted">{{provided.taxID}}</span>
+                <span class="text-muted">{{provided.get("taxID")}}</span>
               </a>
             </li>
             

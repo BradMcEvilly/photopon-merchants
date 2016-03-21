@@ -125,20 +125,19 @@
                 </li>
                 
 
-
                 
                 <li class="list-group-item" ng-repeat="r in requests">
                   <a href class="thumb-sm m-r">
                     <img src=" {{r.get('user').get('image').url() }} " class="r r-2x">
                   </a>
-                  <!--<span class="pull-right label bg-primary inline m-t-sm">{{r.get('user').get('username')}}</span>-->
                   <a>{{r.get('user').get('email')}}</a>
 
                   <button class="pull-right btn btn-danger btn-addon btn-sm m-l-xs" ng-click="denyRequest()"> <i class="fa fa-minus"></i>Deny</button>
-                  
+                  <button class="pull-right btn btn-success btn-addon btn-sm" ng-click="acceptRequest()"> <i class="fa fa-plus"></i>Accept</button>              
+<!--
                   <button class="pull-right btn btn-success btn-addon btn-sm" ui-sref="app.acceptrequest({ id: '{{r}}' })"> <i class="fa fa-plus"></i>Accept</button>
+-->
                 </li>
-
 
               </ul>
               

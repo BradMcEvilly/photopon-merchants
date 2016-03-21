@@ -11,6 +11,7 @@ Parse.Cloud.afterSave("MerchantRequests", function(request) {
 });
 
 
+
 Parse.Cloud.beforeSave("Verifications", function(request, response) {
 	var numTried = request.object.get("numTried") || 0;
 	request.object.set("numTried", numTried + 1);
@@ -38,6 +39,35 @@ Parse.Cloud.beforeSave("Verifications", function(request, response) {
 	);
 
     //response.success();
+});
+
+Parse.Cloud.beforeSave("Friends", function(request, response) {
+	var user1 = request.object.get("user1");
+	var user2 = request.object.get("user2");
+	var phoneId = request.object.get("phoneId");
+
+	var fship = new Parse.Query("Friends");
+	fship.equalTo("user1", user1);
+
+	if (user2) {
+		fship.equalTo("user2", user2);
+	} else {
+		fship.equalTo("phoneId", phoneId);
+	}
+	
+	fship.find({
+		success: function(objects) {
+			if (objects.length > 0) {
+				response.error("Friendship already exists");
+			} else {
+				response.success();
+			}
+		},
+		error: function(error) {
+			response.error(error);
+		}
+	});
+
 });
 
 
@@ -77,6 +107,15 @@ Parse.Cloud.afterSave("Notifications", function(request) {
 
 			} else if (notificationType == "MESSAGE") {
 				message = assocUser.get("username") + ": " + request.object.get("content");
+
+			} else if (notificationType == "FRIEND") {
+				message = assocUser.get("username") + " added you";
+
+			} else if (notificationType == "ADDWALLET") {
+				message = assocUser.get("username") + " saved your Photopon";
+
+			} else if (notificationType == "REDEEMED") {
+				message = assocUser.get("username") + " redeemed your Photopon";
 
 			}
 

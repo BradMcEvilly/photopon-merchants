@@ -111,6 +111,7 @@
               </ul>
               
               <div class="panel-footer">
+                <span class="pull-right badge badge-bg m-t-xs">{{locations.length}}</span>
                 <button class="btn btn-primary btn-addon btn-sm" ui-sref="app.addlocation"><i class="fa fa-plus"></i>Add Location</button>
               </div>
             </div>
@@ -151,11 +152,13 @@
 
                 
                 <li class="list-group-item" ng-repeat="c in coupons">
-                  <a href class="thumb-sm m-r">
-                    <img src=" {{c.get('company').get('image').url() }} " class="r r-2x">
+                  <a ui-sref="app.editcoupon({ id: '{{c.id}}' })">
+                    <span href class="thumb-sm m-r">
+                      <img src=" {{c.get('company').get('image').url() }} " class="r r-2x">
+                    </span>
+                    <span class="pull-right label bg-primary inline m-t-sm" title="{{c.getLocationTitleFull()}}">{{c.getLocationTitle()}}</span>
+                    <span>{{c.get('title')}}</span>
                   </a>
-                  <span class="pull-right label bg-primary inline m-t-sm" title="{{c.getLocationTitleFull()}}">{{c.getLocationTitle()}}</span>
-                  <a ui-sref="app.editcoupon({ id: '{{c.id}}' })">{{c.get('title')}}</a>
                 </li>
 
 

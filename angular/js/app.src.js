@@ -76930,10 +76930,11 @@ angular.module('app')
                 resolve: load(['js/services/acs.js', 'js/controllers/managemerchants.js'])
               })
               .state('app.acceptrequest', {
-                url: '/acceptrequest/:id',
+                url: '/acceptrequest',
                 templateUrl: 'tpl/admin_accept_request.html',
                 controller: 'AcceptRequestCtrl',
-                resolve: load(['ngImgCrop', 'js/services/acs.js', 'js/controllers/acceptrequest.js'])
+                resolve: load(['ngImgCrop', 'js/services/acs.js', 'js/controllers/acceptrequest.js']),
+                params: { obj: null }
               })
 
 

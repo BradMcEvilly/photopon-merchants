@@ -9,6 +9,11 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', 'acsManager
 
 	var GoToDashboard = function() {
 		var userInfo = acsManager.info();
+		
+		if (!userInfo.get("isMerchant")) {
+			$scope.authError = "You have no permission to log in. Please send merchant request from Photopon app to get merchant access.";
+			return;
+		}
 
 	  	if (userInfo.get("isSuperUser")) {
 			$state.go('app.dashboard-super');
@@ -24,6 +29,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', 'acsManager
 				$scope.authError = err.message;
 				return;
 		  	}
+
 		  	GoToDashboard();
 
 		});
