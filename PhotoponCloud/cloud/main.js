@@ -1,4 +1,9 @@
 
+Parse.Cloud.define("ServerTime", function(request, response) {
+	var time = new Date();
+	response.success(time.getTime());
+});
+
 Parse.Cloud.afterSave("MerchantRequests", function(request) {
 
 	if (request.object.get("isAccepted")) {

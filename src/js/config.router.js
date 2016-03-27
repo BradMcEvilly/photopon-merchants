@@ -76,6 +76,23 @@ angular.module('app')
                 controller: 'EditCouponCtrl',
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
               })
+      
+
+
+              .state('app.locations', {
+                url: '/location/all',
+                templateUrl: 'tpl/form_all_locations.html',
+                controller: 'AllLoctionsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/alllocations.js'])
+              })
+
+              .state('app.coupons', {
+                url: '/coupon/all',
+                templateUrl: 'tpl/form_all_coupons.html',
+                controller: 'AllCouponsCtrl',
+                resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/allcoupons.js'])
+              })
+
 
 
 /*

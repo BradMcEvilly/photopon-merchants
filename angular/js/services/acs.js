@@ -113,6 +113,31 @@ angular.module('app')
 							return Math.floor(100 * numRedeemed / numShared) + "%";
 						};
 
+
+
+						results[i].getExpirationDelta = function() {
+							var exp = moment(this.get("expiration"));
+							
+							return exp.fromNow();
+						};
+						
+						results[i].getExpirationDeltaColor = function() {
+							var exp = moment(this.get("expiration"));
+							if (exp.format("X") > moment().format("X")) {
+								return "#00aa33";
+							} else {
+								return "#ff0000";
+							}
+						};
+
+						results[i].getExpiration = function() {
+							var exp = moment(this.get("expiration"));
+							
+							return exp.calendar();
+						};
+
+
+
 						results[i].getLocationTitleFull = function() {
 							var locs = this.get("locations");
 							var locString = "";

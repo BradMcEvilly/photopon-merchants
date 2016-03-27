@@ -76851,6 +76851,23 @@ angular.module('app')
                 controller: 'EditCouponCtrl',
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
               })
+      
+
+
+              .state('app.locations', {
+                url: '/location/all',
+                templateUrl: 'tpl/form_all_locations.html',
+                controller: 'AllLoctionsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/alllocations.js'])
+              })
+
+              .state('app.coupons', {
+                url: '/coupon/all',
+                templateUrl: 'tpl/form_all_coupons.html',
+                controller: 'AllCouponsCtrl',
+                resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/allcoupons.js'])
+              })
+
 
 
 /*
@@ -77519,6 +77536,31 @@ angular.module('app')
 
 							return Math.floor(100 * numRedeemed / numShared) + "%";
 						};
+
+
+
+						results[i].getExpirationDelta = function() {
+							var exp = moment(this.get("expiration"));
+							
+							return exp.fromNow();
+						};
+						
+						results[i].getExpirationDeltaColor = function() {
+							var exp = moment(this.get("expiration"));
+							if (exp.format("X") > moment().format("X")) {
+								return "#00aa33";
+							} else {
+								return "#ff0000";
+							}
+						};
+
+						results[i].getExpiration = function() {
+							var exp = moment(this.get("expiration"));
+							
+							return exp.calendar();
+						};
+
+
 
 						results[i].getLocationTitleFull = function() {
 							var locs = this.get("locations");
