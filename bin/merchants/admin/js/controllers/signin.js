@@ -2,7 +2,7 @@
 
 /* Controllers */
   // signin controller
-app.controller('SigninFormController', ['$scope', '$http', '$state', 'acsManager', function($scope, $http, $state, acsManager) {
+app.controller('SigninFormController', ['$scope', '$http', '$state', 'acsManager', '$timeout', function($scope, $http, $state, acsManager, $timeout) {
 	$scope.user = {};
 	$scope.authError = null;
 
@@ -26,11 +26,14 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', 'acsManager
 		$scope.authError = null;
 		acsManager.login($scope.user.username, $scope.user.password, function(err, userInfo) {
 			if (err) {
-				$scope.authError = err.message;
+				$timeout(function () {
+					$scope.authError = err.message;
+	    		}, 0);
 				return;
 		  	}
-
-		  	GoToDashboard();
+		  	$timeout(function () {
+		    	GoToDashboard();
+    		}, 0);
 
 		});
 	};

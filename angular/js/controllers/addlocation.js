@@ -77,7 +77,9 @@ angular.module('app')
 
     $scope.locations = [];
 	acsManager.getLocations(function(err, locations) {
-    	$scope.locations = locations;
+        $timeout(function () {
+    	   $scope.locations = locations;
+        }, 0);
     });
 
 
@@ -96,7 +98,7 @@ angular.module('app')
 
 
 angular.module('app')
-.controller('EditLoctionCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$stateParams', function($scope, $http, $state, acsManager, $sce, $modal, $stateParams) {
+.controller('EditLoctionCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$stateParams', '$timeout', function($scope, $http, $state, acsManager, $sce, $modal, $stateParams, $timeout) {
     var id = $stateParams.id;
     $scope.user = acsManager.info();
 
@@ -110,28 +112,49 @@ angular.module('app')
     }
 
     acsManager.getLocation(id, function(err, location) {
-        $scope.location_title = location.get("name");
-        $scope.address.selected = {
-            geometry: {
-                location: {}
-            }
-        };
+        $timeout(function () {
 
-        $scope.address.selected.formatted_address = location.get("address");
+            $scope.location_title = location.get("name");
+            $scope.address.selected = {
+                geometry: {
+                    location: {}
+                }
+            };
 
-        $scope.address.selected.geometry.location.lat = location.get("location").lat;
-        $scope.address.selected.geometry.location.lng = location.get("location").lng;
+            $scope.address.selected.formatted_address = location.get("address");
 
-        $scope.address.selected.mapurl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAz3McamUfvYCEn_KoLLtwrMUJAcI7nkr4&q=" + encodeURIComponent($scope.address.selected.formatted_address);
-            
+            $scope.address.selected.geometry.location.lat = location.get("location").latitude;
+            $scope.address.selected.geometry.location.lng = location.get("location").longitude;
 
-        $scope.$apply();
+            $scope.address.selected.mapurl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAz3McamUfvYCEn_KoLLtwrMUJAcI7nkr4&q=" + encodeURIComponent($scope.address.selected.formatted_address);
+                
+        }, 0);
+        
     });
 
 
     $scope.trustSrc = function(src) {
         return $sce.trustAsResourceUrl(src);
     };
+
+    $scope.updateAddress = function() {
+        var params = {
+            latlng: $scope.address.selected.geometry.location.lat + "," + $scope.address.selected.geometry.location.lng
+        };
+        return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
+            params: params
+        }).then(function(response) {
+            var addrs = response.data.results;
+            if (addrs.length > 0) {
+                var addr = addrs[0];
+                
+                $timeout(function () {
+                    $scope.address.selected.mapurl = "https://www.google.com/maps/embed/v1/place?key=AIzaSyAz3McamUfvYCEn_KoLLtwrMUJAcI7nkr4&q=" + encodeURIComponent(addr.formatted_address);
+                    $scope.address.selected.formatted_address = addr.formatted_address;
+                });
+            }
+        });
+    }
 
     $scope.refreshAddresses = function(address) {
         var params = {
@@ -155,8 +178,8 @@ angular.module('app')
         acsManager.editLocation(id, {
             name: $scope.location_title,
             address: $scope.address.selected.formatted_address,
-            latitude: $scope.address.selected.geometry.location.lat,
-            longitude: $scope.address.selected.geometry.location.lng
+            latitude: parseFloat($scope.address.selected.geometry.location.lat),
+            longitude: parseFloat($scope.address.selected.geometry.location.lng)
         }, function() {
             $state.go("app.locations", {}, {
                 reload: true

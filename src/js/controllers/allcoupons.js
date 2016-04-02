@@ -34,8 +34,9 @@ angular.module('app')
         	coupons[i].isActive = coupons[i].get("isActive");
         }
 
-        $scope.coupons = coupons;
-        $scope.$apply();
+        $timeout(function () {
+            $scope.coupons = coupons;
+        });
     });
 
 

@@ -42,8 +42,19 @@
               </div>
                 
               <div class="form-group"  ng-show="address.selected.formatted_address">
-                <label>Coordinates</label>
-                <p class="form-control-static">Latitude: {{address.selected.geometry.location.lat}}, Longitude: {{address.selected.geometry.location.lng}}</p>
+                <label class="control-label">Coordinates</label>
+                <div class="form-inline">
+                  <div class="form-group">
+
+                    <label class="control-label">Latitude: </label>
+                    <input class="form-control" type="text" ng-model="address.selected.geometry.location.lat" ng-change="updateAddress()">
+                  </div>                    
+
+                  <div class="form-group">
+                    <label class="control-label"> Longitude: </label>
+                    <input class="form-control" type="text" ng-model="address.selected.geometry.location.lng" ng-change="updateAddress()">
+                  </div>                    
+                </div>
               </div>                
 
               

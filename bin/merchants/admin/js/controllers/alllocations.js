@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-.controller('AllLoctionsCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', function($scope, $http, $state, acsManager, $sce, $modal) {
+.controller('AllLoctionsCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$timeout', function($scope, $http, $state, acsManager, $sce, $timeout) {
     $scope.user = acsManager.info();
 
     if ($scope.user == null) {
@@ -12,7 +12,10 @@ angular.module('app')
 
     $scope.locations = [];
 	acsManager.getLocations(function(err, locations) {
-    	$scope.locations = locations;
+		$timeout(function () {
+    		$scope.locations = locations;
+    	}, 0);
+
     });
 
 
