@@ -76557,8 +76557,8 @@ angular.module('app', [
 var app =  
 angular.module('app')
   .config(
-    [        '$controllerProvider', '$compileProvider', '$filterProvider', '$provide',
-    function ($controllerProvider,   $compileProvider,   $filterProvider,   $provide) {
+    [        '$controllerProvider', '$compileProvider', '$filterProvider', '$provide', '$httpProvider',
+    function ($controllerProvider,   $compileProvider,   $filterProvider,   $provide,   $httpProvider) {
         
         // lazy controller, directive and service
         app.controller = $controllerProvider.register;
@@ -76568,6 +76568,9 @@ angular.module('app')
         app.service    = $provide.service;
         app.constant   = $provide.constant;
         app.value      = $provide.value;
+
+
+
     }
   ])
   .config(['$translateProvider', function($translateProvider){
@@ -76870,14 +76873,13 @@ angular.module('app')
 
 
 
-/*
               .state('app.companyinfo', {
                 url: '/company',
                 templateUrl: 'tpl/form_company_info.html',
                 controller: 'CompanyInfoCtrl',
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/companyinfo.js'])
               })
-*/
+
               .state('app.statistics', {
                 url: '/stats',
                 templateUrl: 'tpl/company_statistics.html',
@@ -77093,7 +77095,7 @@ angular.module('app')
     };
   }]);
 angular.module('app')
-  .directive('uiButterbar', ['$rootScope', '$anchorScroll', function($rootScope, $anchorScroll) {
+  .directive('uiButterbar', ['$rootScope', '$anchorScroll', function($rootScope, $anchorScroll, $http) {
      return {
       restrict: 'AC',
       template:'<span class="bar"></span>',
@@ -77108,6 +77110,7 @@ angular.module('app')
             el.addClass('hide').removeClass('active');
           })
         });
+
       }
      };
   }]);
@@ -78026,6 +78029,23 @@ angular.module('app')
 
 		
 	}
+	var AcsSaveCompanyName = function(name, callback) {
+		AcsGetCompany(function(err, company) {
+			company.set("name", name);
+
+			company.save(null, {
+				success: function(company) {
+					callback(company);
+				},
+				error: function(company, error) {
+					alert("Failed to save object.");
+				}
+			});
+
+		});
+
+		
+	}
 
 	var AcsRemoveCompanyLogo = function(callback) {
 
@@ -78060,11 +78080,10 @@ angular.module('app')
 					stats.numShares += parseInt(ns, 10);
 					stats.numRedeems += parseInt(nr, 10);
 				};
-				callback(null, stats);			
+				callback(stats);			
 			},
 
 			error: function(error) {
-				callback(new Error('Failed to get coupons'));
 			}
 		});
 
@@ -78245,6 +78264,7 @@ angular.module('app')
 		getCompanies: AcsGetCompanies,
 		removeCompanyLogo: AcsRemoveCompanyLogo,
 		saveCompanyInfo: AcsSaveCompanyInfo,
+		saveCompanyName: AcsSaveCompanyName,
 		getCompanyStats: AcsGetCompanyStats,
 		getCompanyInvoices: AcsGetBills,
 

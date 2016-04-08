@@ -602,6 +602,23 @@ angular.module('app')
 
 		
 	}
+	var AcsSaveCompanyName = function(name, callback) {
+		AcsGetCompany(function(err, company) {
+			company.set("name", name);
+
+			company.save(null, {
+				success: function(company) {
+					callback(company);
+				},
+				error: function(company, error) {
+					alert("Failed to save object.");
+				}
+			});
+
+		});
+
+		
+	}
 
 	var AcsRemoveCompanyLogo = function(callback) {
 
@@ -636,11 +653,10 @@ angular.module('app')
 					stats.numShares += parseInt(ns, 10);
 					stats.numRedeems += parseInt(nr, 10);
 				};
-				callback(null, stats);			
+				callback(stats);			
 			},
 
 			error: function(error) {
-				callback(new Error('Failed to get coupons'));
 			}
 		});
 
@@ -821,6 +837,7 @@ angular.module('app')
 		getCompanies: AcsGetCompanies,
 		removeCompanyLogo: AcsRemoveCompanyLogo,
 		saveCompanyInfo: AcsSaveCompanyInfo,
+		saveCompanyName: AcsSaveCompanyName,
 		getCompanyStats: AcsGetCompanyStats,
 		getCompanyInvoices: AcsGetBills,
 

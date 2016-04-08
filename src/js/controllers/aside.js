@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-.controller('AsideCtrl', ['$scope', '$state', 'acsManager', function($scope, $state, acsManager) {
+.controller('AsideCtrl', ['$scope', '$state', 'acsManager', '$timeout', function($scope, $state, acsManager, $timeout) {
     $scope.user = acsManager.info();
     if ($scope.user == null) {
         $state.go('access.signin');
@@ -10,6 +10,11 @@ angular.module('app')
 
 
 
-
+    acsManager.getCompanyStats(function(stats) {
+    	$timeout(function() {
+    		$scope.stats = stats;
+    		console.log($scope.stats);
+    	}, 0);
+    });
 
 }]);

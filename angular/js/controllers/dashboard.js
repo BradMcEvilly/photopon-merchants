@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-.controller('DashboardCtrl', ['$scope', '$state', 'acsManager', function($scope, $state, acsManager) {
+.controller('DashboardCtrl', ['$scope', '$state', 'acsManager', '$timeout', function($scope, $state, acsManager, $timeout) {
     $scope.user = acsManager.info();
 
 
@@ -15,17 +15,20 @@ angular.module('app')
     }
 
     acsManager.getCoupons(function(err, coupons) {
-    	$scope.coupons = coupons;
-        $scope.$apply();
+        $timeout(function() {
+           $scope.coupons = coupons;
+        }, 0);
     });
     acsManager.getLocations(function(err, locations) {
-        $scope.locations = locations;
-        $scope.$apply();
+        $timeout(function() {
+            $scope.locations = locations;
+        });
     });
 
-    acsManager.getCompanyStats(function(err, stats) {
-        $scope.stats = stats;
-        $scope.$apply();
+    acsManager.getCompanyStats(function(stats) {
+        $timeout(function() {
+            $scope.stats = stats;
+        });
     });
 
 }]);

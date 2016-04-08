@@ -95,14 +95,13 @@ angular.module('app')
 
 
 
-/*
               .state('app.companyinfo', {
                 url: '/company',
                 templateUrl: 'tpl/form_company_info.html',
                 controller: 'CompanyInfoCtrl',
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/companyinfo.js'])
               })
-*/
+
               .state('app.statistics', {
                 url: '/stats',
                 templateUrl: 'tpl/company_statistics.html',

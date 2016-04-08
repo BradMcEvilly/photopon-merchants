@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-.controller('CompanyStatsCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', function($scope, $http, $state, acsManager, $sce, $modal, $filter) {
+.controller('CompanyStatsCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$timeout', function($scope, $http, $state, acsManager, $sce, $modal, $timeout) {
     $scope.user = acsManager.info();
 
     $scope.coupons = [];
@@ -12,8 +12,9 @@ angular.module('app')
     }
 
     acsManager.getCoupons(function(err, coupons) {
-      $scope.coupons = coupons;
-      $scope.$apply();
+      $timeout(function() {
+        $scope.coupons = coupons;
+      }, 0);
     });
 
     $scope.stats = {
@@ -21,10 +22,11 @@ angular.module('app')
       numRedeems: 0
     };
     
-    acsManager.getCompanyStats(function(err, stats) {
-        $scope.stats = stats;
-        $scope.$apply();
-    });
+    acsManager.getCompanyStats(function(stats) {
+        $timeout(function() {
+          $scope.stats = stats;
+        }, 0);
+      });
 
 }]);
 

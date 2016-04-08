@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-.controller('CompanyInfoCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', function($scope, $http, $state, acsManager, $sce, $modal, $filter) {
+.controller('CompanyInfoCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$timeout', function($scope, $http, $state, acsManager, $sce, $modal, $timeout) {
     $scope.user = acsManager.info();
 
     if ($scope.user == null) {
@@ -14,13 +14,14 @@ angular.module('app')
     };
 
     acsManager.getCompany(function(err, company) {
+      $timeout(function () {
         $scope.company = company;
         $scope.companyInfo.name = company.get("name");
         var file = company.get("image");
         if (file) {
           $scope.companyInfo.image = file.url();
         }
-        $scope.$apply();
+      }, 0);
     });
 
 
@@ -46,24 +47,25 @@ angular.module('app')
 
 
 
-
-
     $scope.saveInfo = function() {
-      acsManager.saveCompanyInfo($scope.companyInfo.name, $scope.myCroppedImage, function() {
-        $state.go($state.current, {}, {
-          reload: true
+      if ($scope.fileselected) {
+
+        acsManager.saveCompanyInfo($scope.companyInfo.name, $scope.myCroppedImage, function() {
+          $state.go($state.current, {}, {
+            reload: true
+          });
         });
-      });
+      } else {
+
+        acsManager.saveCompanyName($scope.companyInfo.name, function() {
+          $state.go($state.current, {}, {
+            reload: true
+          });
+        });
+      }
     };
 
-    $scope.removeImage = function() {
-      acsManager.removeCompanyLogo(function() {
-        $state.go($state.current, {}, {
-          reload: true
-        });
-      });
-      $scope.companyInfo.image = null;
-    }
+
 }]);
 
 

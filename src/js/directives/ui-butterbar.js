@@ -1,5 +1,5 @@
 angular.module('app')
-  .directive('uiButterbar', ['$rootScope', '$anchorScroll', function($rootScope, $anchorScroll) {
+  .directive('uiButterbar', ['$rootScope', '$anchorScroll', function($rootScope, $anchorScroll, $http) {
      return {
       restrict: 'AC',
       template:'<span class="bar"></span>',
@@ -14,6 +14,7 @@ angular.module('app')
             el.addClass('hide').removeClass('active');
           })
         });
+
       }
      };
   }]);
