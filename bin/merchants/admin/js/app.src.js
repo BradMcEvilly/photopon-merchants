@@ -76586,6 +76586,15 @@ angular.module('app')
     // Tell the module to store the language in the local storage
     $translateProvider.useLocalStorage();
   }]);
+
+  
+
+app.filter("sanitize", ['$sce', function($sce) {
+  return function(htmlCode){
+    return $sce.trustAsHtml(htmlCode);
+  }
+}]);
+
 // lazyload config
 
 angular.module('app')
@@ -76854,7 +76863,8 @@ angular.module('app')
                 controller: 'EditCouponCtrl',
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
               })
-      
+
+
 
 
               .state('app.locations', {
@@ -76871,6 +76881,24 @@ angular.module('app')
                 resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/allcoupons.js'])
               })
 
+
+              .state('app.redeems', {
+                url: '/redeems/all',
+                templateUrl: 'tpl/form_all_redeems.html',
+                controller: 'AllRedeemsCtrl',
+                resolve: load(['js/app/map/load-google-maps.js', 'js/app/map/ui-map.js', 'toaster', 'moment', 'js/services/acs.js', 'js/controllers/allredeems.js'], function() { 
+                  return loadGoogleMaps(); 
+                })
+              })
+
+              .state('app.redeem', {
+                url: '/coupon/redeem/:id',
+                templateUrl: 'tpl/form_all_redeems.html',
+                controller: 'CouponRedeemCtrl',
+                resolve: load(['js/app/map/load-google-maps.js', 'js/app/map/ui-map.js', 'toaster', 'moment', 'js/services/acs.js', 'js/controllers/allredeems.js'], function() { 
+                  return loadGoogleMaps(); 
+                })
+              })
 
 
               .state('app.companyinfo', {
@@ -77555,6 +77583,36 @@ angular.module('app')
 							} else {
 								return "#ff0000";
 							}
+						};						
+
+						results[i].fetchNumRedeems = function(uiupdater) {
+							var cpn = this;
+							cpn.actualNumRedeemed = "Loading...";
+							cpn.noAvailableRedeems = true;
+
+
+							var query = new Parse.Query("Redeem");
+							query.equalTo("coupon", this);
+							
+							query.count({
+								success: function(count) {
+									if (count == 0) {
+										cpn.actualNumRedeemed = "No redeems";
+									} else if (count == 1) {
+										cpn.actualNumRedeemed = "View 1 redeem";
+										cpn.noAvailableRedeems = false;
+									} else {
+										cpn.actualNumRedeemed = "View " + count + " redeems";
+										cpn.noAvailableRedeems = false;
+									}
+
+									uiupdater();
+								},
+								error: function(err) {
+									cpn.actualNumRedeemed = "Error!";
+									uiupdater();
+								}
+							});
 						};
 
 						results[i].getExpiration = function() {
@@ -77633,6 +77691,81 @@ angular.module('app')
 				}
 			});
 		}, allCoupons);
+
+	};
+
+
+	var AcsGetRedeems = function(callback, id) {
+		var query = new Parse.Query("Redeem");
+		query.include("to");
+		query.include("from");
+		query.include("coupon");
+
+		if (id) {
+
+			var Coupon = Parse.Object.extend("Coupon");
+			var coupon = new Coupon();
+			coupon.id = id;
+			query.equalTo("coupon", coupon);
+
+		} else {
+			var innerQuery = new Parse.Query("Coupon");
+			innerQuery.equalTo("owner", Parse.User.current());
+			query.matchesQuery("coupon", innerQuery);
+		}
+		
+
+		query.find({
+			success: function(results) {
+
+				for (var i = 0; i < results.length; i++) {
+
+					results[i].getExpiration = function() {
+						var exp = moment(this.get("coupon").get("expiration"));
+						return exp.calendar();
+					};
+					
+					results[i].getUser = function(key) {
+						var user = this.get(key);
+						
+						return user;
+					};
+
+					results[i].getUserEmail = function(key) {
+						var user = this.get(key);
+						if (!user) return "No Email";
+						
+						return user.get("email");
+					};
+
+					results[i].getUserPhone = function(key) {
+						var user = this.get(key);
+
+						if (user && user.get("phone")) {
+							return user.get("phone");
+						} else {
+							return "No phone";
+						}
+					};
+					results[i].getUserName = function(key) {
+						var user = this.get(key);
+						if (!user) return "No Username";
+
+						return user.get("username");
+					};
+
+					results[i].getCreateTime = function() {
+						return moment(this.createdAt).format('MM/DD/YYYY h:mm:ss a');
+						
+					};
+				}
+				callback(results);			
+			},
+
+			error: function(error) {
+				throw new Error('Failed to get redeems');
+			}
+		});
 
 	};
 
@@ -77978,9 +78111,16 @@ angular.module('app')
 
 	};
 
-	var AcsNewCompany = function(name, file, userId, callback) {
+	var AcsNewCompany = function(name, file, userId, callback, realFile) {
 		var base64 = file;
-		var image = new Parse.File("logo.png", { base64: base64 });	
+		var image = null;
+
+		if (!realFile) {
+			image = new Parse.File("logo.png", { base64: base64 });	
+		} else {
+			image = file;	
+		}
+
 		AcsGetCompany(function(err, company) {
 
 			var CompanyClass = Parse.Object.extend("Company");
@@ -78011,6 +78151,7 @@ angular.module('app')
 	var AcsSaveCompanyInfo = function(name, file, callback) {
 		var base64 = file;
 		var image = new Parse.File("logo.png", { base64: base64 });	
+
 		AcsGetCompany(function(err, company) {
 			company.set("name", name);
 			company.set("image", image);
@@ -78256,6 +78397,9 @@ angular.module('app')
 		addLocation: AcsAddLocation,
 		editLocation: AcsEditLocation,
 		removeLocation: AcsRemoveLocation,
+
+
+		getRedeems: AcsGetRedeems,
 
 
 

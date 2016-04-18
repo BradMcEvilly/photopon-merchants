@@ -32,3 +32,11 @@ angular.module('app')
     // Tell the module to store the language in the local storage
     $translateProvider.useLocalStorage();
   }]);
+
+  
+
+app.filter("sanitize", ['$sce', function($sce) {
+  return function(htmlCode){
+    return $sce.trustAsHtml(htmlCode);
+  }
+}]);

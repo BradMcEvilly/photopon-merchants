@@ -14,7 +14,7 @@
       <div class="row">
         <div class="col-md-12">
           <div class="row row-sm text-center">
-            <div class="col-xs-3">
+            <div class="col-xs-3" ui-sref="app.locations">
               <div class="panel padder-v item card">
                 <div class="h1 text-info font-thin h1">{{locations.length}}</div>
                 <span class="text-muted text-xs">Locations</span>
@@ -23,7 +23,7 @@
                 </div>
               </div>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-3" ui-sref="app.coupons">
               <a href class="block panel padder-v item card">
                 <span class="text-success font-thin h1 block">{{coupons.length}}</span>
                 <span class="text-muted text-xs">Coupons</span>
@@ -41,7 +41,7 @@
                 </span>
               </a>
             </div>
-            <div class="col-xs-3">
+            <div class="col-xs-3" ui-sref="app.redeems">
               <div class="panel padder-v item card">
                 <div class="font-thin h1">{{stats.numRedeems}}</div>
                 <span class="text-muted text-xs">Total Redeems</span>

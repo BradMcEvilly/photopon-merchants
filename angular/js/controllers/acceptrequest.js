@@ -12,48 +12,6 @@ angular.module('app')
     $scope.provided = $stateParams.obj;
 
 
-    $scope.pageTitle = "Accept Request";
-    $scope.chosenOne = "new";
-
-
-    $scope.showAddCompany = function() {
-      if ($scope.chosenOne == "new") {
-        return true;
-      }
-      return false;
-    };
-
-
-    $scope.disableAcceptButton = function() {
-      if ($scope.chosenOne != "new") {
-        return false;
-      }
-
-      console.log($scope.companyInfo);
-
-      if (!$scope.companyInfo) {
-        return true; 
-      }
-    
-      if (!$scope.companyInfo.name) {
-        return true; 
-      }
-
-      if (!$scope.myCroppedImage) {
-        return true; 
-      }
-
-      return false;
-    };
-    
-
-    acsManager.getCompanies(function(err, companies) {
-      $scope.companies = companies;
-      console.log($scope.provided);
-    }, function() {
-      $scope.$apply();
-    });
-
 
 
 // Image cropping
@@ -80,14 +38,23 @@ angular.module('app')
 
     $scope.acceptRequest = function() {
       
-      acsManager.newCompany($scope.companyInfo.name, $scope.myCroppedImage, $scope.provided.get("user").id, function(c) {
+      //acsManager.newCompany($scope.provided.get("name"), $scope.myCroppedImage, $scope.provided.get("user").id, function(c) {
+      acsManager.newCompany($scope.provided.get("businessName"), $scope.provided.get("logo"), $scope.provided.get("user").id, function(c) {
         acsManager.acceptMerchantRequest($scope.provided.id, function() {
           $state.go("app.dashboard-super", {}, {
             reload: true
           });
         });
-      });
+      }, true);
 
+    };
+
+     $scope.denyRequest = function() {
+        acsManager.denyMerchantRequest($scope.provided.id, function() {
+          $state.go("app.dashboard-super");
+
+
+        });
     };
 
     $scope.removeImage = function() {
@@ -96,7 +63,7 @@ angular.module('app')
           reload: true
         });
       });
-      $scope.companyInfo.image = null;
+      $scope.provided.image = null;
     }
 
 

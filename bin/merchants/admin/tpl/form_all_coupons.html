@@ -21,6 +21,7 @@
                   <th>Title</th>
                   <th>Locations</th>
                   <th>Expiration</th>
+                  <th>Redeems</th>
                  
                 </tr>
               </thead>
@@ -38,6 +39,9 @@
                   <td  ui-sref="app.editcoupon({ id: '{{c.id}}' })">{{c.getLocationTitle()}}</td>
 
                   <td>{{c.getExpiration()}} (<span style="color:{{ c.getExpirationDeltaColor() }};">{{ c.getExpirationDelta() }}</span>) </td>
+                  <td>
+                    <button class="btn btn-default btn-xs" ng-disabled="c.noAvailableRedeems" ui-sref="app.redeem({ id: '{{c.id}}' })">{{c.actualNumRedeemed}}</button>
+                  </td>
                   
                 </tr>
 

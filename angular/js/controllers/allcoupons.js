@@ -32,6 +32,9 @@ angular.module('app')
     acsManager.getCoupons(function(err, coupons) {
         for (var i = 0; i < coupons.length; i++) {
         	coupons[i].isActive = coupons[i].get("isActive");
+            coupons[i].fetchNumRedeems(function() {
+                $scope.$apply();
+            });
         }
 
         $timeout(function () {

@@ -1,31 +1,107 @@
 <div class="bg-light lter b-b wrapper-md">
-  <h1 class="m-n font-thin h3">Accept Request</h1>
+  <h1 class="m-n font-thin h3">Review Request</h1>
 </div>
 <div class="wrapper-md">
   <div>
     <div class="row">
+
+
       <div class="col-sm-6">
-        <form name="form" class="form-validation" ng-submit="acceptRequest()">
+        <div class="panel panel-default">            
+          <div class="panel-heading">
+            <span class="h4">Company Logo</span>
+          </div>
+
+          <div class="panel-body">
+            <img class="companyprovidedlogo" src="{{provided.get('logo').url()}}" height="256" width="256" />
+          </div>
+        </div>
+      </div>
+
+
+
+      <div class="col-sm-6">
+
+
+        <form name="form" class="form-validation">
           <div class="panel panel-default">
+            
             <div class="panel-heading">
               <span class="h4">Company info</span>
             </div>
+
+
             <div class="panel-body">
-<!--
-              <div class="form-group">
-                <label>Choose Company</label>
-                <select class="form-control" ng-model="chosenOne">
-                  <option   value="new">Add new...</option>
-                  <option ng-repeat="l in companies" class="form-control"  value="{{ l.id }}">{{ l.get('name') }}</option>
-                  
-                </select>
-              </div>
--->
+              <ul class="list-group list-group-lg m-b-none">
+
+                <li class="list-group-item">
+                  <a href class="thumb-sm m-r">
+                    <i class="icon-briefcase fa-fw" style="
+                        font-size: 26px;
+                        vertical-align: middle;
+                    "></i>
+                  </a>
+                  <a href style="display: inline-block; vertical-align: middle;">
+                    <span>Business name</span>
+                    <br>
+                    <span class="text-muted">{{provided.get("businessName")}}</span>
+                  </a>
+                </li>
+
+              
+                <li class="list-group-item">
+                  <a href class="thumb-sm m-r">
+                    <i class="icon-call-end fa-fw" style="
+                        font-size: 26px;
+                        vertical-align: middle;
+                    "></i>
+                  </a>
+                  <a href style="display: inline-block; vertical-align: middle;">
+                    <span>Phone number</span>
+                    <br>
+                    <span class="text-muted">{{provided.get("phoneNumber")}}</span>
+                  </a>
+                </li>
+
+
+                <li class="list-group-item">
+                  <a href class="thumb-sm m-r">                
+                    <i class="icon-envelope fa-fw" style="
+                        font-size: 26px;
+                        vertical-align: middle;
+                    "></i>
+                  </a>
+                  <a href style="display: inline-block; vertical-align: middle;">
+                    <span>Email</span>
+                    <br>
+                    <span class="text-muted">{{provided.get("user").get("email")}}</span>
+                  </a>
+                </li>
+
+
+                <li class="list-group-item">
+                  <a href class="thumb-sm m-r">                
+                    <i class="icon-paper-clip fa-fw" style="
+                        font-size: 26px;
+                        vertical-align: middle;
+                    "></i>
+                  </a>
+                  <a href style="display: inline-block; vertical-align: middle;">
+                    <span>Tax ID</span>
+                    <br>
+                    <span class="text-muted">{{provided.get("taxID")}}</span>
+                  </a>
+                </li>
+                
+
+              </ul>
+              
+
+
+
+
               <div ng-show="showAddCompany()">
-                <div class="form-group">
-                  <label>Company Name</label>
-                  <input type="text" class="form-control" ng-model="companyInfo.name" required >
-                </div>
+                
 
                 <div class="form-group" ng-show="companyInfo.image">
                   <label>Company Logo</label>
@@ -86,89 +162,14 @@
             </div>
 
             <footer class="panel-footer text-right bg-light lter">
-              <button type="submit" class="btn btn-success" ng-disabled="disableAcceptButton()">Accept</button>
+              <button type="button" class="btn btn-success" ng-click="acceptRequest()">Accept</button>
+              <button type="button" class="btn btn-danger" ng-click="denyRequest()">Deny</button>
+
             </footer>
           </div>
         </form>
       </div>
 
-
-
-      <div class="col-md-6">            
-        <div class="panel no-border">
-          
-          <div class="panel-heading wrapper b-b b-light">
-            <h4 class="font-thin m-t-none m-b-none text-muted">Provided Information</h4>              
-          </div>            
-
-          <ul class="list-group list-group-lg m-b-none">
-
-
-
-            <li class="list-group-item">
-              <a href class="thumb-sm m-r">
-                <i class="icon-briefcase fa-fw" style="
-                    font-size: 26px;
-                    vertical-align: middle;
-                "></i>
-              </a>
-              <a href style="display: inline-block; vertical-align: middle;">
-                <span>Business name</span>
-                <br>
-                <span class="text-muted">{{provided.get("businessName")}}</span>
-              </a>
-            </li>
-
-          
-            <li class="list-group-item">
-              <a href class="thumb-sm m-r">
-                <i class="icon-call-end fa-fw" style="
-                    font-size: 26px;
-                    vertical-align: middle;
-                "></i>
-              </a>
-              <a href style="display: inline-block; vertical-align: middle;">
-                <span>Phone number</span>
-                <br>
-                <span class="text-muted">{{provided.get("phoneNumber")}}</span>
-              </a>
-            </li>
-
-
-            <li class="list-group-item">
-              <a href class="thumb-sm m-r">                
-                <i class="icon-envelope fa-fw" style="
-                    font-size: 26px;
-                    vertical-align: middle;
-                "></i>
-              </a>
-              <a href style="display: inline-block; vertical-align: middle;">
-                <span>Email</span>
-                <br>
-                <span class="text-muted">{{provided.get("user").get("email")}}</span>
-              </a>
-            </li>
-
-
-            <li class="list-group-item">
-              <a href class="thumb-sm m-r">                
-                <i class="icon-paper-clip fa-fw" style="
-                    font-size: 26px;
-                    vertical-align: middle;
-                "></i>
-              </a>
-              <a href style="display: inline-block; vertical-align: middle;">
-                <span>Tax ID</span>
-                <br>
-                <span class="text-muted">{{provided.get("taxID")}}</span>
-              </a>
-            </li>
-            
-
-          </ul>
-          
-        </div>
-      </div>
 
 
 

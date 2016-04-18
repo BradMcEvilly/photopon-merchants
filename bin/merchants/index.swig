@@ -11,9 +11,11 @@
           <div class="col-md-8 col-md-offset-2 text-center">
             <div class="m-t-xxl m-b-xxl padder-v">
               <h1 class="font-bold l-h-1x m-t-xxl text-black padder-v animated fadeInDown">
-                PLACEHOLDER FOR MERCHANT HELP WEBSITE.
+                Empower your business with Photopon.
               </h1>
-              <h3 class="text-muted m-t-xl l-h-1x">Photopon allows you to convert your photos into coupons and share with your friends. Use Photopon to turn your social activity into currency.</h3>
+              <h3 id="requestsenttext" class="hidden text-muted m-t-xl l-h-1x" style="color: #00bb88;"><strong>Your merchant request was successfully sent.</strong></h3>
+
+              <h3 class="text-muted m-t-xl l-h-1x">Photopon allows you to make your business social. Your coupons will be available to all local Photopon users to share with thier friends and redeem. To become Photopon merchant make <strong><a href="request.html">request here</a></strong></h3>
             </div>
 
           </div>

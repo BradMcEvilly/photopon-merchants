@@ -76,7 +76,8 @@ angular.module('app')
                 controller: 'EditCouponCtrl',
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
               })
-      
+
+
 
 
               .state('app.locations', {
@@ -93,6 +94,24 @@ angular.module('app')
                 resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/allcoupons.js'])
               })
 
+
+              .state('app.redeems', {
+                url: '/redeems/all',
+                templateUrl: 'tpl/form_all_redeems.html',
+                controller: 'AllRedeemsCtrl',
+                resolve: load(['js/app/map/load-google-maps.js', 'js/app/map/ui-map.js', 'toaster', 'moment', 'js/services/acs.js', 'js/controllers/allredeems.js'], function() { 
+                  return loadGoogleMaps(); 
+                })
+              })
+
+              .state('app.redeem', {
+                url: '/coupon/redeem/:id',
+                templateUrl: 'tpl/form_all_redeems.html',
+                controller: 'CouponRedeemCtrl',
+                resolve: load(['js/app/map/load-google-maps.js', 'js/app/map/ui-map.js', 'toaster', 'moment', 'js/services/acs.js', 'js/controllers/allredeems.js'], function() { 
+                  return loadGoogleMaps(); 
+                })
+              })
 
 
               .state('app.companyinfo', {

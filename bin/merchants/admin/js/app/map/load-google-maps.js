@@ -10,12 +10,14 @@
  */
 /*globals window, google, jQuery*/
 var loadGoogleMaps = (function($) {
-	
+	console.log("loadGoogleMaps called");
+
 	var now = $.now(),
 	
 		promise;
 	
 	return function( version, apiKey, language ) {
+		apiKey = "AIzaSyAz3McamUfvYCEn_KoLLtwrMUJAcI7nkr4";
 		
 		if( promise ) { return promise; }
 		

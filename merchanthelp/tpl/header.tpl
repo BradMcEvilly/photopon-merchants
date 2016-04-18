@@ -6,7 +6,7 @@
         <button class="btn btn-link visible-xs pull-right m-r" type="button" data-toggle="collapse" data-target=".navbar-collapse">
           <i class="fa fa-bars"></i>
         </button>
-        <a href="#" class="navbar-brand m-r-lg">
+        <a href="index.html" class="navbar-brand m-r-lg">
           <img src="img/logo.png" class="m-r-sm">
         </a>
       </div>

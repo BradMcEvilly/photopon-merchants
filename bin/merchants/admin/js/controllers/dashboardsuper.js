@@ -1,6 +1,6 @@
 'use strict';
 
-app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', function($scope, $state, acsManager) {
+app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', '$timeout', function($scope, $state, acsManager, $timeout) {
     $scope.user = acsManager.info();
 
 
@@ -19,45 +19,46 @@ app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', function
     }
 
 
-    $scope.denyRequest = function() {
-        acsManager.denyMerchantRequest(this.r.id, function() {
+   
 
-            acsManager.getMerchantRequests(function(err, requests) {
-                $scope.requests = requests;
-                $scope.$apply();
-            });
-
-        });
-    };
-
-    $scope.acceptRequest = function() {
+    $scope.reviewRequest = function() {
         $state.go("app.acceptrequest", { obj: this.r });
     };
 
 
 
     acsManager.getCompanies(function(err, companies) {
-        $scope.companies = companies;
-        $scope.$apply();
+        $timeout(function() {
+            $scope.companies = companies;
+        }, 0);
     }, function() {
         $scope.$apply();
     });
 
     acsManager.numAllCoupons(function(err, num) {
-        $scope.numCoupons = num;
-        $scope.$apply();
+         $timeout(function() {
+            $scope.numCoupons = num;
+        }, 0);
     });
 
 
 
     acsManager.getTotalStats(function(err, stats) {
-        $scope.stats = stats;
-        $scope.$apply();
+         $timeout(function() {
+            $scope.stats = stats;
+        }, 0);
     });
 
 
     acsManager.getMerchantRequests(function(err, requests) {
-        $scope.requests = requests;
+         $timeout(function() {
+            $scope.requests = requests;
+        }, 0);
     });
 
 }]);
+
+
+
+
+

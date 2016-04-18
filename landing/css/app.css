@@ -2813,6 +2813,10 @@ fieldset[disabled] .i-checks input + i:before {
   display: none;
 }
 
+[ui-sref] {
+  cursor: pointer;
+}
+
 [ui-view].ng-leave {
   display: none;
 }
