@@ -2654,6 +2654,23 @@ fieldset[disabled] .i-checks input + i:before {
   color: #fff !important;
 }
 
+.coverpic {
+  width: 100%;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.pic1 {
+  height: 360px;
+  background-image: url('../img/pic1.png');
+}
+
+.pic2 {
+  height: 360px;
+  background-image: url('../img/pic2.png');
+}
+
 /*Charts*/
 
 .jqstooltip {

@@ -158,6 +158,7 @@ module.exports = {
         files: [
             {expand: true, src:'**', cwd:'src/fonts/', dest: 'landing/fonts/'},
             {expand: true, src:'*.css', cwd:'src/css/', dest: 'landing/css/'},
+            {expand: true, src: "**", cwd: 'src/img',     dest: "landing/img"},
             {src:'html/css/app.min.css', dest: 'landing/css/app.min.css'},
             {
                 src:  [
@@ -272,6 +273,7 @@ module.exports = {
         files: [
             {expand: true, src:'**', cwd:'src/fonts/', dest: 'merchanthelp/fonts/'},
             {expand: true, src:'*.css', cwd:'src/css/', dest: 'merchanthelp/css/'},
+            {expand: true, src: "**", cwd: 'src/img',     dest: "merchanthelp/img"},
             {src:'html/css/app.min.css', dest: 'merchanthelp/css/app.min.css'},
             {
                 src:  [
