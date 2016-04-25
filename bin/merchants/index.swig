@@ -45,25 +45,25 @@
             <h3 class="text-black font-bold">
               <i class="glyphicon glyphicon-ok-sign icon text-info-dker"></i>
               Add business locations</h3>
-              <p class="h4 l-h-1x">Add locations of your business. Those locations will be used to show users nearby available coupons.</p>
+              <p class="h4 l-h-1x">Add locations of your business. Those locations will be used to show your coupons to users nearby users.</p>
       
             
            
             <h3 class="text-black font-bold">
               <i class="glyphicon glyphicon-ok-sign icon text-info-dker"></i>
               Add coupons</h3>
-              <p class="h4 l-h-1x">Create your coupons. Your coupons will be attached to your business locations and neraby Photopon users will be able to share them</p>
+              <p class="h4 l-h-1x">Create your coupons and attach them to your business locations or make them available on all locations.</p>
             
             <h3 class="text-black font-bold">
               <i class="glyphicon glyphicon-ok-sign icon text-info-dker"></i>
               Track your redeems</h3>
-            <p class="h4 l-h-1x">Track your coupon redeems and see them on map.</p>
+            <p class="h4 l-h-1x">Track your coupon redeems and see detailed map and information of all coupon redeems.</p>
           </div>
 
 
         </div>
 
-
+<!--
 
         <div class="row">
           <div class="col-sm-6 col-sm-offset-3" >
@@ -80,7 +80,7 @@
               </a>
             </div>
           </div>
-
+-->
       </div>
     </div>
    

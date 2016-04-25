@@ -11,20 +11,7 @@
         </a>
       </div>
       <div class="collapse navbar-collapse">
-        <ul class="nav navbar-nav font-bold">
-          <li>
-            <a href="#what" data-ride="scroll">What is Photopon</a>
-          </li>
-          <li>
-            <a href="#why" data-ride="scroll">Why</a>
-          </li>
-          <li>
-            <a href="#features" data-ride="scroll">Features</a>
-          </li>
-          <li>
-            <a href="http://themeforest.net/item/angulr-bootstrap-admin-web-app-with-angularjs/8437259">Download</a>
-          </li>
-        </ul>
+        
         <ul class="nav navbar-nav navbar-right">
           <li>
             <div class="m-t-sm">

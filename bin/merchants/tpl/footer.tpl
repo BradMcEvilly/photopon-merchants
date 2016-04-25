@@ -8,12 +8,12 @@
 
           <div class="col-sm-4">
             <h4 class="text-u-c m-b font-thin"><span class="b-b b-dark font-bold">Find</span> Us</h4>
-            <p class="text-sm">23 soe Midlokls <br>
-              120002 Loki — UNITED STATES <br>
-              +333 432 321 322
+            <p class="text-sm">Photopon, Inc.<br>
+              254B Mountain Ave., Suite 201 <br>
+              Hackettstown, 07840, New Jersey
              </p>
-             <p>Sale: <a href="mailto:info@photopon.com">info@photopon.com</a></p>
-             <p class="m-b-xl">Job: <a href="mailto:job@photopon.com">job@photopon.com</a></p>
+             <p>Contact us: <a href="mailto:contact@photopon.com">contact@photopon.com</a></p>
+             <p class="m-b-xl">Support: <a href="mailto:support@photopon.com">support@photopon.com</a></p> 
           </div>
           <div class="col-sm-4">
             <h4 class="text-u-c m-b-xl font-thin"><span class="b-b b-dark font-bold">Follow</span> Us</h4>

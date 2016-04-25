@@ -4,26 +4,17 @@
     <div class="bg-white">
       <div class="container">
         <div class="row m-t-xl m-b-xl">
-          <div class="col-sm-3">
-            <h4 class="text-u-c m-b font-thin"><span class="b-b b-dark font-bold">Version</span> options</h4>
-            <ul class="list-unstyled">
-              <li><a href="../angular"><i class="fa fa-angle-right m-r-sm"></i>Angular App</a></li>
-              <li><a href="../html"><i class="fa fa-angle-right m-r-sm"></i>Html Template</a></li>
-              <li><a href="../angular/#music/home"><i class="fa fa-angle-right m-r-sm"></i>Music single page application</a></li>
-              <li><a href="#"><i class="fa fa-angle-right m-r-sm"></i>App landing page</a></li>
-            </ul>
-            <p class="m-b-xl">More coming...</p>
-          </div>
-          <div class="col-sm-3">
+          
+          <div class="col-sm-4">
             <h4 class="text-u-c m-b font-thin"><span class="b-b b-dark font-bold">Find</span> Us</h4>
-            <p class="text-sm">23 soe Midlokls <br>
-              120002 Loki — UNITED STATES <br>
-              +333 432 321 322
+            <p class="text-sm">Photopon, Inc.<br>
+              254B Mountain Ave., Suite 201 <br>
+              Hackettstown, 07840, New Jersey
              </p>
-             <p>Sale: <a href="mailto:info@photopon.com">info@photopon.com</a></p>
-             <p class="m-b-xl">Job: <a href="mailto:job@photopon.com">job@photopon.com</a></p>
+             <p>Contact us: <a href="mailto:contact@photopon.com">contact@photopon.com</a></p>
+             <p class="m-b-xl">Support: <a href="mailto:support@photopon.com">support@photopon.com</a></p>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <h4 class="text-u-c m-b-xl font-thin"><span class="b-b b-dark font-bold">Follow</span> Us</h4>
             <div class="m-b-xl">
               <a href="#" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-facebook"></i></a>
@@ -33,7 +24,7 @@
               <a href="#" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-pinterest"></i></a>
             </div>
           </div>
-          <div class="col-sm-3">
+          <div class="col-sm-4">
             <h4 class="text-u-c m-b font-thin"><span class="b-b b-dark font-bold">News</span> Letter</h4>
             <p>Do not want to miss anything? Subscribe to our newsletter box</p>
             <form class="form-inline m-t m-b text-center m-b-xl">
@@ -46,24 +37,6 @@
                 </div>
               </div>
             </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="bg-light dk">
-      <div class="container">
-        <div class="row padder-v m-t">
-          <div class="col-xs-8">
-            <ul class="list-inline">
-              <li><a href="#">Sales</a></li>
-              <li><a href="#">About</a></li>
-              <li><a href="#">API</a></li>
-              <li><a href="#">Contact us</a></li>
-              <li><a href="#">Job</a></li>
-            </ul> 
-          </div>
-          <div class="col-xs-4 text-right">
-            Photopon &copy; 2015
           </div>
         </div>
       </div>
