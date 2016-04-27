@@ -19,19 +19,39 @@
     </a>
   </li>
 
-  <li ui-sref-active="active">
-    <a ui-sref="app.redeems">
-      <i class="glyphicon glyphicon-gift icon text-info-dker"></i>
-      <span class="font-bold">All Redeems</span>
-    </a>
-  </li>
 
-
-  <li ui-sref-active="active">
-    <a ui-sref="app.statistics">
+  <li ng-class="{active:$state.includes('app.analytics')}">
+    <a href class="auto">
       <i class="glyphicon glyphicon-stats icon text-info-lter"></i>
-      <span class="font-bold">Statistics</span>
+      <span class="font-bold">Analytics</span>
     </a>
+
+    <ul class="nav nav-sub dk">
+      
+      <li ui-sref-active="active">
+        <a ui-sref="app.analytics.redeems" href="#/analytics/redeems/all">
+          <b class="badge bg-dark pull-right">{{stats.numRedeems}}</b>
+          <span class="ng-scope">Redeems</span>
+        </a>
+      </li>
+      
+      <li ui-sref-active="active">
+        <a ui-sref="app.analytics.shares" href="#/analytics/shares/all">
+          <b class="badge bg-dark pull-right">{{stats.numShares}}</b>
+          <span class="ng-scope">Shares</span>
+        </a>
+      </li>
+      
+      <li ui-sref-active="active">
+        <a ui-sref="app.analytics.allcoupons" href="#/analytics/coupons">
+          <span class="ng-scope">All Coupons</span>
+        </a>
+      </li>
+      
+
+    </ul>
+
+
   </li>
   
   <li ui-sref-active="active">

@@ -15,7 +15,7 @@
               </h1>
               <h3 id="requestsenttext" class="hidden text-muted m-t-xl l-h-1x" style="color: #00bb88;"><strong>Your merchant request was successfully sent.</strong></h3>
 
-              <h3 class="text-muted m-t-xl l-h-1x">Photopon allows you to make your business social. Your coupons will be available to all local Photopon users to share with thier friends and redeem. To become Photopon merchant make <strong><a href="request.html">request here</a></strong></h3>
+              <h3 class="text-muted m-t-xl l-h-1x">Photopon allows you to make your business social. Your coupons will be available to all local Photopon users to share with thier friends and redeem. To become Photopon merchant make <strong><a href="./admin/#/access/request">request here</a></strong></h3>
             </div>
 
           </div>

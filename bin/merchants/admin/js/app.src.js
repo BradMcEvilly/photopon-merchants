@@ -76881,8 +76881,20 @@ angular.module('app')
                 resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/allcoupons.js'])
               })
 
+              .state('app.analytics', {
+                url: '/analytics',
+                abstract: true,
+                template: '<ui-view/>'
+              })
 
-              .state('app.redeems', {
+              .state('app.analytics.allcoupons', {
+                url: '/allcoupons',
+                templateUrl: 'tpl/company_statistics.html',
+                controller: 'CompanyStatsCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/companystats.js'])
+              })
+
+              .state('app.analytics.redeems', {
                 url: '/redeems/all',
                 templateUrl: 'tpl/form_all_redeems.html',
                 controller: 'AllRedeemsCtrl',
@@ -76891,14 +76903,25 @@ angular.module('app')
                 })
               })
 
-              .state('app.redeem', {
-                url: '/coupon/redeem/:id',
+
+              .state('app.analytics.redeem', {
+                url: '/redeems/:id',
                 templateUrl: 'tpl/form_all_redeems.html',
                 controller: 'CouponRedeemCtrl',
                 resolve: load(['js/app/map/load-google-maps.js', 'js/app/map/ui-map.js', 'toaster', 'moment', 'js/services/acs.js', 'js/controllers/allredeems.js'], function() { 
                   return loadGoogleMaps(); 
                 })
               })
+
+              .state('app.analytics.shares', {
+                url: '/shares/all',
+                templateUrl: 'tpl/form_all_shares.html',
+                controller: 'AllSharesCtrl',
+                resolve: load(['js/app/map/load-google-maps.js', 'js/app/map/ui-map.js', 'toaster', 'moment', 'js/services/acs.js', 'js/controllers/allshares.js'], function() { 
+                  return loadGoogleMaps(); 
+                })
+              })
+
 
 
               .state('app.companyinfo', {
@@ -76908,13 +76931,7 @@ angular.module('app')
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/companyinfo.js'])
               })
 
-              .state('app.statistics', {
-                url: '/stats',
-                templateUrl: 'tpl/company_statistics.html',
-                controller: 'CompanyStatsCtrl',
-                resolve: load(['js/services/acs.js', 'js/controllers/companystats.js'])
-              })
-
+              
       
               .state('app.invoices', {
                 url: '/invoices',
@@ -76930,16 +76947,24 @@ angular.module('app')
                   url: '/access',
                   template: '<div ui-view class="fade-in-right-big smooth"></div>'
               })
+
               .state('access.signin', {
                   url: '/signin',
                   templateUrl: 'tpl/page_signin.html',
                   resolve: load( ['js/services/acs.js', 'js/controllers/signin.js'] )
               })
+              .state('access.request', {
+                  url: '/request',
+                  templateUrl: 'tpl/page_requestaccess.html',
+                  resolve: load( ['ngImgCrop', 'js/services/acs.js', 'js/controllers/requestaccess.js'] )
+              })
+              /*
               .state('access.signup', {
                   url: '/signup',
                   templateUrl: 'tpl/page_signup.html',
                   resolve: load( ['js/controllers/signup.js'] )
               })
+              */
               .state('access.forgotpwd', {
                   url: '/forgotpwd',
                   templateUrl: 'tpl/page_forgotpwd.html'

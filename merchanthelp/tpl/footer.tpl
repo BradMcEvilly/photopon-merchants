@@ -18,11 +18,9 @@
           <div class="col-sm-4">
             <h4 class="text-u-c m-b-xl font-thin"><span class="b-b b-dark font-bold">Follow</span> Us</h4>
             <div class="m-b-xl">
-              <a href="#" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-facebook"></i></a>
-              <a href="#" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-twitter"></i></a>
-              <a href="#" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-google-plus"></i></a>
-              <a href="#" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-linkedin"></i></a>
-              <a href="#" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-pinterest"></i></a>
+              <a href="http://www.facebook.com/Photopon" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-facebook"></i></a>
+              <a href="http://www.twitter.com/Photopon" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-twitter"></i></a>
+              <a href="http://www.linkedin.com/company/photopon-inc-" class="btn btn-icon btn-rounded btn-dark"><i class="fa fa-linkedin"></i></a>
             </div>
           </div>
           <div class="col-sm-4">

@@ -18,7 +18,7 @@
       <div class="collapse pos-rlt navbar-collapse box-shadow {{app.settings.navbarCollapseColor}}">
 
         <!-- link and dropdown -->
-        <ul class="nav navbar-nav hidden-xs" ng-hide="user.get('isSuperUser')">
+        <ul class="nav navbar-nav hidden-xs" ng-hide="user.get('isSuperUser') || $state.includes('app.analytics')">
 
           <li class="dropdown" dropdown>
             <a href class="dropdown-toggle" dropdown-toggle>

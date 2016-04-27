@@ -12,9 +12,16 @@ angular.module('app')
     }
 
     acsManager.getCoupons(function(err, coupons) {
-      $timeout(function() {
-        $scope.coupons = coupons;
-      }, 0);
+      for (var i = 0; i < coupons.length; i++) {
+          coupons[i].isActive = coupons[i].get("isActive");
+            coupons[i].fetchNumRedeems(function() {
+                $scope.$apply();
+            });
+        }
+
+        $timeout(function () {
+            $scope.coupons = coupons;
+        });
     });
 
     $scope.stats = {
