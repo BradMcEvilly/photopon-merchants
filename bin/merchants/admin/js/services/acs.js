@@ -22,6 +22,19 @@ angular.module('app')
 		});
 	};
 
+
+	var AcsForgot = function(email, callback) {
+				
+		Parse.User.requestPasswordReset(email, {
+		  success: function() {
+			callback(null);
+		  },
+		  error: function(error) {
+			callback(new Error('Failed to reset password.'));
+		  }
+		});
+	};
+
 	var AcsIsLoggedIn = function() {
 		if (Parse.User.current()) {
 			return true;
@@ -860,6 +873,51 @@ angular.module('app')
 		});
 	};
 
+	var AcsCreateMerchantRequest = function(data, callback) {
+
+		var SaveRequest = function(parseFile) {
+
+            var ReqClass = Parse.Object.extend("MerchantRequests");
+            var req = new ReqClass();
+
+            req.set("taxID", data.taxid);
+            req.set("promo", data.promocode);
+            req.set("businessName", data.companyname);
+            req.set("phoneNumber", data.phonenumber);
+            req.set("user", Parse.User.current());
+
+            if (parseFile) {
+            	req.set("logo", parseFile);
+            }
+
+
+            req.save(null, {
+                success: function(req) {
+                    callback();
+                },
+                error: function(req, error) {
+                     callback("Failed to send request");
+                }
+            });
+
+		};
+
+
+		if (data.file) {
+			var base64 = data.file;
+			var parseFile = new Parse.File("logo.png", { base64: base64 });	
+
+	        parseFile.save().then(function() {
+	        	SaveRequest(parseFile);
+	        }, function(error) {
+	            callback("Failed to upload file");
+	        });	
+		} else {
+			SaveRequest(null);
+		}
+		
+	};
+
 
 	var AcsGetAllLocations = function(callback, uiupdater) {
 		AcsGetLocations(callback, true, uiupdater);
@@ -924,6 +982,7 @@ angular.module('app')
 	return {
 		loggedIn: AcsIsLoggedIn,
 		login: AcsLogin,
+		forgot: AcsForgot,
 		logout: AcsLogout,
 		info: AcsGetInfo,
 
@@ -963,6 +1022,7 @@ angular.module('app')
 		getMerchantRequests: AcsGetMerchantRequests,
 		denyMerchantRequest: AcsDenyMerchantRequest,
 		acceptMerchantRequest: AcsAcceptMerchantRequest,
+		createMerchantRequest: AcsCreateMerchantRequest,
 		
 		getAllLocations: AcsGetAllLocations,
 		getAllCoupons: AcsGetAllCoupons,

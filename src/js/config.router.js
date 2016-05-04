@@ -180,7 +180,8 @@ angular.module('app')
               */
               .state('access.forgotpwd', {
                   url: '/forgotpwd',
-                  templateUrl: 'tpl/page_forgotpwd.html'
+                  templateUrl: 'tpl/page_forgotpwd.html',
+                  resolve: load( ['js/services/acs.js', 'js/controllers/signin.js'] )
               })
               .state('access.404', {
                   url: '/404',
