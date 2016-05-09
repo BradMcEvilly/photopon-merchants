@@ -3,11 +3,12 @@
 angular.module('app')
 .controller('AcceptRequestCtrl', ['$scope', '$http', '$state', 'acsManager', '$stateParams', function($scope, $http, $state, acsManager, $stateParams) {
     $scope.user = acsManager.info();
-
-    if ($scope.user == null) {
+   
+    if (!acsManager.isAdmin()) {
       $state.go('access.signin');
       return;
     }
+
 
     $scope.provided = $stateParams.obj;
 

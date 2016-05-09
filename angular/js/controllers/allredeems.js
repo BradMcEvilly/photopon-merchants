@@ -51,6 +51,16 @@ var ControllerFunction = function($scope, $http, $state, acsManager, $sce, $time
                     }
 
                     $scope.userInfo = obj;
+                    $scope.userInfo.activeFriends = "Loading...";
+                    $scope.userInfo.totalFriends = "Loading...";
+
+                    acsManager.getFriendInfo(obj, function(info) {
+                        $timeout(function() {
+                            $scope.userInfo.activeFriends = info.activeFriends;
+                            $scope.userInfo.totalFriends = info.totalFriends;
+                        }, 0);
+                    });
+
                     FillMarkers();
                 }, 0);
 

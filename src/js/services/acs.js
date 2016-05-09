@@ -49,6 +49,20 @@ angular.module('app')
 		return Parse.User.current();
 	};
 
+
+	var AcsIsAdmin = function() {
+		
+	    if (!Parse.User.current()) {
+	        return false;
+	    }
+
+	    if (!Parse.User.current().get("isSuperUser")) {
+	        return false;
+	    }
+
+	    return true;
+	};
+
 	var AcsLogout = function() {
 		Parse.User.logOut();
 		console.log("Logging out from parse");
@@ -328,6 +342,40 @@ angular.module('app')
 	};
 
 
+	var AcsGetFriendInfo = function(user, callback) {
+		var info = {
+			activeFriends: 0,
+			totalFriends: 0
+		};
+		
+		var query = new Parse.Query("Friends");
+		query.include("user2");
+		query.equalTo("user1", user);
+
+
+		query.find({
+			success: function(results) {
+				info.totalFriends = results.length;
+				info.activeFriends = 0;
+
+				console.log(results);
+				for (var i = 0; i < results.length; i++) {
+					var lp = results[i].get("user2").get("lastPhotopon");
+					if (!lp) continue;
+
+					var momentLastPhotopon = moment(lp);
+					if (momentLastPhotopon.add(3, 'days') > moment()) {
+						++info.activeFriends;
+					}
+				}
+				callback(info);
+			}, 
+			error: function() {
+				callback(info);
+			}
+		});
+	};
+
 
 	var AcsAddCoupon = function(data, callback) {
 		
@@ -345,6 +393,7 @@ angular.module('app')
 			coupon.set("code", data.code);
 			coupon.set("company", company);
 			coupon.set("expiration", data.expiration);
+			coupon.set("isActive", data.isActive);
 			coupon.set("locations", data.locations);
 
 			coupon.set("owner", Parse.User.current());
@@ -979,12 +1028,153 @@ angular.module('app')
 
 
 
+
+
+	var AcsAddRepresentative = function(repInfo, callback, isEditing) {
+
+		var FillInfo = function(rep) {
+			rep.set("title", repInfo.title);
+			rep.set("firstName", repInfo.firstName);
+			rep.set("middleName", repInfo.middleName);
+			rep.set("lastName", repInfo.lastName);
+			rep.set("phoneNumber", repInfo.phoneNumber);
+			rep.set("address", repInfo.address);
+			rep.set("birthday", repInfo.birthday);
+			rep.set("bio", repInfo.bio);
+			rep.set("linkedin", repInfo.linkedin);
+			rep.set("facebook", repInfo.facebook);
+			rep.set("twitter", repInfo.twitter);
+			rep.set("repID", repInfo.repID);
+
+
+			if (repInfo.profile) {
+				image = new Parse.File("profile.png", { base64: repInfo.profile });	
+				rep.set("photo", image);
+			}
+		};
+
+		var SaveRep = function(rep) {
+			if (repInfo.originalRepID == repInfo.repID) {
+				rep.save(null, {
+					success: function(rep) {
+						callback(null, rep);
+					},
+					error: function(rep, error) {
+						callback("Failed to save object.");
+					}
+				});
+			} else {
+				AcsCheckRepID(repInfo.repID, function(isValid, err) {
+					if (!isValid) {
+						callback(err);
+						return;
+					}
+
+					rep.save(null, {
+						success: function(rep) {
+							callback(null, rep);
+						},
+						error: function(rep, error) {
+							callback("Failed to save object.");
+						}
+					});
+				});
+			}
+		};
+		
+
+		var RepClass = Parse.Object.extend("Representative");
+		
+		if (!isEditing) {
+			var rep = new RepClass();
+
+			FillInfo(rep);
+			SaveRep(rep);
+		} else {
+			
+			var query = new Parse.Query(RepClass);
+            query.get(repInfo.objectId, {
+                success: function(repObj) {
+                    FillInfo(repObj);
+                    SaveRep(repObj);
+                },
+                error: function(repObj, err) {
+                	callback("Failed to save object.");
+                }
+            });
+		}
+
+	};
+
+
+
+	var AcsCheckRepID = function(id, callback) {
+		var query = new Parse.Query("Representative");
+		query.equalTo("repID", id);
+		
+		query.find({
+			success: function(results) {
+				if (results.length == 0) {
+					callback(true);
+				} else {
+					callback(false, "Representative ID is already used. Please use other ID", results[0]);
+				}
+			},
+
+			error: function(error) {
+				callback(false, "Server communication error", results[0]);
+			}
+		});
+
+	};
+
+
+	var AcsGetReps = function(callback, allCoupons) {
+		var query = new Parse.Query("Representative");
+
+		query.find({
+			success: function(results) {
+
+
+
+				for (var i = 0; i < results.length; i++) {
+
+					results[i].getBirthday = function() {
+						return  moment(this.get("birthday")).format('MM/DD/YYYY');
+					};
+
+
+
+					results[i].getFullName = function() {
+						var first = this.get("firstName");
+						var middle = this.get("middleName");
+						var last = this.get("lastName");
+						var title = this.get("title");
+						
+						return title + " " + first + " " + (middle ? middle : "") + " " + last;
+					};
+
+				};
+				
+				callback(null, results);			
+			},
+
+			error: function(error) {
+				callback('Failed to get representatives');
+			}
+		});
+
+	};
+
+
+
 	return {
 		loggedIn: AcsIsLoggedIn,
 		login: AcsLogin,
 		forgot: AcsForgot,
 		logout: AcsLogout,
 		info: AcsGetInfo,
+		isAdmin: AcsIsAdmin,
 
 
 		
@@ -1004,7 +1194,7 @@ angular.module('app')
 
 
 		getRedeems: AcsGetRedeems,
-
+		getFriendInfo: AcsGetFriendInfo,
 
 
 		getCompany: AcsGetCompany,
@@ -1026,7 +1216,12 @@ angular.module('app')
 		
 		getAllLocations: AcsGetAllLocations,
 		getAllCoupons: AcsGetAllCoupons,
-		getAllPhotopons: AcsGetAllPhotopons
+		getAllPhotopons: AcsGetAllPhotopons,
+
+
+		addRepresentative: AcsAddRepresentative,
+		getRepresentatives: AcsGetReps,
+		checkRepID: AcsCheckRepID
 
 	};
 }]);

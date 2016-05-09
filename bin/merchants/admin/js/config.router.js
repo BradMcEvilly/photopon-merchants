@@ -94,6 +94,7 @@ angular.module('app')
                 resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/allcoupons.js'])
               })
 
+
               .state('app.analytics', {
                 url: '/analytics',
                 abstract: true,
@@ -153,7 +154,7 @@ angular.module('app')
                 resolve: load(['js/services/acs.js', 'js/controllers/companyinvoices.js'])
               })
 
-			
+      
 
 
               .state('access', {
@@ -221,6 +222,12 @@ angular.module('app')
                 controller: 'AcceptRequestCtrl',
                 resolve: load(['ngImgCrop', 'js/services/acs.js', 'js/controllers/acceptrequest.js']),
                 params: { obj: null }
+              })
+              .state('app.salesreps', {
+                url: '/salesreps',
+                templateUrl: 'tpl/admin_salesreps.html',
+                controller: 'SalesReps',
+                resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/salesreps.js'])
               })
 
 

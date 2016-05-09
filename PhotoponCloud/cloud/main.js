@@ -34,6 +34,7 @@ Parse.Cloud.beforeSave("Verifications", function(request, response) {
 	  }, function(err, responseData) {
 	    if (err) {
 			console.log(err);
+			response.success();
 	    } else {
 			console.log(responseData.from);
 			console.log(responseData.body);
@@ -80,13 +81,22 @@ Parse.Cloud.beforeSave("Photopon", function(request, response) {
 
 	request.object.set("creator", request.user);
 	request.object.set("installationId", request.installationId);
-	
+
     var groupACL = new Parse.ACL();
     groupACL.setPublicReadAccess(true);
     groupACL.setWriteAccess(request.user, true);
     request.object.setACL(groupACL);
- 
-    response.success();
+ 	
+	request.user.set("lastPhotopon", new Date());
+	request.user.save(null, {
+		success: function(user) {
+			response.success();
+		},
+		error: function(user, error) {
+			response.error();
+		}
+	});
+	
 });
 
 

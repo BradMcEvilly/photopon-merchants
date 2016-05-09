@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-.controller('AddCouponCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', function($scope, $http, $state, acsManager, $sce, $modal, $filter) {
+.controller('AddCouponCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', '$timeout', function($scope, $http, $state, acsManager, $sce, $modal, $filter, $timeout) {
     $scope.user = acsManager.info();
 
     if ($scope.user == null) {
@@ -15,8 +15,10 @@ angular.module('app')
     };
 
     acsManager.getCoupons(function(err, coupons) {
-        $scope.coupons = coupons;
-        $scope.$apply();
+        $timeout(function() {
+          $scope.coupons = coupons;
+        }, 0);
+        
     });
 
     acsManager.getLocations(function(err, locations) {
@@ -27,8 +29,10 @@ angular.module('app')
           $scope.locationNames[i] = locations[i].get("name");
         }
 
-        $scope.locations = locations;
-        $scope.$apply();
+        $timeout(function() {
+          $scope.locations = locations;
+        }, 0);
+        
     });
 
 
@@ -74,7 +78,8 @@ angular.module('app')
         body: $scope.coupon.body,
         code: $scope.coupon.code,
         locations: locationIds,
-        expiration: $scope.coupon.expiration
+        expiration: $scope.coupon.expiration,
+        isActive: true
       }, function() {
         $state.go($state.current, {}, {
           reload: true
@@ -118,9 +123,12 @@ angular.module('app')
           $scope.locationNames[i] = locations[i].get("name");
         }
 
-        $scope.locations = locations;
+        $timeout(function() {
+          $scope.locations = locations;
+        }, 0);
         
         acsManager.getCoupon(id, function(err, coupon) {
+          $timeout(function() {
             $scope.coupon.title = coupon.get("title");
             $scope.coupon.body = coupon.get("description");
             $scope.coupon.expiration = coupon.get("expiration");
@@ -140,7 +148,8 @@ angular.module('app')
 
             };
 
-            $scope.$apply();
+          });
+          
         });
     });
 

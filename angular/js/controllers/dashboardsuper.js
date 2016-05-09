@@ -3,22 +3,14 @@
 app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', '$timeout', function($scope, $state, acsManager, $timeout) {
     $scope.user = acsManager.info();
 
-
-   	$scope.coupons = [];
-   	$scope.locations = [];
-
-    if ($scope.user == null) {
-
-    	$state.go('access.signin');
-    	return;
-    }
-
-    if (!$scope.user.get("isSuperUser")) {
-        $state.go('app.dashboard-merchant');
+    if (!acsManager.isAdmin()) {
+        $state.go('access.signin');
         return;
     }
 
 
+   	$scope.coupons = [];
+   	$scope.locations = [];
    
 
     $scope.reviewRequest = function() {

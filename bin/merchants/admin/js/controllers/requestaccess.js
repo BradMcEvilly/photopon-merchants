@@ -32,18 +32,38 @@ app.controller('RequestFormController', ['$scope', '$http', '$state', 'acsManage
         $scope.user.file = $scope.myCroppedImage;
       }
 
-      acsManager.createMerchantRequest($scope.user, function(err) {
-        $timeout(function () {
-          if (err) {
-            $scope.authError = err;
-            return;
-          }
+      var CreateRequest = function() {
+        acsManager.createMerchantRequest($scope.user, function(err) {
+          $timeout(function () {
+            if (err) {
+              $scope.authError = err;
+              return;
+            }
 
-          $scope.requestSent = true;
-          
-          $timeout(acsManager.logout, 100);
-        }, 0);
-      });
+            $scope.requestSent = true;
+            
+            $timeout(acsManager.logout, 100);
+          }, 0);
+        });
+      };
+
+      if ($scope.user.promocode != "") {
+        acsManager.checkRepID($scope.user.promocode, function(isAvailable, err, rep) {
+          if (!isAvailable) {
+            $scope.user.rep = rep;
+            CreateRequest();
+          } else {
+            $timeout(function () {
+              $scope.authError = "Can not find referral code.";
+            }, 0);
+          }
+        });
+        
+      } else {
+        CreateRequest();
+      }
+
+
     });
 
 
