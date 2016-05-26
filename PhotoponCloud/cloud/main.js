@@ -192,16 +192,24 @@ Parse.Cloud.job("CreateBills", function(request, response) {
 		};
 
 
-		var GenerateBillForMrechant = function(merchantId, coupons, callback) {
+		var GenerateBillForMerchant = function(merchantId, coupons, properties, callback) {
 			var BillClass = Parse.Object.extend("Bills");
 
+			var centPerShare = properties.centPerShare ? properties.centPerShare : 5;
+			var centPerRedeem = properties.centPerRedeem ? properties.centPerRedeem : 25;
 
 			GetLastBill(merchantId, function(lastBill) {
 
 				var totalShares = 0;
 				var totalRedeems = 0;
 
+				var minCouponTime = new Date();
 				for (var i = 0; i < coupons.length; i++) {
+
+					if (coupons[i].createdAt < minCouponTime) {
+						minCouponTime = coupons[i].createdAt;
+					}
+
 					totalShares += parseInt(coupons[i].get("numShared") || 0, 10);
 					totalRedeems += parseInt(coupons[i].get("numRedeemed") || 0, 10);
 				};
@@ -215,12 +223,6 @@ Parse.Cloud.job("CreateBills", function(request, response) {
 				var currentShared = totalShares - lastTotalShared;
 				var currentRedeemed = totalRedeems - lastTotalRedeemed;
 
-				var billItems = [];
-				billItems.push(currentShared + " coupons shares");
-				billItems.push(currentRedeemed + " coupons redeems");
-
-				var price = currentShared * 5 + currentRedeemed * 25;
-
 
 				var user = new Parse.User();
 				user.id = merchantId;
@@ -229,9 +231,18 @@ Parse.Cloud.job("CreateBills", function(request, response) {
 
 				bill.set("numShared", totalShares);
 				bill.set("numRedeemed", totalRedeems);
-				bill.set("billItems", billItems);
-				bill.set("amount", price);
+
+				bill.set("currentShares", currentShared);
+				bill.set("currentRedeems", currentRedeemed);
+
+				bill.set("centPerShare", centPerShare);
+				bill.set("centPerRedeem", centPerRedeem);
+
+				bill.set("previousBillDate", lastBill ? lastBill.createdAt : minCouponTime);
+
 				bill.set("generation", generation + 1);
+
+
 				bill.set("user", user);
 
 
@@ -249,13 +260,13 @@ Parse.Cloud.job("CreateBills", function(request, response) {
 
 		};
 
-		var WhenCouponsFetched = function(merchantCouponMap) {
+		var WhenCouponsFetched = function(merchantCouponMap, companyProperties) {
 
 			var numMerchantsLeft = Object.keys(merchantCouponMap).length;
 
 
 			for (var merchantId in merchantCouponMap) {
-				GenerateBillForMrechant(merchantId, merchantCouponMap[merchantId], function() {
+				GenerateBillForMerchant(merchantId, merchantCouponMap[merchantId], companyProperties[merchantId], function() {
 					numMerchantsLeft--;
 					if (numMerchantsLeft == 0) {
 						WhenBillsGenerated(merchantCouponMap);
@@ -276,12 +287,31 @@ Parse.Cloud.job("CreateBills", function(request, response) {
 
 				success: function(companies) {
 					var merchants = {};
+					var companyProperties = {};
 
 					for (var i = 0; i < companies.length; i++) {
 						
 						var company = companies[i];
-						merchants[company.get("merchant").id] = [];
+						var merchantObject = company.get("merchant");
+
 						var numRequests = companies.length;
+					
+						if (!merchantObject) {
+							console.log("Error: Merchant not found for company " + company.get("name") + " [" + company.id + "]");
+							
+							numRequests = numRequests - 1;
+
+							if (numRequests == 0) {
+								WhenCouponsFetched(merchants, companyProperties);
+							}
+							continue;
+						}
+
+						merchants[merchantObject.id] = [];
+						companyProperties[merchantObject.id] = {
+							centPerShare: company.get("centPerShare"),
+							centPerRedeem: company.get("centPerRedeem")
+						};
 
 
 						(function(id) {
@@ -303,7 +333,7 @@ Parse.Cloud.job("CreateBills", function(request, response) {
 									};
 
 									if (numRequests == 0) {
-										WhenCouponsFetched(merchants);
+										WhenCouponsFetched(merchants, companyProperties);
 									}
 
 								},
@@ -312,7 +342,7 @@ Parse.Cloud.job("CreateBills", function(request, response) {
 								}
 							})
 
-						})(company.get("merchant").id);
+						})(merchantObject.id);
 
 
 

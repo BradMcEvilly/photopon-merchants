@@ -98,7 +98,7 @@ angular.module('app')
 
 
 angular.module('app')
-.controller('EditCouponCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', '$stateParams', function($scope, $http, $state, acsManager, $sce, $modal, $filter, $stateParams) {
+.controller('EditCouponCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', '$stateParams', '$timeout', function($scope, $http, $state, acsManager, $sce, $modal, $filter, $stateParams, $timeout) {
  
     var id = $stateParams.id;
     $scope.user = acsManager.info();

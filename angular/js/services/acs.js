@@ -358,7 +358,6 @@ angular.module('app')
 				info.totalFriends = results.length;
 				info.activeFriends = 0;
 
-				console.log(results);
 				for (var i = 0; i < results.length; i++) {
 					var lp = results[i].get("user2").get("lastPhotopon");
 					if (!lp) continue;
@@ -1168,6 +1167,26 @@ angular.module('app')
 
 
 
+	var AcsGetLastBill = function(callback) {
+
+
+		var billQuery = new Parse.Query("Bills");
+		billQuery.equalTo("user", Parse.User.current());
+		billQuery.descending("generation");
+		
+		billQuery.first({
+			success: function(object) {
+				callback(object);
+			},
+			error: function(error) {
+				callback(null);
+			}
+		});
+
+
+	};
+
+
 	return {
 		loggedIn: AcsIsLoggedIn,
 		login: AcsLogin,
@@ -1205,6 +1224,7 @@ angular.module('app')
 		saveCompanyName: AcsSaveCompanyName,
 		getCompanyStats: AcsGetCompanyStats,
 		getCompanyInvoices: AcsGetBills,
+		getLastBill: AcsGetLastBill,
 
 
 

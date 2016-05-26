@@ -29,6 +29,9 @@ module.exports = {
 
       'angular/libs/parse/parse/build/parse-latest.js',
 
+      'angular/libs/angular/pdfmake/build/pdfmake.min.js',
+      'angular/libs/angular/pdfmake/build/vfs_fonts.js',
+
       'src/js/*.js',
       'src/js/directives/*.js',
       'src/js/services/*.js',

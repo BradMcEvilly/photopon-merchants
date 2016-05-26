@@ -45,7 +45,10 @@ module.exports = {
                     'videogular-buffering/buffering.min.js',
                     'videogular-overlay-play/overlay-play.min.js',
                     'videogular-poster/poster.min.js',
-                    'videogular-ima-ads/ima-ads.min.js'
+                    'videogular-ima-ads/ima-ads.min.js',
+                    'pdfmake/build/pdfmake.min.js',
+                    'pdfmake/build/pdfmake.js',
+                    'pdfmake/build/vfs_fonts.js'
                 ],
                 dest: 'angular/libs/angular',
                 cwd:  'bower_components',
@@ -127,6 +130,11 @@ module.exports = {
             {expand: true, src: "**", cwd: 'src/tpl',     dest: "angular/tpl"},
             {src: 'src/index.min.html', dest : 'angular/index.html'},
             {src: 'src/material.min.html', dest : 'angular/material.html'}
+        ]
+    },
+    paypal: {
+        files: [
+            {expand: true, src: "**", cwd: 'paypal',      dest: "bin/paypal"}
         ]
     },
     angulardev: {

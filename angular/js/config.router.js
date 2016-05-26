@@ -151,7 +151,7 @@ angular.module('app')
                 url: '/invoices',
                 templateUrl: 'tpl/company_invoices.html',
                 controller: 'CompanyInvoicesCtrl',
-                resolve: load(['js/services/acs.js', 'js/controllers/companyinvoices.js'])
+                resolve: load(['moment', 'pdfMake', 'pdfMakeVFS', 'js/services/acs.js', 'js/controllers/companyinvoices.js'])
               })
 
       

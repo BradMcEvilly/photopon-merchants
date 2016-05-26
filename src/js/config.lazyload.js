@@ -47,8 +47,9 @@ angular.module('app')
                           './libs/jquery/bootstrap-daterangepicker/daterangepicker.js',
                           './libs/jquery/bootstrap-daterangepicker/daterangepicker-bs3.css'],
       tagsinput:      [   './libs/jquery/bootstrap-tagsinput/dist/bootstrap-tagsinput.js',
-                          './libs/jquery/bootstrap-tagsinput/dist/bootstrap-tagsinput.css']
-                      
+                          './libs/jquery/bootstrap-tagsinput/dist/bootstrap-tagsinput.css'],
+      pdfMake:        [   './libs/angular/pdfmake/build/pdfmake.js'],
+      pdfMakeVFS:     [   './libs/angular/pdfmake/build/vfs_fonts.js']
     }
   )
   .constant('MODULE_CONFIG', [
