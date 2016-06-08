@@ -47,7 +47,7 @@ app.controller('RequestFormController', ['$scope', '$http', '$state', 'acsManage
         });
       };
 
-      if ($scope.user.promocode != "") {
+      if ($scope.user.promocode && $scope.user.promocode != "") {
         acsManager.checkRepID($scope.user.promocode, function(isAvailable, err, rep) {
           if (!isAvailable) {
             $scope.user.rep = rep;

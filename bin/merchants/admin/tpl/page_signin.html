@@ -12,13 +12,13 @@
       </div>
       <div class="list-group list-group-sm">
         <div class="list-group-item">
-          <input type="text" placeholder="Username" class="form-control no-border" ng-model="user.username" required>
+          <input type="text" placeholder="Username" class="form-control no-border" ng-model="user.username" name="login_username" required>
         </div>
         <div class="list-group-item">
-           <input type="password" placeholder="Password" class="form-control no-border" ng-model="user.password" required>
+           <input type="password" placeholder="Password" class="form-control no-border" ng-model="user.password" name="login_password" required>
         </div>
       </div>
-      <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid'>Log in</button>
+      <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid' name="login_button">Log in</button>
       <div class="text-center m-t m-b"><a ui-sref="access.forgotpwd">Forgot password?</a></div>
     </form>
   </div>

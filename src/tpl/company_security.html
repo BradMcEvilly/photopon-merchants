@@ -1,0 +1,62 @@
+
+
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">Security</h1>
+</div>
+<div class="wrapper-md">
+  <div class="row">
+    <div class="col-sm-6">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Banned Numbers
+        </div>
+        <table class="table table-striped m-b-none">
+            <thead>
+              <tr>
+                <th>Name</th>
+                <th>Phone</th>
+                <th></th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr ng-repeat="c in numbers">                    
+                <td>{{c.get('name')}}</td>
+                <td>{{c.get('phoneNumber')}}</td>
+                <td>
+                  <button class="btn btn-default btn-xs" ng-disabled="processing" ng-click="remove()">
+                    <i class="glyphicon glyphicon-minus icon text-danger-lter"></i>
+                  Remove</button>
+                </td>
+                
+                
+              </tr>
+
+
+              <tr>
+                <td>
+                 <input type="text" class="form-control input-sm" ng-disabled="processing" ng-model="newBannedNumber.name" required >
+                </td>
+                <td>
+                 <input type="text" class="form-control input-sm" ng-disabled="processing" ng-model="newBannedNumber.phone" required >
+                </td>
+                <td>
+                  <button class="btn btn-default btn-sm" ng-disabled="processing" ng-click="add()">
+                    <i class="glyphicon glyphicon-plus icon text-success-lter"></i>
+                  Add</button>
+                </td>
+                
+                
+              </tr>
+
+
+            </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+
+<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>

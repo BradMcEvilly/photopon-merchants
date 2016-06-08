@@ -32,6 +32,7 @@ angular.module('app')
 			$scope.currentShared = $scope.totalShares - shares;
 			$scope.currentRedeemed = $scope.totalRedeems - redeems;
 
+			$scope.currentTotal = $scope.currentRedeemed * bill.get("centPerRedeem") / 100;
 			$scope.$apply();
 		});
 
@@ -44,14 +45,15 @@ angular.module('app')
 	acsManager.getCompanyInvoices(function(err, invoices) {
 		for (var i = 0; i < invoices.length; i++) {
 
-			var cShare = invoices[i].get("currentShares");
+			//var cShare = invoices[i].get("currentShares");
 			var cRedeem = invoices[i].get("currentRedeems");
 
-			var CPS = invoices[i].get("centPerShare");
+			//var CPS = invoices[i].get("centPerShare");
 			var CPR = invoices[i].get("centPerRedeem");
 
 			invoices[i].dateText = moment(invoices[i].createdAt).format('MM/DD/YYYY');
-			invoices[i].totalAmount = cShare * CPS + cRedeem * CPR;
+			//invoices[i].totalAmount = cShare * CPS + cRedeem * CPR;
+			invoices[i].totalAmount = cRedeem * CPR;
 
 			if (invoices[i].get("status") == "DUE") {
 				$scope.totalDue += invoices[i].totalAmount;
@@ -94,10 +96,10 @@ angular.module('app')
 			}
 		};
 
-		var cShare = obj.c.get("currentShares");
+		//var cShare = obj.c.get("currentShares");
 		var cRedeem = obj.c.get("currentRedeems");
 
-		var CPS = obj.c.get("centPerShare");
+		//var CPS = obj.c.get("centPerShare");
 		var CPR = obj.c.get("centPerRedeem");
 	
 		var docDefinition = {
@@ -114,9 +116,10 @@ angular.module('app')
 										headerRows: 1,
 										body: [
 												[{ text: 'Description', style: 'tableHeader' }, { text: 'Amount', style: 'tableHeader'}, { text: 'Subtotal', style: 'tableHeader' }],
-												[ 'Coupon share (' + CPS + ' cents per share)' , cShare + " share(s)", "$" + CPS * cShare / 100.0 ],
+												//[ 'Coupon share (' + CPS + ' cents per share)' , cShare + " share(s)", "$" + CPS * cShare / 100.0 ],
 												[ 'Coupon redeem (' + CPR + ' cents per redeem)', cRedeem + " redeem(s)", "$" + CPR * cRedeem / 100.0 ],
-												[ 'Total', "", "$" + (CPR * cRedeem + CPS * cShare) / 100.0 ],
+												//[ 'Total', "", "$" + (CPR * cRedeem + CPS * cShare) / 100.0 ],
+												[ 'Total', "", "$" + (CPR * cRedeem ) / 100.0 ],
 										]
 								},
 								layout: 'lightHorizontalLines'
@@ -147,7 +150,9 @@ angular.module('app')
 			}
 		};
 
-		pdfMake.createPdf(docDefinition).download();
+		var ts = moment(obj.c.createdAt).format('YYYY-MM-DD');
+
+		pdfMake.createPdf(docDefinition).download("invoice-" + ts + ".pdf");
 
 			
 	}

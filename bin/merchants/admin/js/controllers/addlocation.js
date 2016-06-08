@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-.controller('AddLoctionCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', function($scope, $http, $state, acsManager, $sce, $modal) {
+.controller('AddLoctionCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$timeout', function($scope, $http, $state, acsManager, $sce, $modal, $timeout) {
     $scope.user = acsManager.info();
 
     if ($scope.user == null) {

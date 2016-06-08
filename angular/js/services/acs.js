@@ -837,6 +837,73 @@ angular.module('app')
 	};
 
 
+	var AcsGetCompanyBannedNumbers = function(callback) {
+		AcsGetCompany(function(err, company) {
+
+			var query = new Parse.Query("BannedNumbers");
+			query.equalTo("company", company);
+			
+			query.find({
+				success: function(results) {
+					callback(results);			
+				},
+
+				error: function(error) {
+				}
+			});
+		});
+
+	};
+
+
+	var AcsAddBannedNumber = function(newBannedNumber, callback) {
+		AcsGetCompany(function(err, company) {
+
+
+			var BannedNumbers = Parse.Object.extend("BannedNumbers");
+			var num = new BannedNumbers();
+
+			num.set("name", newBannedNumber.name);
+			num.set("phoneNumber", newBannedNumber.phone);
+			num.set("company", company);
+
+			num.save(null, {
+			  success: function(num) {
+			  	callback(null);
+			  },
+			  error: function(num, error) {
+				callback(error);
+			  }
+			});
+
+		});
+
+	};
+
+	var AcsRemoveBannedNumber = function(id, callback) {
+		var BannedNumbers = Parse.Object.extend("BannedNumbers");
+		var query = new Parse.Query(BannedNumbers);
+		query.get(id, {
+		  success: function(num) {
+
+		    num.destroy({
+			  success: function(myObject) {
+			    callback(null);
+			  },
+			  error: function(myObject, error) {
+			    callback(error, null);
+			  }
+			});
+
+		  },
+		  error: function(object, error) {
+		    callback(error, null);
+
+		  }
+		});
+
+	};
+
 
 
 	var AcsGetTotalStats = function(callback) {
@@ -1225,6 +1292,10 @@ angular.module('app')
 		getCompanyStats: AcsGetCompanyStats,
 		getCompanyInvoices: AcsGetBills,
 		getLastBill: AcsGetLastBill,
+
+		getBannedNumbers: AcsGetCompanyBannedNumbers,
+		removeBannedNumber: AcsRemoveBannedNumber,
+		addBannedNumber: AcsAddBannedNumber,
 
 
 

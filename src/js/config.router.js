@@ -153,6 +153,13 @@ angular.module('app')
                 controller: 'CompanyInvoicesCtrl',
                 resolve: load(['moment', 'pdfMake', 'pdfMakeVFS', 'js/services/acs.js', 'js/controllers/companyinvoices.js'])
               })
+      
+              .state('app.security', {
+                url: '/security',
+                templateUrl: 'tpl/company_security.html',
+                controller: 'CompanySecurityCtrl',
+                resolve: load(['moment', 'toaster', 'js/services/acs.js', 'js/controllers/companysecurity.js'])
+              })
 
       
 

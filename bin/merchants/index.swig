@@ -31,7 +31,6 @@
 
         <div class="row">
           
-
           <div class="col-sm-offset-2 col-sm-4 wrapper-xl">
             <div class="coverpic pic2"></div>
           </div>
@@ -63,24 +62,92 @@
 
         </div>
 
-<!--
+
+
 
         <div class="row">
-          <div class="col-sm-6 col-sm-offset-3" >
-            <div class="text-center">
-              <a href="https://itunes.apple.com/us/app/photopon-turn-your-photos/id545200032?mt=8" target="_blank" class="text-sm btn btn-lg btn-rounded btn-default m-sm">
-                <i class="fa fa-apple fa-3x pull-left m-l-sm"></i>
-                <span class="block clear m-t-xs text-left m-r m-l">Available on the <b class="text-lg block font-bold">App Store</b>
-                </span>
-              </a>
-              <a href="#" target="_blank" class="text-sm btn btn-lg btn-rounded btn-default m-sm">
-                <i class="fa fa-android fa-3x pull-left m-l-sm"></i>
-                <span class="block clear m-t-xs text-left m-r m-l">Soon on <b class="text-lg block font-bold">Google Play</b>
-                </span>
-              </a>
-            </div>
+          <h1 class="font-bold l-h-1x m-t-xxl text-black text-center padder-v animated fadeInDown">
+                How it works.
+          </h1>
+        </div>
+
+        <!-- Request -->
+        <div class="row">
+          
+          <div class="col-sm-8 wrapper-md">
+            <div class="coverpic-big pic-request"></div>
           </div>
--->
+
+          <div class="col-sm-4 wrapper-md">
+            <h3 class="text-black font-bold">Request merchant access</h3>
+              <p class="h4 l-h-1x">In order to request merchant access you will need to provide following information.</p>
+              <ul>
+                <li>Existing Photopon account username and password</li>
+                <li>Company name</li>
+                <li>Phone number</li>
+                <li>Tax ID</li>
+                <li>Referral code (optional)</li>
+                <li>Company Logo (optional)</li>
+              </ul>
+              <p class="h4 l-h-1x">After you submit request it will be reviewed and you will be granted access to merchants dashboard
+          </div>
+        </div>
+
+        <!-- Add location -->
+        <div class="row">
+
+          <div class="col-sm-4 wrapper-md">
+            <h3 class="text-black font-bold">Add Location</h3>
+              <p class="h4 l-h-1x">Add all your business locations here by simply naming them and fillling up the address.</p>
+          </div>
+          
+          <div class="col-sm-8 wrapper-md">
+            <div class="coverpic-big pic-location"></div>
+          </div>
+        </div>
+
+
+        <!-- Add Coupon -->
+        <div class="row">
+          
+          <div class="col-sm-8 wrapper-md">
+            <div class="coverpic-big pic-coupon"></div>
+          </div>
+
+          <div class="col-sm-4 wrapper-md">
+            <h3 class="text-black font-bold">Add Coupon</h3>
+              <p class="h4 l-h-1x">Adding coupons is easy. You need to fill up the title and full description of coupon, coupon code and expiration date. After all this information is filled up you need to choose the business location(s) where coupon is available or simply choose all locations.</p>
+          </div>
+        </div>
+
+        <!-- Track Redeems -->
+        <div class="row">
+
+          <div class="col-sm-4 wrapper-md">
+            <h3 class="text-black font-bold">Track Redeems</h3>
+              <p class="h4 l-h-1x">Each coupon redeem is tracked in Photopon. You will get information about users who redeemed it, location where it was redeemed and information about user who sent your coupon.</p>
+          </div>
+          
+          <div class="col-sm-8 wrapper-md">
+            <div class="coverpic-big pic-stats"></div>
+          </div>
+        </div>
+
+        <!-- Request -->
+        <div class="row">
+          
+          <div class="col-sm-8 wrapper-md">
+            <div class="coverpic-big pic-invoice"></div>
+          </div>
+
+          <div class="col-sm-4 wrapper-md">
+            <h3 class="text-black font-bold">Invoice</h3>
+              <p class="h4 l-h-1x">Photopon charges you only when user redeems your coupon through our system. You will be charged 25 cents per redeem. Invoices are generated monthly.</p>
+          </div>
+        </div>
+
+
+
       </div>
     </div>
    

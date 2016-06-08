@@ -2656,19 +2656,47 @@ fieldset[disabled] .i-checks input + i:before {
 
 .coverpic {
   width: 100%;
+  height: 360px;
   background-position: center;
   background-repeat: no-repeat;
   background-size: contain;
 }
 
+.coverpic-big {
+  width: 100%;
+  height: 480px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  box-shadow: 0 0 20px #999;
+}
+
 .pic1 {
-  height: 360px;
   background-image: url('../img/pic1.png');
 }
 
 .pic2 {
-  height: 360px;
   background-image: url('../img/pic2.png');
+}
+
+.pic-location {
+  background-image: url('../img/tutorial/pic-location.jpg');
+}
+
+.pic-coupon {
+  background-image: url('../img/tutorial/pic-coupon.jpg');
+}
+
+.pic-request {
+  background-image: url('../img/tutorial/pic-request.jpg');
+}
+
+.pic-stats {
+  background-image: url('../img/tutorial/pic-stats.jpg');
+}
+
+.pic-invoice {
+  background-image: url('../img/tutorial/pic-invoice.jpg');
 }
 
 /*Charts*/
