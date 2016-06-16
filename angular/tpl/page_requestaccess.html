@@ -4,57 +4,196 @@
   </a>
 
 
-  <div class="m-b-lg" ng-hide="requestSent">
+  <div class="m-b-lg">
     <div class="wrapper text-center">
-      <strong>Request merchant access</strong>
-    </div>
-
-    <div class="list-group list-group-sm bg-primary wrapper" ng-show="currentUser">
-
-      <h4>Hello {{currentUser.get("username")}}, you are already signed in as merchant. If you want to request merchant access for another user please <a href="#" ng-click="signout()">Sign out</a></p>
-      
+      <h2>Request merchant access</h2>
     </div>
 
  
+<!-- Step 1 Login -->
+    <form name="form" class="form-validation" ng-show="currentStep == 1">
+     
+      <fieldset ng-disabled="isProcessing">
 
-    <form name="form" class="form-validation" ng-submit="request()" ng-hide="currentUser">
-      <div class="text-danger wrapper text-center" ng-show="authError">
-          {{authError}}
-      </div>
-
-
-      <div class="list-group list-group-sm">
-
-        <p class="text-muted">Use your existing Photopon account to request access</p>
-        <div class="list-group-item">
-          <input type="text" placeholder="Username" class="form-control no-border" ng-model="user.username" required>
+        <div class="text-danger wrapper text-center" ng-show="authError">
+            {{authError}}
         </div>
-        <div class="list-group-item">
-           <input type="password" placeholder="Password" class="form-control no-border" ng-model="user.password" required>
+
+
+        <div class="list-group list-group-sm">
+
+          <p class="">Merchant dashboard allows you to add locations and publish coupons for your clients. Use this form to request access to dashboard.</p>
+
+
+          <div class="radio">
+            <label class="i-checks i-checks-sm">
+              <input type="radio" name="a" ng-model="isExistingAccount" ng-value="1">
+              <i></i>
+              I already have Photopon account
+            </label>
+          </div>
+
+          <div class="radio">
+            <label class="i-checks i-checks-sm">
+              <input type="radio" name="a" ng-model="isExistingAccount" ng-value="0">
+              <i></i>
+              Register Photopon account now
+            </label>
+          </div>
+
+
+          <div ng-show="isExistingAccount">
+
+            <label>Photopon username</label>
+            <input type="text" class="form-control no-border" ng-model="user.username" required>
+            
+            <label>Password</label>
+             <input type="password" class="form-control no-border" ng-model="user.password" required>
+            
+          </div>
+
+          <div ng-hide="isExistingAccount">
+
+            <label>Username</label>
+            <input type="text"  class="form-control no-border" ng-model="user.username" required>
+            
+
+            <label>Pick a password</label>
+             <input type="password"  class="form-control no-border" ng-model="user.password" required>
+            
+
+            <label>Email</label>
+            <input type="email"  class="form-control no-border" ng-model="user.email" required>
+            
+
+          </div>
+
+
         </div>
-      </div>
 
-      
+        <button type="submit" class="btn btn-lg btn-success btn-block" ng-click="gotoNextStep()">
+          <i ng-show="isProcessing" class="fa fa-spin fa-spinner" disableAnimate></i> 
+          &nbsp;Continue...
+        </button>
+
+      </fieldset>
+    </form>
 
 
-      <div class="list-group list-group-sm">
+
+
+
+
+
+<!-- Step 2 Register -->
+    <form name="form" class="form-validation" ng-show= "currentStep == 2">
+     
+      <fieldset ng-disabled="isProcessing">
+
+        <div class="text-danger wrapper text-center" ng-show="requestError">
+            {{requestError}}
+        </div>
+
+
+
+        <div class="list-group list-group-sm">
+
+          <p class="">Please fill information about your company.</p>
+
+
+          <label>Business name</label>
+          <input type="text" class="form-control no-border" ng-model="user.companyname" required>
+          
+          
+          <label>Business phone</label>
+          <input type="text" class="form-control no-border" ui-mask="(999) 999-9999" ng-model="user.phonenumber" required>
+          
+
+          <label>EIN</label>
+          <input type="text"  class="form-control no-border" ui-mask="99-9999999" ng-model="user.taxid" required>
+          
+          
+          <label>Referral Code (optional)</label>
+          <input type="text" class="form-control no-border" ng-model="user.promocode">
+
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-success btn-block" ng-click="gotoNextStep()">
+          <i ng-show="isProcessing" class="fa fa-spin fa-spinner" disableAnimate></i> 
+          &nbsp;Continue...
+        </button>
+
+      </fieldset>
+    </form>
+
+
+
+
+<!-- Step 3 Verification -->
+    <form name="form" class="form-validation" ng-show= "currentStep == 3">
+     
+      <fieldset ng-disabled="isProcessing">
+
+
+        <div class="text-danger wrapper text-center" ng-show="verificationError">
+            {{verificationError}}
+        </div>
+
+        <div class="list-group list-group-sm">
+
+          <p class="">Please verify your mobile phone number. 6 digit verification code is sent to your phone number.</p>
+
+
+          <label>Verification Code</label>
+          <input type="text" class="form-control no-border" ui-mask="999999" ng-model="user.verificationInput" required>
+          
+        </div>
+
+        <button type="submit" class="btn btn-lg btn-success btn-block" ng-click="gotoNextStep()">
+          <i ng-show="isProcessing" class="fa fa-spin fa-spinner" disableAnimate></i> 
+          &nbsp;Continue...
+        </button>
+
+      </fieldset>
+    </form>
+
+
+
+
+
+
+<!-- Step 3 Done -->
+    <form name="form" class="form-validation" ng-show= "currentStep == 4">
+     
+      <fieldset ng-disabled="isProcessing">
+
+
+        <h3 class="text-success wrapper text-center">
+            Congratulations your request has been sent. We will review your request in 24 hours and contact you. <br>Thank you. 
+        </h3>
+
+
+        <a type="button" class="btn btn-lg btn-success btn-block" href="/merchants">
+          <i class="fa fa-check" disableAnimate></i> 
+          &nbsp;Go Back
+        </a>
+
+      </fieldset>
+    </form>
+
+
+
+
+
+
+  </div>
+
+
+<!--
+      <div class="list-group list-group-sm" ng-hide="1">
 
         <p class="text-muted">Please fill company information.</p>
-        <div class="list-group-item">
-          <input type="text" placeholder="Business name" class="form-control no-border" ng-model="user.companyname" required>
-        </div>
         
-        <div class="list-group-item">
-          <input type="text" placeholder="Phone number" class="form-control no-border" ng-model="user.phonenumber" required>
-        </div>
-        
-        <div class="list-group-item">
-          <input type="text" placeholder="Tax ID" class="form-control no-border" ng-model="user.taxid" required>
-        </div>
-        
-        <div class="list-group-item">
-          <input type="text" placeholder="Referral Code (optional)" class="form-control no-border" ng-model="user.promocode">
-        </div>
         
         <div class="list-group-item">
 
@@ -107,10 +246,8 @@
 
       </div>
 
+-->
 
-      <button type="submit" class="btn btn-lg btn-primary btn-block" ng-disabled='form.$invalid'>Request Access</button>
-    </form>
-  </div>
 
 
 

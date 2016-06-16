@@ -76615,6 +76615,13 @@ app.filter("sanitize", ['$sce', function($sce) {
 }]);
 
 
+app.directive("disableAnimate", function ($animate) {
+    return function (scope, element) {
+        $animate.enabled(element, false);
+    };
+});
+
+
    
 // lazyload config
 
@@ -77538,6 +77545,27 @@ angular.module('app')
 		  }
 		});
 	};
+
+	var AcsRegister = function(username, password, email, mobile, callback) {
+		
+		var user = new Parse.User();
+        user.set("username", username);
+        user.set("password", password);
+        //user.set("phone", mobile);
+        user.set("email", email);
+
+        user.signUp(null, {
+              success: function(user) {
+              	callback(null, user);
+              },
+              error: function(user, error) {
+                callback(new Error(error.message));
+              }
+        });
+		
+	};
+
+
 
 
 	var AcsForgot = function(email, callback) {
@@ -78770,10 +78798,35 @@ angular.module('app')
 
 	};
 
+	var AcsVerifyNumber = function(number, callback) {
+		var cnum = number.replace(/[^0-9]/, '');
+
+	    var Verifications = Parse.Object.extend("Verifications");
+	    var v = new Verifications();
+	    var c = Math.ceil(Math.random() * 900000 + 100000) + "";
+
+	    v.set("userName", Parse.User.current().get("username"));
+	    v.set("code", c);
+	    v.set("phoneNumber", cnum);
+	    v.set("numTried", 0);
+
+
+	    v.save(null, {
+	        success: function(v) {
+	            callback(null, c);
+	        },
+	        error: function(v, error) {
+	             callback("Failed to send request");
+	        }
+	    });
+
+	};
+
 
 	return {
 		loggedIn: AcsIsLoggedIn,
 		login: AcsLogin,
+		register: AcsRegister,
 		forgot: AcsForgot,
 		logout: AcsLogout,
 		info: AcsGetInfo,
@@ -78829,7 +78882,9 @@ angular.module('app')
 
 		addRepresentative: AcsAddRepresentative,
 		getRepresentatives: AcsGetReps,
-		checkRepID: AcsCheckRepID
+		checkRepID: AcsCheckRepID,
+
+		verifyNumber: AcsVerifyNumber
 
 	};
 }]);

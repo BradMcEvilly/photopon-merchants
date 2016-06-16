@@ -42,4 +42,11 @@ app.filter("sanitize", ['$sce', function($sce) {
 }]);
 
 
+app.directive("disableAnimate", function ($animate) {
+    return function (scope, element) {
+        $animate.enabled(element, false);
+    };
+});
+
+
    
