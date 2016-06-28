@@ -63,7 +63,8 @@ angular.module('app')
     $scope.addLocation = function() {
 
     	acsManager.addLocation({
-    		name: $scope.location_title,
+            name: $scope.location_title,
+    		phoneNumber: $scope.location_phone,
 			address: $scope.address.selected.formatted_address,
 			latitude: $scope.address.selected.geometry.location.lat,
 			longitude: $scope.address.selected.geometry.location.lng
@@ -115,6 +116,7 @@ angular.module('app')
         $timeout(function () {
 
             $scope.location_title = location.get("name");
+            $scope.location_phone = location.get("phoneNumber");
             $scope.address.selected = {
                 geometry: {
                     location: {}
@@ -177,6 +179,7 @@ angular.module('app')
 
         acsManager.editLocation(id, {
             name: $scope.location_title,
+            phoneNumber: $scope.location_phone,
             address: $scope.address.selected.formatted_address,
             latitude: parseFloat($scope.address.selected.geometry.location.lat),
             longitude: parseFloat($scope.address.selected.geometry.location.lng)

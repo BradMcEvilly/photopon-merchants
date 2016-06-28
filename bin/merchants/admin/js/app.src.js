@@ -76615,6 +76615,27 @@ app.filter("sanitize", ['$sce', function($sce) {
 }]);
 
 
+app.filter('toPhoneNumber', function() {
+  return function(input) {
+    input = input || '';
+    var out = "";
+
+    input.replace(/\D/g,'');
+
+    if (input.length == 0) {
+      return "No Phone"
+    }
+
+    if (input.length != 10) {
+      return input;
+    }
+
+    
+    return "(" + input.substr(0, 3) + ") " + input.substr(3, 3) + "-" + input.substr(6, 4);
+  };
+});
+
+
 app.directive("disableAnimate", function ($animate) {
     return function (scope, element) {
         $animate.enabled(element, false);
@@ -77051,6 +77072,15 @@ angular.module('app')
                 templateUrl: 'tpl/admin_salesreps.html',
                 controller: 'SalesReps',
                 resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/salesreps.js'])
+              })
+
+              .state('app.manageregions', {
+                url: '/regions',
+                templateUrl: 'tpl/admin_regions.html',
+                controller: 'ManageRegions',
+                resolve: load(['js/app/map/load-google-maps.js', 'js/app/map/ui-map.js', 'toaster', 'moment', 'js/services/acs.js', 'js/controllers/manageregions.js'], function() { 
+                  return loadGoogleMaps(); 
+                })
               })
 
 
@@ -78079,6 +78109,7 @@ angular.module('app')
 		var location = new LocationClass();
 
 		location.set("name", data.name);
+		location.set("phoneNumber", data.phoneNumber);
 		location.set("address", data.address);
 		location.set("location", point);
 		location.set("owner", Parse.User.current());
@@ -78109,6 +78140,7 @@ angular.module('app')
 				});
 
 				object.set("name", data.name);
+				object.set("phoneNumber", data.phoneNumber);
 				object.set("address", data.address);
 				object.set("location", point);
 
@@ -78778,6 +78810,55 @@ angular.module('app')
 	};
 
 
+	var AcsGetZipCodes = function(callback) {
+		var query = new Parse.Query("EnabledLocations");
+
+		query.find({
+			success: function(results) {
+
+				callback(null, results);			
+			},
+
+			error: function(error) {
+				callback('Failed to get representatives');
+			}
+		});
+
+	};
+
+	var AcsRemoveZipCode = function(id, callback) {
+		var EnableLocation = Parse.Object.extend("EnabledLocations");
+		var query = new Parse.Query(EnableLocation);
+
+		query.get(id, {
+			success: function(obj) {
+				obj.destroy();
+				callback();
+			},
+			error: function(object, error) {
+				callback(new Error('Failed to deny merchant request'));
+			}
+		});
+	};
+
+	var AcsAddZipCode = function(zip, callback) {
+
+        var EnabledLocation = Parse.Object.extend("EnabledLocations");
+        var loc = new EnabledLocation();
+
+        loc.set("zipcode", zip);
+
+        loc.save(null, {
+            success: function(req) {
+                callback();
+            },
+            error: function(req, error) {
+                 callback("Failed to send request");
+            }
+        });
+	};
+
+
 
 	var AcsGetLastBill = function(callback) {
 
@@ -78884,8 +78965,10 @@ angular.module('app')
 		getRepresentatives: AcsGetReps,
 		checkRepID: AcsCheckRepID,
 
-		verifyNumber: AcsVerifyNumber
-
+		verifyNumber: AcsVerifyNumber,
+		getZipCodes: AcsGetZipCodes,
+		addZipCode: AcsAddZipCode,
+		removeZipCode: AcsRemoveZipCode
 	};
 }]);
 

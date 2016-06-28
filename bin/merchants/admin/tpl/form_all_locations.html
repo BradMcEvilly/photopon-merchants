@@ -17,6 +17,7 @@
                 <tr>
                   <th>Name</th>
                   <th>Address</th>
+                  <th>Phone</th>
                   <th>Coordinates</th>
                 </tr>
               </thead>
@@ -25,6 +26,7 @@
                 <tr ng-repeat="c in locations" ui-sref="app.editlocation({ id: '{{c.id}}' })">                    
                   <td>{{c.get('name')}}</td>
                   <td>{{c.get('address')}}</td>
+                  <td>{{c.get('phoneNumber') | toPhoneNumber}}</td>
                   <td>({{c.get('location').latitude}}, {{c.get('location').longitude}})</td>
                   
                 </tr>

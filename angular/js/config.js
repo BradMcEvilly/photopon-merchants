@@ -42,6 +42,27 @@ app.filter("sanitize", ['$sce', function($sce) {
 }]);
 
 
+app.filter('toPhoneNumber', function() {
+  return function(input) {
+    input = input || '';
+    var out = "";
+
+    input.replace(/\D/g,'');
+
+    if (input.length == 0) {
+      return "No Phone"
+    }
+
+    if (input.length != 10) {
+      return input;
+    }
+
+    
+    return "(" + input.substr(0, 3) + ") " + input.substr(3, 3) + "-" + input.substr(6, 4);
+  };
+});
+
+
 app.directive("disableAnimate", function ($animate) {
     return function (scope, element) {
         $animate.enabled(element, false);

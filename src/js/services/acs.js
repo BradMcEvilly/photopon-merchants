@@ -555,6 +555,7 @@ angular.module('app')
 		var location = new LocationClass();
 
 		location.set("name", data.name);
+		location.set("phoneNumber", data.phoneNumber);
 		location.set("address", data.address);
 		location.set("location", point);
 		location.set("owner", Parse.User.current());
@@ -585,6 +586,7 @@ angular.module('app')
 				});
 
 				object.set("name", data.name);
+				object.set("phoneNumber", data.phoneNumber);
 				object.set("address", data.address);
 				object.set("location", point);
 
@@ -1254,6 +1256,55 @@ angular.module('app')
 	};
 
 
+	var AcsGetZipCodes = function(callback) {
+		var query = new Parse.Query("EnabledLocations");
+
+		query.find({
+			success: function(results) {
+
+				callback(null, results);			
+			},
+
+			error: function(error) {
+				callback('Failed to get representatives');
+			}
+		});
+
+	};
+
+	var AcsRemoveZipCode = function(id, callback) {
+		var EnableLocation = Parse.Object.extend("EnabledLocations");
+		var query = new Parse.Query(EnableLocation);
+
+		query.get(id, {
+			success: function(obj) {
+				obj.destroy();
+				callback();
+			},
+			error: function(object, error) {
+				callback(new Error('Failed to deny merchant request'));
+			}
+		});
+	};
+
+	var AcsAddZipCode = function(zip, callback) {
+
+        var EnabledLocation = Parse.Object.extend("EnabledLocations");
+        var loc = new EnabledLocation();
+
+        loc.set("zipcode", zip);
+
+        loc.save(null, {
+            success: function(req) {
+                callback();
+            },
+            error: function(req, error) {
+                 callback("Failed to send request");
+            }
+        });
+	};
+
+
 
 	var AcsGetLastBill = function(callback) {
 
@@ -1360,8 +1411,10 @@ angular.module('app')
 		getRepresentatives: AcsGetReps,
 		checkRepID: AcsCheckRepID,
 
-		verifyNumber: AcsVerifyNumber
-
+		verifyNumber: AcsVerifyNumber,
+		getZipCodes: AcsGetZipCodes,
+		addZipCode: AcsAddZipCode,
+		removeZipCode: AcsRemoveZipCode
 	};
 }]);
 

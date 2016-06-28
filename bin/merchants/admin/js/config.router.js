@@ -237,6 +237,15 @@ angular.module('app')
                 resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/salesreps.js'])
               })
 
+              .state('app.manageregions', {
+                url: '/regions',
+                templateUrl: 'tpl/admin_regions.html',
+                controller: 'ManageRegions',
+                resolve: load(['js/app/map/load-google-maps.js', 'js/app/map/ui-map.js', 'toaster', 'moment', 'js/services/acs.js', 'js/controllers/manageregions.js'], function() { 
+                  return loadGoogleMaps(); 
+                })
+              })
+
 
 
 

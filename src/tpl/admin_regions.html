@@ -1,0 +1,102 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">Available Locations</h1>
+</div>
+<div class="wrapper-md">
+  <div>
+    
+      <div class="row">
+        <div class="col-sm-8">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Availability area map
+                </div>
+                
+                <div id="map_canvas" style="min-height:400px" ui-map="myMap"
+                     ui-options="mapOptions">
+                </div>
+
+                <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
+                     ui-event="{'map-click': 'openMarkerInfo(marker)'}">
+                </div>
+
+                <div ui-map-info-window="myInfoWindow">
+                  <div class="m-b-sm"><strong>Redeem</strong></div>
+                  <div class="m-b-sm">Title: {{currentMarker.redeem.get('coupon').get('title')}}</div>
+                  <div class="m-b-sm">Expiration: {{currentMarker.redeem.getExpiration()}}</div>
+                  <div class="m-b-sm">Time: {{currentMarker.redeem.getCreateTime()}}</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Add new zip code
+                </div>
+                
+                <div class="wrapper-md">
+
+                  <div class="input-group">
+                    <input type="text" class="form-control" placeholder="Zip Code" ng-model="newZipCode">
+                    <span class="input-group-btn">
+                      <button class="btn btn-default" type="button" ng-click="enableArea()">Enable Area</button>
+                    </span>
+                  </div>
+                
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <div class="col-sm-4">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Zip codes
+            </div>
+            
+
+            <table class="table table-striped m-b-none">
+             
+              <tbody>
+
+                <tr ng-repeat="c in zipCodes">   
+
+                  <td>{{c.get("zipcode")}}</td>
+                  <td class="text-right">
+                    <a ng-click="removeZipCode()"><i class="fa fa-times-circle"></i></a>
+                  </td>
+                  
+                  
+                </tr>
+
+
+              </tbody>
+            </table>
+            
+
+          </div>
+        </div>
+
+
+
+      </div>
+
+
+
+
+
+  </div>
+
+</div>
+
+<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
