@@ -129,6 +129,7 @@ module.exports = {
             {expand: true, src: "**", cwd: 'src/js',      dest: "angular/js"},
             {expand: true, src: "**", cwd: 'src/tpl',     dest: "angular/tpl"},
             {src: 'src/index.min.html', dest : 'angular/index.html'},
+            {src: 'src/zips.json', dest : 'angular/zips.json'},
             {src: 'src/material.min.html', dest : 'angular/material.html'}
         ]
     },
@@ -146,6 +147,7 @@ module.exports = {
             {expand: true, src: "**", cwd: 'src/js',      dest: "angular/js"},
             {expand: true, src: "**", cwd: 'src/tpl',     dest: "angular/tpl"},
             {src: 'src/index.html', dest : 'angular/index.html'},
+            {src: 'src/zips.json', dest : 'angular/zips.json'},
             {src: 'src/material.html', dest : 'angular/material.html'}
         ]
     },

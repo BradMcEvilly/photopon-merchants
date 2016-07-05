@@ -76700,6 +76700,12 @@ angular.module('app')
   )
   .constant('MODULE_CONFIG', [
       {
+          name: 'photopon.backend',
+          files: [
+              'js/services/acs.js'
+          ]
+      },
+      {
           name: 'ngGrid',
           files: [
               './libs/angular/ng-grid/build/ng-grid.min.js',

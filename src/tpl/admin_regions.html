@@ -15,19 +15,12 @@
                 </div>
                 
                 <div id="map_canvas" style="min-height:400px" ui-map="myMap"
-                     ui-options="mapOptions">
+                     ui-options="mapOptions" ui-event="{'map-click': 'findZipCode($event, $params)'}">
                 </div>
 
-                <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
-                     ui-event="{'map-click': 'openMarkerInfo(marker)'}">
+                <div ng-repeat="p in polys" ui-map-polygon="polys[$index]">
                 </div>
 
-                <div ui-map-info-window="myInfoWindow">
-                  <div class="m-b-sm"><strong>Redeem</strong></div>
-                  <div class="m-b-sm">Title: {{currentMarker.redeem.get('coupon').get('title')}}</div>
-                  <div class="m-b-sm">Expiration: {{currentMarker.redeem.getExpiration()}}</div>
-                  <div class="m-b-sm">Time: {{currentMarker.redeem.getCreateTime()}}</div>
-                </div>
               </div>
             </div>
           </div>
@@ -71,7 +64,7 @@
 
                 <tr ng-repeat="c in zipCodes">   
 
-                  <td>{{c.get("zipcode")}}</td>
+                  <td ng-click="centerArea()">{{c.get("zipcode")}}</td>
                   <td class="text-right">
                     <a ng-click="removeZipCode()"><i class="fa fa-times-circle"></i></a>
                   </td>
