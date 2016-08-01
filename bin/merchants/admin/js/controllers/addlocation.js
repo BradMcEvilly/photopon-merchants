@@ -61,6 +61,18 @@ angular.module('app')
     };
 
     $scope.addLocation = function() {
+        
+        var addr = $scope.address.selected;
+
+        for (var i = 0; i < addr.address_components.length; i++) {
+            var types = addr.address_components[i].types;
+
+            for (var t = 0; t < types.length; t++) {
+                if (types[t] == "postal_code") {
+                    acsManager.addZipCode(addr.address_components[i].short_name, function(err) {});
+                }
+            }
+        }
 
     	acsManager.addLocation({
             name: $scope.location_title,

@@ -11,7 +11,9 @@ angular.module('app')
 
     $scope.coupon = {
         locations: [],
-        expiration: new Date()
+        expiration: new Date(),
+        givetoget: "3",
+        oneperuser: true
     };
 
     acsManager.getCoupons(function(err, coupons) {
@@ -77,7 +79,9 @@ angular.module('app')
         title: $scope.coupon.title,
         body: $scope.coupon.body,
         code: $scope.coupon.code,
+        oneperuser: $scope.coupon.oneperuser,
         locations: locationIds,
+        givetoget: $scope.coupon.givetoget,
         expiration: $scope.coupon.expiration,
         isActive: true
       }, function() {
@@ -133,6 +137,8 @@ angular.module('app')
             $scope.coupon.body = coupon.get("description");
             $scope.coupon.expiration = coupon.get("expiration");
             $scope.coupon.code = coupon.get("code");
+            $scope.coupon.givetoget = (coupon.get("givetoget") || 0) + "";
+            $scope.coupon.oneperuser = coupon.get("oneperuser");
 
             
             var locs = coupon.get("locations");
@@ -197,6 +203,8 @@ angular.module('app')
         title: $scope.coupon.title,
         body: $scope.coupon.body,
         code: $scope.coupon.code,
+        oneperuser: $scope.coupon.oneperuser,
+        givetoget: $scope.coupon.givetoget,
         locations: locationIds,
         expiration: $scope.coupon.expiration
       }, function() {

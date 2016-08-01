@@ -19,6 +19,8 @@ angular.module('app')
     };
 
     var allZips = {};
+    var allCoords = {};
+    $scope.filteredAreas = [];
 
 
     function isNormalInteger(str) {
@@ -48,7 +50,12 @@ angular.module('app')
             obj: polygon,
             coords: coords
         };
-    }
+    };
+
+    var ResizeMap = function() {
+        google.maps.event.trigger($scope.myMap,'resize');
+        $scope.myMap.setZoom( $scope.myMap.getZoom() );
+    };
 
 
     function LoadEverything() {
@@ -59,48 +66,56 @@ angular.module('app')
             }, 0);
 
 
-            $http.get('./zips.json').then(function(us) {
+        
+            for (var i = 0; i < $scope.polys.length; i++) {
+                $scope.polys[i].setMap(null);
+            }
+            $scope.polys = [];
 
-                var allCoords = us.data.features;
+            allZips = {};
 
-                allZips = {};
-
-                for (var i = 0; i < $scope.polys.length; i++) {
-                    $scope.polys[i].setMap(null);
-                }
-                $scope.polys = [];
-
-
-                for (var i = 0; i < allCoords.length; i++) {
-                    allZips[allCoords[i].properties.zip] = allCoords[i];
-                }
+            for (var i = 0; i < allCoords.length; i++) {
+                allZips[allCoords[i].properties.zip] = allCoords[i];
+                allZips[allCoords[i].properties.zip].isEnabled = false;
+            }
 
 
-                 $timeout(function () {
-                    for (var i = 0; i < zipCodes.length; i++) {
-                        var zip = zipCodes[i].get("zipcode");
-                        var obj = allZips[zip];
-                        
-                        var g = obj.geometry;
-                        if (g.type != "Polygon") {
-                            continue;
-                        }
+             $timeout(function () {
+                for (var i = 0; i < zipCodes.length; i++) {
+                    var zip = zipCodes[i].get("zipcode");
+                    var obj = allZips[zip];
 
-                        var c = g.coordinates[0];
-                        zipCodes[i].poly = AddPolygon(c);
-                    };
-                }, 0);
+                    if (!obj) {
+                        console.log("Not found " + zip);
+                        continue;
+                    }
 
-            });
+                    obj.isEnabled = true;
+                    obj.objectId = zipCodes[i].id;
+                    
+                    var g = obj.geometry;
+                    if (g.type != "Polygon") {
+                        continue;
+                    }
 
+                    var c = g.coordinates[0];
+                    zipCodes[i].poly = AddPolygon(c);
 
+                };
+                console.log("everything is loaded");
+
+                $scope.evaluateInput();
+            }, 0);
+
+             $timeout(function() {
+                ResizeMap();
+             }, 100);
 
         });
 
 
-        
 
-        $scope.newZipCode = "";
+
     };
 
 
@@ -133,24 +148,68 @@ angular.module('app')
         });
     };
 
+    $scope.batchAddZipCodes = function() {
+        var zips = $scope.newZipCodesBatch.split(",");
+        for (var i = 0; i < zips.length; i++) {
+            zips[i] = zips[i].trim();
+        }
+
+        var nextIndex = 0;
+        var numAdded = 0;
+        var numFailed = 0;
+        $scope.batchProgress = "Starting...";
+
+        var addNextZip = function() {
+            var zip = zips[nextIndex];
+            acsManager.addZipCode(zip, function(err) {
+
+                if (err) {
+                    ++numFailed;
+                } else {
+                    ++numAdded;
+                }
+
+                $timeout(function() {
+                    $scope.batchProgress = "Added " + numAdded + ", Failed " + numFailed + " from " + zips.length;
+                }, 0);
+
+                ++nextIndex;
+                if (nextIndex >= zips.length) {
+                    $scope.batchProgress = null;
+                    $scope.newZipCodesBatch = "";
+                    LoadEverything();
+                    return;
+                }
+                addNextZip();
+            });
+            
+        };
+
+        addNextZip();
+
+    };
+
 
     $scope.centerArea = function() {
         var bounds = new google.maps.LatLngBounds();
 
-        for (var i = 0; i < this.c.poly.coords.length; i++) {
-          bounds.extend(this.c.poly.coords[i]);
+        var p = this.c.geometry.coordinates[0];
+
+        for (var i = 0; i < p.length; i++) {
+            bounds.extend(new google.maps.LatLng(p[i][1], p[i][0]));
+            
         }
 
         $scope.myMap.fitBounds(bounds);
     }
 
     $scope.removeZipCode = function() {
-        var id = this.c.id;
+        var id = this.c.objectId;
         acsManager.removeZipCode(id, LoadEverything);
     };
 
     $scope.enableArea = function() {
-        var zip = $scope.newZipCode;
+        var zip = this.c.properties.zip;
 
         if (allZips[zip]) {
             acsManager.addZipCode(zip, LoadEverything);
@@ -159,8 +218,42 @@ angular.module('app')
         }
     };
 
+    $scope.onNoteClicked = function() {
+        $scope.newZipCode = this.c.get("zipcode");
+        $scope.evaluateInput();
+        $scope.centerArea.call({ c: allZips[$scope.newZipCode] });
+    };
 
-    LoadEverything();
+    $scope.evaluateInput = function() {
+        var zip = $scope.newZipCode;
+        console.log(zip);
+
+        if (zip == "") {
+            $scope.filteredAreas = [];
+            return;
+        }
+
+        var newFiltered = Object.keys(allZips).filter(function (propertyName) {
+            return propertyName.indexOf(zip) === 0;
+        });
+
+        $scope.resultCount = newFiltered.length;
+        newFiltered = newFiltered.slice(0, 10);
+
+        
+        $scope.filteredAreas = [];
+        for (var i = 0; i < newFiltered.length; i++) {
+            $scope.filteredAreas.push(allZips[newFiltered[i]]);
+        }
+
+        console.log($scope.filteredAreas);
+    };
+
+    $http.get('./zips.json').then(function(us) {
+        allCoords = us.data.features;
+        LoadEverything();
+        $scope.isLoadFinished = true;
+    });
 
 }]);
 

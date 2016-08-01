@@ -20,6 +20,7 @@
                   <th>Is active</th>
                   <th>Title</th>
                   <th>Locations</th>
+                  <th>Give To Get</th>
                   <th>Expiration</th>
                  
                 </tr>
@@ -36,6 +37,7 @@
                   
                   <td  ui-sref="app.editcoupon({ id: '{{c.id}}' })">{{c.get('title')}}</td>
                   <td  ui-sref="app.editcoupon({ id: '{{c.id}}' })">{{c.getLocationTitle()}}</td>
+                  <td  ui-sref="app.editcoupon({ id: '{{c.id}}' })">{{c.getGiveToGet()}}</td>
 
                   <td>{{c.getExpiration()}} (<span style="color:{{ c.getExpirationDeltaColor() }};">{{ c.getExpirationDelta() }}</span>) </td>
                   

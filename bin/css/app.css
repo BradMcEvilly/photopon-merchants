@@ -2967,31 +2967,28 @@ fieldset[disabled] .i-checks input + i:before {
           animation: fadeOutDown 0.5s;
 }
 
-.ng-hide-add,
-.ng-hide-remove {
-  /* this is required as of 1.3x to properly
-     apply all styling in a show/hide animation */
+/*
 
+.ng-hide-add, .ng-hide-remove {
   transition: 0s linear all;
 }
 
-.ng-hide-add-active,
-.ng-hide-remove-active {
-  /* the transition is defined in the active class */
-
+.ng-hide-add-active, .ng-hide-remove-active {
   transition: 0.3s linear all;
+
 }
 
 .ng-hide-add-active {
-  animation-duration: 0.3s;
   animation-name: fadeOutUp;
+  animation-duration: 0.3s;
 }
 
 .ng-hide-remove-active {
-  animation-duration: 0.3s;
   animation-name: fadeInDown;
+  animation-duration: 0.3s;
 }
 
+*/
 .bg-gd {
   background-image: -webkit-gradient(linear, left 0, left 100%, from(rgba(40, 50, 60, 0)), to(rgba(40, 50, 60, 0.075)));
   background-image: -webkit-linear-gradient(top, rgba(40, 50, 60, 0), 0, rgba(40, 50, 60, 0.075), 100%);
@@ -5112,6 +5109,36 @@ a.text-#000000:hover {
   .no-m-xs {
     margin: 0 !important;
   }
+}
+
+.bg-number {
+  position: relative;
+  top: 50px;
+  left: -60px;
+  z-index: 1;
+  display: block;
+  height: 0;
+  font-size: 8em;
+  color: #f2f2f0;
+  text-align: left;
+}
+
+.bg-description {
+  position: relative;
+  z-index: 999;
+}
+
+.globe-image {
+  position: relative;
+  top: 90px;
+  left: 80px;
+  display: block;
+  width: 200px;
+  height: 200px;
+  background-image: url('../img/technology_globe.png');
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
 }
 
 .butterbar {

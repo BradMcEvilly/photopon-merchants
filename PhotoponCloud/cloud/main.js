@@ -1,4 +1,97 @@
 
+Parse.Cloud.job("RemoveDuplicateZips", function(request, status) {
+  Parse.Cloud.useMasterKey();
+  var _ = require("underscore");
+
+  var hashTable = {};
+
+  var testItemsQuery = new Parse.Query("EnabledLocations");
+
+  testItemsQuery.each(function (testItem) {
+    var key = testItem.get("zipcode");
+
+    if (key in hashTable) { // this item was seen before, so destroy this
+        return testItem.destroy();
+    } else { // it is not in the hashTable, so keep it
+        hashTable[key] = 1;
+    }
+
+  }).then(function() {
+    console.log("Migration completed successfully.");
+  }, function(error) {
+    console.log("Uh oh, something went wrong.");
+  });
+});
+
+
+Parse.Cloud.define("MyCoupons", function(request, response) {
+	Parse.Cloud.useMasterKey();
+	
+
+	var hashTable = {};
+
+	var d = new Date();
+	var todaysDate = new Date(d.getTime()); 
+
+	var myCoupons = new Parse.Query("Coupon");
+	myCoupons.include("company");
+	myCoupons.equalTo("isActive", true);
+	myCoupons.greaterThanOrEqualTo("expiration", todaysDate);
+
+
+	var myRedeems = new Parse.Query("RedeemedCoupons");
+	myRedeems.equalTo("user", request.user);
+
+
+
+
+
+	myCoupons.find({
+		success: function (allCoupons) {
+		
+			var redeemed = [];
+			
+			myRedeems.find({
+				success: function(redeems) {
+
+					for (var i = 0; i < allCoupons.length; i++) {
+						redeemed.push(false);
+						var c = allCoupons[i];
+
+						for (var j = 0; j < redeems.length; j++) {
+							var r = redeems[j];
+
+							if (r.get("coupon").id == c.id) {
+								redeemed[i] = true;
+								break;
+							}
+						}
+					}
+
+					response.success({
+						coupons: allCoupons,
+						redeems: redeemed,
+						params: request.params 
+					});
+
+				},
+				error: function(err) {
+
+				}
+			});
+
+					
+		},
+		error: function() {
+
+		}
+	});
+
+
+});
+
+
+
 Parse.Cloud.define("ServerTime", function(request, response) {
 	var time = new Date();
 	response.success(time.getTime());
@@ -88,6 +181,26 @@ Parse.Cloud.beforeSave("Photopon", function(request, response) {
     request.object.setACL(groupACL);
  	
 	request.user.set("lastPhotopon", new Date());
+
+
+	var PerUserShareClass = Parse.Object.extend("PerUserShare");
+
+	var friends = request.object.get("users");
+
+	for (var i = 0; i < friends.length; i++) {
+		var friend = new Parse.User();
+		friend.id = friends[i];
+			
+		var sh = new PerUserShareClass();
+
+		sh.set("user", request.user);
+		sh.set("coupon", request.object.get("coupon"));
+		sh.set("friend", friend);
+
+		sh.save();
+	}
+
+
 	request.user.save(null, {
 		success: function(user) {
 			response.success();

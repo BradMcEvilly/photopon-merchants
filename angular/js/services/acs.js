@@ -154,6 +154,17 @@ angular.module('app')
 
 					for (var i = 0; i < results.length; i++) {
 
+						results[i].getGiveToGet = function() {
+							var giveToGet = this.get('givetoget') || 0;
+
+							if (giveToGet == 0) {
+								return "None";
+							}
+
+							return giveToGet + ((giveToGet == 1) ? " share" : " shares");
+						};
+
+
 						results[i].getShareRato = function() {
 							var numShared = this.get('numShared');
 							var numRedeemed = this.get('numRedeemed');
@@ -413,6 +424,8 @@ angular.module('app')
 			coupon.set("code", data.code);
 			coupon.set("company", company);
 			coupon.set("expiration", data.expiration);
+			coupon.set("oneperuser", data.oneperuser);
+			coupon.set("givetoget", parseInt(data.givetoget + "", 10));
 			coupon.set("isActive", data.isActive);
 			coupon.set("locations", data.locations);
 
@@ -443,7 +456,9 @@ angular.module('app')
 				object.set("description", data.body);
 				object.set("code", data.code);
 				object.set("expiration", data.expiration);
+				object.set("oneperuser", data.oneperuser);
 				object.set("locations", data.locations);
+				object.set("givetoget", parseInt(data.givetoget + "", 10));
 
 				object.save(null, {
 					success: function(coupon) {
@@ -1257,19 +1272,37 @@ angular.module('app')
 
 
 	var AcsGetZipCodes = function(callback) {
-		var query = new Parse.Query("EnabledLocations");
+		var allResults = [];
+		var maxResults = 1000;
+		var currentOffset = 0;
 
-		query.find({
-			success: function(results) {
+		var GetSomething = function() {
+			var query = new Parse.Query("EnabledLocations");
+			query.limit(maxResults);
+			query.skip(currentOffset);
+			query.ascending("zipcode");
 
-				callback(null, results);			
-			},
+			query.find({
+				success: function(results) {
+					allResults = allResults.concat(results);
 
-			error: function(error) {
-				callback('Failed to get representatives');
-			}
-		});
+					if (results.length == maxResults) {
+						currentOffset += maxResults;
+						GetSomething();
+					} else {
+						callback(null, allResults);				
+					}
 
+				},
+
+				error: function(error) {
+					callback('Failed to get representatives');
+				}
+			});
+
+		};
+
+		GetSomething();
 	};
 
 	var AcsRemoveZipCode = function(id, callback) {
