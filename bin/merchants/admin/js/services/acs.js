@@ -27,7 +27,12 @@ angular.module('app')
 		var user = new Parse.User();
         user.set("username", username);
         user.set("password", password);
-        //user.set("phone", mobile);
+        
+        if (mobile) {
+        	mobile = mobile.replace(/\D/g,'');
+        	user.set("phone", mobile);
+        }
+        
         user.set("email", email);
 
         user.signUp(null, {

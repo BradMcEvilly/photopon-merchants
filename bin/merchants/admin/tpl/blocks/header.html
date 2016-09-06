@@ -81,10 +81,11 @@
           <li class="dropdown" dropdown>
             <a href class="dropdown-toggle clear" dropdown-toggle>
               <span class="thumb-sm avatar pull-right m-t-n-sm m-b-n-sm m-l-sm">
-                <img src="{{ user.get('image').url() }}" alt="...">
+                <img ng-show="user.get('image').url()"  src="{{ user.get('image').url() }}" alt="...">
+                <img ng-hide="user.get('image').url()"  src="img/profile-icon.png" alt="...">
                 <i class="on md b-white bottom"></i>
               </span>
-              <span class="hidden-sm hidden-md">{{user.get('email')}}</span> <b class="caret"></b>
+              <span class="hidden-sm hidden-md">{{user.get('username')}}</span> <b class="caret"></b>
             </a>
             <!-- dropdown -->
             <ul class="dropdown-menu animated fadeInRight w">
@@ -95,7 +96,7 @@
                 </a>
               </li>
               <li>
-                <a ui-sref="app.docs">
+                <a ui-sref="app.dashboard-merchant({ action: 'help' })">
                       <i class="glyphicon glyphicon-log-out icon text-info-dker"></i>
                     &nbsp;Help
                 </a>

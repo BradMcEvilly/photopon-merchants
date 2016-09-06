@@ -64,7 +64,7 @@ app.controller('RequestFormController', ['$scope', '$http', '$state', 'acsManage
 
     } else {
         
-      acsManager.register($scope.user.username, $scope.user.password, $scope.user.email, $scope.user.mobile, function(err, user) {
+      acsManager.register($scope.user.username, $scope.user.password, $scope.user.email, $scope.user.phonenumber, function(err, user) {
         if (err) {
             $timeout(function () {
               $scope.authError = err.message;
@@ -109,6 +109,15 @@ app.controller('RequestFormController', ['$scope', '$http', '$state', 'acsManage
         return 4;
       }
 
+
+
+      var currentUser = Parse.User.current();
+      var mobile = $scope.user.phonenumber;
+      
+      if (mobile) {
+        mobile = mobile.replace(/\D/g,'');
+        currentUser.set("phone", mobile);
+      }
 
       var CreateRequest = function() {
         acsManager.createMerchantRequest($scope.user, function(err) {

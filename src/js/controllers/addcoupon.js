@@ -1,25 +1,30 @@
 'use strict';
 
 angular.module('app')
-.controller('AddCouponCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', '$timeout', function($scope, $http, $state, acsManager, $sce, $modal, $filter, $timeout) {
+.controller('AddCouponCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', '$timeout', '$document', function($scope, $http, $state, acsManager, $sce, $modal, $filter, $timeout, $document) {
     $scope.user = acsManager.info();
 
     if ($scope.user == null) {
     	$state.go('access.signin');
     	return;
-    }
+    } 
 
     $scope.coupon = {
         locations: [],
         expiration: new Date(),
-        givetoget: "3",
+        givetoget: "3", 
         oneperuser: true
     };
 
     acsManager.getCoupons(function(err, coupons) {
         $timeout(function() {
           $scope.coupons = coupons;
-        }, 0);
+
+          if ($scope.coupons.length == 0) {
+            ShowOverlayFor($document.find(".tutorial-gtg-item"), $scope);
+
+          }
+       }, 0);
         
     });
 
@@ -85,9 +90,7 @@ angular.module('app')
         expiration: $scope.coupon.expiration,
         isActive: true
       }, function() {
-        $state.go($state.current, {}, {
-          reload: true
-        });
+          $state.go("app.dashboard-merchant");
       });
     };
 

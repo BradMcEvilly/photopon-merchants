@@ -42,10 +42,10 @@ angular.module('app')
 
 							
               .state('app.dashboard-merchant', {
-                  url: '/dashboard-merchant',
+                  url: '/dashboard-merchant/:action',
                   templateUrl: 'tpl/app_dashboard_merchant.html',
 								controller: 'DashboardCtrl',
-								resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js', 'js/controllers/aside.js'])
+								resolve: load(['js/directives/tutorial.js', 'js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboard.js', 'js/controllers/header.js', 'js/controllers/aside.js', 'toaster'])
               })
 
       
@@ -67,7 +67,7 @@ angular.module('app')
                 url: '/coupon/add',
                 templateUrl: 'tpl/form_add_coupon.html',
                 controller: 'AddCouponCtrl',
-                resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
+                resolve: load(['js/directives/tutorial.js', 'ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
               })
 
               .state('app.editcoupon', {

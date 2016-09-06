@@ -26,13 +26,21 @@ angular.module('app')
 		}
 
 		acsManager.getLastBill(function(bill) {
-			var shares = parseInt(bill.get("numShared") || 0, 10);
-			var redeems = parseInt(bill.get("numRedeemed") || 0, 10);
+			var shares = 0;
+			var redeems = 0;
+			var centPerRedeem = 0;
+
+
+			if (bill) {
+				redeems = parseInt(bill.get("numRedeemed") || 0, 10);
+				shares = parseInt(bill.get("numShared") || 0, 10);
+				centPerRedeem = bill.get("centPerRedeem");
+			}
 
 			$scope.currentShared = $scope.totalShares - shares;
 			$scope.currentRedeemed = $scope.totalRedeems - redeems;
 
-			$scope.currentTotal = $scope.currentRedeemed * bill.get("centPerRedeem") / 100;
+			$scope.currentTotal = $scope.currentRedeemed * centPerRedeem / 100;
 			$scope.$apply();
 		});
 

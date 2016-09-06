@@ -71,17 +71,15 @@
               <ul class="list-group list-group-lg m-b-none">
 
                 <li class="list-group-item" ng-hide="locations.length">
-                  <a href class="thumb-sm m-r">
-                    
-                    <i class="icon-bell fa-fw" style="
+                  
+                  
+                  <a href style="display: inline-block; vertical-align: middle;">
+                    <i class="icon-bell fa-fw m-r" style="
                         font-size: 26px;
                         vertical-align: middle;
                     "></i>
 
-                  </a>
-                  
-                  <a href style="display: inline-block; vertical-align: middle;">
-                    <span>You have no locations yet.</span>
+                    <span>You have no locations yet. Click "Add Location" button to start.</span>
                   </a>
                 </li>
                 
@@ -112,13 +110,16 @@
               
               <div class="panel-footer">
                 <span class="pull-right badge badge-bg m-t-xs">{{locations.length}}</span>
-                <button class="btn btn-primary btn-addon btn-sm" ui-sref="app.addlocation"><i class="fa fa-plus"></i>Add Location</button>
+
+                <button class="btn btn-primary btn-addon btn-sm tutorial-add-location-button"  hint-text="First, you'll need to add a business location" hint-width="180" hint-height="90" ui-sref="app.addlocation"><i class="fa fa-plus"></i>Add Location</button>
+
+
               </div>
-            </div>
+            </div> 
           </div>
 
 
-
+  
 
           <div class="col-md-6">
             <div class="panel no-border">
@@ -133,18 +134,17 @@
               <ul class="list-group list-group-lg m-b-none">
 
 
-                <li class="list-group-item" ng-hide="locations.length">
-                  <a href class="thumb-sm m-r">
-                    
-                    <i class="icon-bell fa-fw" style="
+                <li class="list-group-item" ng-hide="coupons.length">
+                 
+                  
+                  <a href style="display: inline-block; vertical-align: middle;">
+                  <i class="icon-bell fa-fw m-r" style="
                         font-size: 26px;
                         vertical-align: middle;
                     "></i>
 
-                  </a>
-                  
-                  <a href style="display: inline-block; vertical-align: middle;">
-                    <span>You have no coupons yet.</span>
+                    <span ng-show="locations.length">You have no coupons yet. Click "Add Coupon" to start.</span>
+                    <span ng-hide="locations.length">You have no coupons and locations yet. Please start by adding your business locations first.</span>
                   </a>
                 </li>
                 
@@ -165,7 +165,7 @@
               </ul>
               <div class="panel-footer">
                 <span class="pull-right badge badge-bg m-t-xs">{{coupons.length}}</span>
-                <button class="btn btn-primary btn-addon btn-sm" ui-sref="app.addcoupon"><i class="fa fa-plus"></i>Add Coupon</button>
+                <button hint-text="Great! Now you can create advocate coupons. Your customers use these in their photos to promote your business and get their friends & family in your door." hint-width="180" hint-height="90" class="btn btn-primary btn-addon btn-sm tutorial-add-coupon-button" ng-click="goToAddCoupons();"><i class="fa fa-plus"></i>Add Coupon</button> 
               </div>
             </div>
           </div>
@@ -176,3 +176,14 @@
   </div>
 
 </div>
+
+
+<div>
+    <script type="text/ng-template" id="myModalContent.html">
+        <div ng-include="'tpl/tutorial.html'"></div>
+    </script>
+</div>
+
+
+
+<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>

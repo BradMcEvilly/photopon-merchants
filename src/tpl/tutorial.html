@@ -1,0 +1,124 @@
+
+
+<div class="modal-header">
+    <h3 ng-show="currentStep == 0" class="text-center modal-title">Welcome to Photopon Marchant Dashboard!</h3>
+    <h3 ng-show="currentStep == 1" class="text-center modal-title">Add Locations</h3>
+    <h3 ng-show="currentStep == 2" class="text-center modal-title">Add Coupons</h3>
+    <h3 ng-show="currentStep == 3" class="text-center modal-title">Track your statistics</h3>
+</div>
+
+<div class="modal-body" ng-show="currentStep == 0">
+    <div class="row">
+        <div class="col-sm-3">
+            <img src="img/technology_globe.png" width="100%"/>
+        </div>
+        <div class="col-sm-9">
+            <h4>Start growing your business with Photopon</h4>
+            <p>Photopon will help your business go viral. Our platform gurantees that your coupons will be shared with people that are interested and makes spamming meningless. Photopon will generate repeat customers for your business.</p>
+
+            <h4>How it works</h4>
+            <p>Our users will see your coupons when they are nearby. In order to redeem your coupon users will have to share your coupon with their friends by creating Photopons. When user receives Photopon he/she can redeem it right away and use it in one of your locations.</p>
+
+            <h4>Start using Photopon</h4>
+            <p>Start by adding your business locations in Photopon Merchant Dashboard.</p>
+        </div>
+
+    </div>
+</div>
+
+<div class="modal-body" ng-show="currentStep == 1">
+    <div class="row">
+
+        <div class="col-sm-3">
+            <img src="img/locations_map.png" width="100%"/>
+        </div>
+        <div class="col-sm-9">
+            <p>Add location by clicking "Add Location" button on dashboard or go to New->Location from top menu bar. You will need following information:</p>
+
+            <h4>Name</h4>
+            <p>Your location name will be only visible for you. We won't display location names to our app users.</p>
+
+            <h4>Contact Phone</h4>
+            <p>Contact phone number for this location. Will be visible to app user.</p>
+
+            <h4>Address</h4>
+            <p>Your business location address. Start typing address and you will see autocomplete suggestions. Please check on map that your address is recognized correctly.</p>
+        </div>
+    </div>
+</div>
+ 
+
+
+<div class="modal-body" ng-show="currentStep == 2">
+    <div class="row">
+
+        <div class="col-sm-3">
+            <img src="img/coupons_img.png" width="100%"/>
+        </div>
+        <div class="col-sm-9">
+            <p>Add coupon by clicking "Add Coupon" button on dashboard or go to New->Coupon from top menu bar. You will need following information:</p>
+
+            <h4>Title</h4>
+            <p>Coupon title should contain short description about what your coupon offers. It will be visible in list of available coupons and should attract users to click on your coupon.</p>
+
+            <h4>Body</h4>
+            <p>Coupon body should contain full description of coupon. It will be visible to users in coupon details page when user opens your coupon.</p>
+
+            <h4>Code</h4>
+            <p>Coupon code will be shown to users when they redeem your coupon. It should be redeemable coupon code in locations that coupon is available.</p>
+
+            <h4>Expiration date</h4>
+            <p>Coupon will be visible in app until expiration date. Once coupon is expired it will become unavailable. Coupon expiration date can be extended later by editing coupon.</p>
+
+            <h4>Locations</h4>
+            <p>Select business locations where coupon is available. If your coupon is available in all your locations you can check "Available in all locations" checkbox.</p>  
+
+            <h4>Give To Get</h4>
+            <p>Give to get option controls number of coupon shares before user can redeem it.</p>
+
+            <h4>Limit 1 per customer</h4>
+            <p>When checked Photopon will allow to redeem your coupon once for each user.</p>
+
+        </div>
+    </div>
+
+</div>
+
+
+<div class="modal-body" ng-show="currentStep == 3">
+    <div class="row">
+
+        <div class="col-sm-3">
+            <img src="img/statistics.png" width="100%"/>
+        </div>
+        <div class="col-sm-9">
+            <p>Once you are done publishing your coupons you can start tracking their performace in Dashboard. Track your statistics in "Analytics" menu in navigation bar</p>
+
+            <h4>Redeems</h4>
+            <p>In this section you can see all your coupon redeems. You will see users who redeemed your coupon, users who sent the coupon, location and time information. You can also see map of all redeems (actual redeem locations).</p>
+
+            <h4>Shares</h4>
+            <p>Coming soon.</p>
+
+            <h4>All Coupons</h4>
+            <p>List of all your coupons with number of shares and redeems information and share to redeems ratio. </p>
+        </div>
+    </div>
+</div>
+   
+
+<div class="modal-footer">
+	<button ng-click="skip()" class="btn btn-default btn-addon pull-left"><i class="fa fa-minus"></i>Skip Tutorial</button>
+    <button ng-click="prev()" class="btn btn-primary btn-addon" ng-show="currentStep > 0"><i class="fa fa-chevron-left"></i>Prev</button>
+
+
+    <button ng-click="next()" class="btn btn-success btn-addon" ng-show="currentStep == 0"><i class="fa fa-chevron-right"></i>Add Location</button>
+
+    <button ng-click="next()" class="btn btn-success btn-addon" ng-show="currentStep == 1"><i class="fa fa-chevron-right"></i>Add Coupon</button>
+
+    <button ng-click="next()" class="btn btn-success btn-addon" ng-show="currentStep == 2"><i class="fa fa-chevron-right"></i>Track Statistics</button>
+
+
+	<button ng-click="skip()" class="btn btn-success btn-addon" ng-show="currentStep == 3"><i class="fa fa-thumbs-up"></i>Got it!</button>
+
+</div>

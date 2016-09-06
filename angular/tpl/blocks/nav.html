@@ -7,22 +7,23 @@
   <li ui-sref-active="active">
     <a ui-sref="app.coupons">
       <i class="glyphicon glyphicon-list icon text-info-dker"></i>
-      <span class="font-bold">All Coupons</span>
+      <span class="font-bold" tooltip="Manage all your coupons." tooltip-append-to-body="true" tooltip-placement="right">All Coupons</span>
     </a>
   </li>
 
   <li ui-sref-active="active">
     <a ui-sref="app.locations">
       <i class="glyphicon glyphicon-map-marker icon text-info-dker"></i>
-      <span class="font-bold">All Locations</span>
+      <span class="font-bold" tooltip="Add/Edit your business locations." tooltip-append-to-body="true" tooltip-placement="right">All Locations</span>
     </a>
   </li>
 
 
   <li ng-class="{active:$state.includes('app.analytics')}">
-    <a href class="auto">
+    <a href class="auto tutorial-analytics-nav" hint-text="Great! Now you're all set! You can monitor your campaign's performance here." hint-width="240" hint-height="70" hint-close-on-click="1" hint-bottom="1">
+
       <i class="glyphicon glyphicon-stats icon text-info-lter"></i>
-      <span class="font-bold">Analytics</span>
+      <span class="font-bold" tooltip="Analytics for coupon shares and redeems." tooltip-append-to-body="true" tooltip-placement="right">Analytics</span>
     </a>
 
     <ul class="nav nav-sub dk">
@@ -30,20 +31,20 @@
       <li ui-sref-active="active">
         <a ui-sref="app.analytics.redeems" href="#/analytics/redeems/all">
           <b class="badge bg-dark pull-right">{{stats.numRedeems}}</b>
-          <span class="ng-scope">Redeems</span>
+          <span class="ng-scope"  tooltip="Detailed report of all your coupon redeems." tooltip-append-to-body="true" tooltip-placement="right">Redeems</span>
         </a>
       </li>
       
       <li ui-sref-active="active">
         <a ui-sref="app.analytics.shares" href="#/analytics/shares/all">
           <b class="badge bg-dark pull-right">{{stats.numShares}}</b>
-          <span class="ng-scope">Shares</span>
+          <span class="ng-scope" tooltip="Detailed report of all your coupon shares (coming soon)." tooltip-append-to-body="true" tooltip-placement="right">Shares</span>
         </a>
       </li>
       
       <li ui-sref-active="active">
         <a ui-sref="app.analytics.allcoupons" href="#/analytics/coupons">
-          <span class="ng-scope">All Coupons</span>
+          <span class="ng-scope"  tooltip="Detailed report for each coupon." tooltip-append-to-body="true" tooltip-placement="right">All Coupons</span>
         </a>
       </li>
       
@@ -56,7 +57,7 @@
   <li ui-sref-active="active">
     <a ui-sref="app.invoices">
       <i class="glyphicon glyphicon-credit-card icon text-info-lter"></i>
-      <span class="font-bold">Invoices</span>
+      <span class="font-bold"  tooltip="Invoices and payments." tooltip-append-to-body="true" tooltip-placement="right">Invoices</span>
     </a>
   </li>
 
@@ -64,7 +65,7 @@
   <li ui-sref-active="active">
     <a ui-sref="app.security">
       <i class="glyphicon glyphicon-warning-sign icon text-info-lter"></i>
-      <span class="font-bold">Security</span>
+      <span class="font-bold"  tooltip="Manage banned numbers." tooltip-append-to-body="true" tooltip-placement="right">Security</span>
     </a>
   </li>
 

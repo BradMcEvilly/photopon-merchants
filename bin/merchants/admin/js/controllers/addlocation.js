@@ -72,7 +72,7 @@ angular.module('app')
                     acsManager.addZipCode(addr.address_components[i].short_name, function(err) {});
                 }
             }
-        }
+        } 
 
     	acsManager.addLocation({
             name: $scope.location_title,
@@ -81,9 +81,7 @@ angular.module('app')
 			latitude: $scope.address.selected.geometry.location.lat,
 			longitude: $scope.address.selected.geometry.location.lng
 		}, function() {
-			$state.go($state.current, {}, {
-				reload: true
-			});
+			$state.go("app.dashboard-merchant");
 		});
     };
 
