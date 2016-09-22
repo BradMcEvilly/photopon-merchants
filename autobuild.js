@@ -5,10 +5,14 @@ var build = function() {
 	var exec = require('child_process').exec;
 	var cmd = 'grunt buildnu';
 
+	exec("say started");
+
 	exec(cmd, function(error, stdout, stderr) {
 	  console.log(stdout);
 	  console.log(stderr);
+		exec("say done");
 	});
+
 }
 
 var watchThis = function(dir) {

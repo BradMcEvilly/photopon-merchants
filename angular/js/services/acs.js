@@ -12,6 +12,9 @@ angular.module('app')
 		  success: function(user) {
 	  		userInfo = user;
 			//localStorage.setItem("userInfo", JSON.stringify(userInfo));
+
+			user.set("lastLogin", new Date());
+			user.save();
 			callback(null, userInfo);
 		    
 		  },
@@ -37,6 +40,9 @@ angular.module('app')
 
         user.signUp(null, {
               success: function(user) {
+              	user.set("lastLogin", new Date());
+				user.save();
+				
               	callback(null, user);
               },
               error: function(user, error) {
@@ -108,14 +114,41 @@ angular.module('app')
 
 	var AcsNumAllCoupons = function(callback) {
 		var query = new Parse.Query("Coupon");
+		var query1 = new Parse.Query("Coupon");
+		query1.equalTo("isActive", true);
 
 		query.count({
 			success: function(count) {
-				callback(null, count);			
+				
+				query1.count({
+					success: function(activeCount) {
+						callback(null, count, activeCount);			
+					},
+
+					error: function(error) {
+						callback(new Error("Failed to get coupons"), null);
+					}
+				});
+				
 			},
 
 			error: function(error) {
 				callback(new Error("Failed to get coupons"), null);
+			}
+		});
+	};
+
+
+	var AcsNumPhotopons = function(callback) {
+		var query = new Parse.Query("Photopon");
+
+		query.count({
+			success: function(count) {
+				callback(null, count);
+			},
+
+			error: function(error) {
+				callback(new Error("Failed to get photopons"), null);
 			}
 		});
 	};
@@ -197,6 +230,7 @@ angular.module('app')
 						results[i].fetchNumRedeems = function(uiupdater) {
 							var cpn = this;
 							cpn.actualNumRedeemed = "Loading...";
+							cpn.numRedeemedRaw = "Loading...";
 							cpn.noAvailableRedeems = true;
 
 
@@ -207,11 +241,14 @@ angular.module('app')
 								success: function(count) {
 									if (count == 0) {
 										cpn.actualNumRedeemed = "No redeems";
+										cpn.numRedeemedRaw = 0;
 									} else if (count == 1) {
 										cpn.actualNumRedeemed = "View 1 redeem";
+										cpn.numRedeemedRaw = 1;
 										cpn.noAvailableRedeems = false;
 									} else {
 										cpn.actualNumRedeemed = "View " + count + " redeems";
+										cpn.numRedeemedRaw = count;
 										cpn.noAvailableRedeems = false;
 									}
 
@@ -219,6 +256,7 @@ angular.module('app')
 								},
 								error: function(err) {
 									cpn.actualNumRedeemed = "Error!";
+									cpn.numRedeemedRaw = "Error!";
 									uiupdater();
 								}
 							});
@@ -949,15 +987,43 @@ angular.module('app')
 
 
 
+	var AcsGetUserStats = function(callback) {
+		
+		Parse.Cloud.run("UserStats", {}, {
+			success: function(stats) {
+				callback(null, stats);			
+			},
+
+			error: function(error) {
+				callback(new Error('Failed to get user stats'));
+			}
+		});
+
+	};
+
 	var AcsGetTotalStats = function(callback) {
+		var stats = {
+			numShares: 0,
+			numRedeems: 0
+		};
+
+
+
+		var maybeSendStats = function() {
+
+			if ((stats.todaysPhotopon !== undefined) && (stats.todaysShares !== undefined) && (stats.todaysRedeems !== undefined)) {
+				stats.dailyRevenue = stats.todaysRedeems * 0.25;
+				callback(null, stats);
+
+			}
+		};
+
+
 		var query = new Parse.Query("Coupon");
 		
 		query.find({
 			success: function(results) {
-				var stats = {
-					numShares: 0,
-					numRedeems: 0
-				};
+				
 
 				for (var i = 0; i < results.length; i++) {
 					var ns = results[i].get("numShared");
@@ -967,11 +1033,64 @@ angular.module('app')
 					stats.numShares += parseInt(ns, 10);
 					stats.numRedeems += parseInt(nr, 10);
 				};
-				callback(null, stats);			
+
+
+
+				var dayBeforeDate = new Date((new Date()).getTime() - (24 * 3600 * 1000));
+
+
+
+				var query1 = new Parse.Query("Photopon");
+				query1.greaterThanOrEqualTo("createdAt", dayBeforeDate);
+				query1.count({
+					success: function(count) {
+						stats.todaysPhotopon = count;
+						maybeSendStats();
+					},
+
+					error: function(error) {
+						callback(new Error("Failed to get stats"), null);
+					}
+				});
+
+				
+				var query2 = new Parse.Query("Notifications");
+				query2.greaterThanOrEqualTo("createdAt", dayBeforeDate);
+				query2.equalTo("type", "PHOTOPON");
+				query2.count({
+					success: function(count) {
+						stats.todaysShares = count;
+						maybeSendStats();
+					},
+
+					error: function(error) {
+						callback(new Error("Failed to get stats"), null);
+					}
+				});
+
+
+
+				var query3 = new Parse.Query("Notifications");
+				query3.greaterThanOrEqualTo("createdAt", dayBeforeDate);
+				query3.equalTo("type", "REDEEMED");
+				query3.count({
+					success: function(count) {
+						stats.todaysRedeems = count;
+						maybeSendStats();
+					},
+
+					error: function(error) {
+						callback(new Error("Failed to get stats"), null);
+					}
+				});
+
+
+
+
 			},
 
 			error: function(error) {
-				callback(new Error('Failed to get coupons'));
+				callback(new Error('Failed to get stats'));
 			}
 		});
 
@@ -1434,6 +1553,7 @@ angular.module('app')
 
 
 
+		getUserStats: AcsGetUserStats,
 		getTotalStats: AcsGetTotalStats,
 		getMerchantRequests: AcsGetMerchantRequests,
 		denyMerchantRequest: AcsDenyMerchantRequest,
@@ -1443,6 +1563,7 @@ angular.module('app')
 		getAllLocations: AcsGetAllLocations,
 		getAllCoupons: AcsGetAllCoupons,
 		getAllPhotopons: AcsGetAllPhotopons,
+		numPhotopons: AcsNumPhotopons,
 
 
 		addRepresentative: AcsAddRepresentative,

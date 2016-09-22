@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('app')
-.controller('AllCouponsCtrl', ['$scope', '$http', '$state', 'acsManager', function($scope, $http, $state, acsManager) {
+.controller('AllCouponsCtrl', ['$scope', '$http', '$state', 'acsManager', '$timeout', function($scope, $http, $state, acsManager, $timeout) {
     $scope.user = acsManager.info();
 
     if ($scope.user == null) {
@@ -12,10 +12,17 @@ angular.module('app')
     $scope.pageTitle = "All Coupons";
     
     acsManager.getAllCoupons(function(err, coupons) {
-      $scope.coupons = coupons;
-      console.log(coupons);
 
-      $scope.$apply();
+     for (var i = 0; i < coupons.length; i++) {
+          coupons[i].fetchNumRedeems(function() {
+              $scope.$apply();
+          });
+      }
+
+      $timeout(function () {
+          $scope.coupons = coupons;
+      });
+      
     });
 
 

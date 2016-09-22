@@ -203,19 +203,19 @@ angular.module('app')
                 url: '/allcoupons',
                 templateUrl: 'tpl/admin_items_list.html',
                 controller: 'AllCouponsCtrl',
-                resolve: load(['js/services/acs.js', 'js/controllers/adminlists.js'])
+                resolve: load(['js/services/acs.js', 'moment', 'js/controllers/adminlists.js'])
               })
               .state('app.alllocations', {
                 url: '/alllocations',
                 templateUrl: 'tpl/admin_items_list.html',
                 controller: 'AllLocationsCtrl',
-                resolve: load(['js/services/acs.js', 'js/controllers/adminlists.js'])
+                resolve: load(['js/services/acs.js', 'moment', 'js/controllers/adminlists.js'])
               })
               .state('app.allphotopons', {
                 url: '/allphotopons',
                 templateUrl: 'tpl/admin_items_list.html',
                 controller: 'AllPhotoponsCtrl',
-                resolve: load(['js/services/acs.js', 'js/controllers/adminlists.js'])
+                resolve: load(['js/services/acs.js', 'moment', 'js/controllers/adminlists.js'])
               })
               .state('app.managemerchants', {
                 url: '/managemerchants',

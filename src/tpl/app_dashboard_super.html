@@ -10,47 +10,97 @@
   <div class="col">
     <!-- / main header -->
     <div class="wrapper-md">
+
+
       <!-- stats -->
       <div class="row">
         <div class="col-md-12">
           <div class="row row-sm text-center">
+            
+
+            <div class="col-xs-3">
+              <a href class="block panel padder-v item card">
+                <span class="text-success font-thin h1 block">{{numActiveCoupons|dize}}/{{numCoupons|dize}}</span>
+                <span class="text-muted text-xs">Active/All Coupons</span>
+              </a>
+            </div>
+            
             <div class="col-xs-3">
               <div class="panel padder-v item card">
-                <div class="h1 text-info font-thin h1">{{companies.length}}</div>
-                <span class="text-muted text-xs">Companies</span>
-                <div class="top text-right w-full">
-                  <i class="fa fa-caret-down text-warning m-r-sm"></i>
-                </div>
+                <div class="font-thin h1">{{stats.todaysPhotopon|dize}}/{{totalPhotopons|dize}}</div>
+                <span class="text-muted text-xs">Today/Total Photopons Created</span>
               </div>
             </div>
+
             <div class="col-xs-3">
               <a href class="block panel padder-v item card">
-                <span class="text-success font-thin h1 block">{{numCoupons}}</span>
-                <span class="text-muted text-xs">Coupons</span>
-                <span class="bottom text-right w-full">
-                  <i class="fa fa-cloud-upload text-success m-r-sm"></i>
-                </span>
+                <span class="text-primary font-thin h1 block">{{stats.todaysShares|dize}}/{{stats.numShares|dize}}</span>
+                <span class="text-muted text-xs">Today/Total Shares</span>
               </a>
             </div>
-            <div class="col-xs-3">
-              <a href class="block panel padder-v item card">
-                <span class="text-primary font-thin h1 block">{{stats.numShares}}</span>
-                <span class="text-muted text-xs">Total Shares</span>
-                <span class="top text-left">
-                  <i class="fa fa-caret-up text-warning m-l-sm"></i>
-                </span>
-              </a>
-            </div>
+            
             <div class="col-xs-3">
               <div class="panel padder-v item card">
-                <div class="font-thin h1">{{stats.numRedeems}}</div>
-                <span class="text-muted text-xs">Total Redeems</span>
-                <div class="bottom text-left">
-                  <i class="fa fa-caret-up text-warning m-l-sm"></i>
-                </div>
+                <div class="font-thin h1">{{stats.todaysRedeems|dize}}/{{stats.numRedeems|dize}}</div>
+                <span class="text-muted text-xs">Today/Total Redeems</span>
               </div>
             </div>
             
+            
+          </div>
+        </div>
+
+      </div>
+      <!-- / stats -->
+
+
+      <!-- stats -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="row row-sm text-center">
+            
+            <div class="col-xs-2">
+              <div class="panel padder-v item card">
+                <div class="h1 text-info font-thin h1">{{companies.length|dize}}</div>
+                <span class="text-muted text-xs">Companies</span>
+              </div>
+            </div>
+
+            <div class="col-xs-2">
+              <div class="panel padder-v item card">
+                <div class="font-thin h1">{{userStats.consumers|dize}}</div>
+                <span class="text-muted text-xs">Total App Users</span>
+              </div>
+            </div>
+
+
+            <div class="col-xs-2">
+              <a href class="block panel padder-v item card">
+                <span class="text-success font-thin h1 block">{{userStats.activeMerchants|dize}}/{{userStats.merchants|dize}}</span>
+                <span class="text-muted text-xs">Active/All Merchants</span>
+              </a>
+            </div>
+            <div class="col-xs-2">
+              <a href class="block panel padder-v item card">
+                <span class="text-primary font-thin h1 block">{{stats.numShares|dize}}</span>
+                <span class="text-muted text-xs">Total Shares</span>
+              </a>
+            </div>
+            <div class="col-xs-2">
+              <div class="panel padder-v item card">
+                <div class="font-thin h1">{{userStats.todaysSignup|dize}}</div>
+                <span class="text-muted text-xs">Signed Up Today</span>
+              </div>
+            </div>
+            
+            <div class="col-xs-2">
+              <div class="panel padder-v item card">
+                <div class="font-thin h1">{{stats.dailyRevenue|dizeusd}}</div>
+                <span class="text-muted text-xs">Daily Revenue</span>
+              </div>
+            </div>
+
+
           </div>
         </div>
 

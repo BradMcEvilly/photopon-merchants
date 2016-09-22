@@ -1,5 +1,26 @@
 'use strict';
 
+app.filter('dize', function() {
+  return function(input) {
+    if (input === undefined) {
+        return "?";
+    }
+
+    return input;
+  };
+});
+
+app.filter('dizeusd', function() {
+  return function(input) {
+    if (input === undefined) {
+        return "?";
+    }
+
+    return "$" + Math.floor(input * 100) / 100;
+  };
+});
+
+
 app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', '$timeout', function($scope, $state, acsManager, $timeout) {
     $scope.user = acsManager.info();
 
@@ -27,9 +48,17 @@ app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', '$timeou
         $scope.$apply();
     });
 
-    acsManager.numAllCoupons(function(err, num) {
+    acsManager.numAllCoupons(function(err, num, activeCount) {
          $timeout(function() {
             $scope.numCoupons = num;
+            $scope.numActiveCoupons = activeCount;
+        }, 0);
+    });
+
+
+    acsManager.numPhotopons(function(err, num) {
+         $timeout(function() {
+            $scope.totalPhotopons = num;
         }, 0);
     });
 
@@ -38,6 +67,13 @@ app.controller('DashboardSuperCtrl', ['$scope', '$state', 'acsManager', '$timeou
     acsManager.getTotalStats(function(err, stats) {
          $timeout(function() {
             $scope.stats = stats;
+            console.log(stats);
+        }, 0);
+    });
+
+    acsManager.getUserStats(function(err, stats) {
+         $timeout(function() {
+            $scope.userStats = stats;
         }, 0);
     });
 
