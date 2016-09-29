@@ -77042,6 +77042,12 @@ angular.module('app')
 
 
               // Merchant Pages
+              .state('app.admincompany', {
+                url: '/company/:id',
+                templateUrl: 'tpl/admin_company_info.html',
+                controller: 'AdminCompanyInfo',
+                resolve: load(['js/services/acs.js', 'moment', 'js/controllers/companyinfo.js'])
+              })
               .state('app.allcoupons', {
                 url: '/allcoupons',
                 templateUrl: 'tpl/admin_items_list.html',
@@ -77882,7 +77888,7 @@ angular.module('app')
 
 
 
-	var AcsGetCoupons = function(callback, allCoupons) {
+	var AcsGetCoupons = function(callback, allCoupons, forUser) {
 		AcsGetLocations(function(err, allLocations) {
 
 		
@@ -77893,6 +77899,12 @@ angular.module('app')
 			if (!allCoupons) {
 				query.equalTo("owner", Parse.User.current());
 			}
+
+			if (forUser) {
+				query.equalTo("owner", forUser);
+			}
+
+			query.ascending("company");
 			
 			query.find({
 				success: function(results) {
@@ -78046,7 +78058,7 @@ angular.module('app')
 					callback(new Error('Failed to get coupons'));
 				}
 			});
-		}, allCoupons);
+		}, allCoupons, forUser);
 
 	};
 
@@ -78259,7 +78271,7 @@ angular.module('app')
 		
 	};
 
-	var AcsGetLocations = function(callback, allLocations, uiupdater) {
+	var AcsGetLocations = function(callback, allLocations, uiupdater, forUser) {
 		
 		var query = new Parse.Query("Location");
 		query.include("owner");
@@ -78267,6 +78279,12 @@ angular.module('app')
 		if (!allLocations) {
 			query.equalTo("owner", Parse.User.current());
 		}
+
+		if (forUser) {
+			query.equalTo("owner", forUser);
+		}
+
+		query.ascending("company");
 
 		query.find({
 			success: function(results) {
@@ -78429,6 +78447,21 @@ angular.module('app')
 			callback(null, results);			
 		});
 
+	};
+
+	var AcsGetCompanyByID = function(id, callback) {
+		
+		var query = new Parse.Query("Company");
+		
+		query.get(id, {
+			success: function(object) {
+				callback(null, object);
+			},
+
+			error: function(object, error) {
+				callback(new Error("Failed to get object"), null);
+			}
+		});
 	};
 
 
@@ -78965,6 +78998,67 @@ angular.module('app')
 
 
 
+	var AcsGetLocationsFor = function(user, callback, uiupdater) {
+		AcsGetLocations(callback, false, uiupdater, user);
+	};
+
+	var AcsGetCouponsFor = function(user, callback) {
+		AcsGetCoupons(callback, false, user);
+	};
+
+	var AcsGetPhotoponsFor = function(user, callback, uiupdater) {
+		var query = new Parse.Query("Photopon");
+
+		query.include("creator");
+		query.include("coupon");
+		query.include("coupon.company");
+
+		//query.equalTo("coupon.owner", user);
+		query.find({
+			success: function(results) {
+				for (var i = 0; i < results.length; i++) {
+					results[i].fetchEverything = function() {
+						var obj = this;
+						var users = obj.get("users");
+
+						obj.userList = "Loading...";
+
+						var query2 = new Parse.Query("User");
+						console.log(users);
+						query2.containedIn("objectId", users);
+
+						query2.find({
+							success: function(users) {
+								obj.userList = "";
+								console.log(users);
+
+								for (var i = 0; i < users.length; i++) {
+									obj.userList += users[i].get("username") + ((i == users.length - 1) ? "" : ", ")
+								};
+								if (uiupdater) uiupdater();		
+							},
+							error: function(error) {
+								obj.userList = "Not Found!";
+								if (uiupdater) uiupdater();		
+							}
+						});
+
+
+
+
+					}
+
+					results[i].fetchEverything();
+				};
+
+				callback(null, results);
+			}
+		});
+	};
+
+
+
+
 
 
 	var AcsAddRepresentative = function(repInfo, callback, isEditing) {
@@ -79247,6 +79341,7 @@ angular.module('app')
 
 
 		getCompany: AcsGetCompany,
+		getCompanyByID: AcsGetCompanyByID,
 		newCompany: AcsNewCompany,
 		getCompanies: AcsGetCompanies,
 		removeCompanyLogo: AcsRemoveCompanyLogo,
@@ -79272,6 +79367,10 @@ angular.module('app')
 		getAllLocations: AcsGetAllLocations,
 		getAllCoupons: AcsGetAllCoupons,
 		getAllPhotopons: AcsGetAllPhotopons,
+
+		getLocationsFor: AcsGetLocationsFor,
+		getCouponsFor: AcsGetCouponsFor,
+		getPhotoponsFor: AcsGetPhotoponsFor,
 		numPhotopons: AcsNumPhotopons,
 
 

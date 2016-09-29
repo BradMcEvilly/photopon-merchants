@@ -29,6 +29,7 @@
                   <th>Num Redeems</th>
                   <th>Num Shares</th>
 
+                  <th>GTG</th>
                   <th>Expiration</th>
                   <th>Company Name</th>
                   <th>Merchant</th>
@@ -44,6 +45,7 @@
                   <td>{{c.numRedeemedRaw}}</td>
                   <td>{{c.get('numShared') || 0 }}</td>
                   
+                  <td>{{c.get('givetoget') || 0}}</td>
                   <td>{{c.getExpiration()}} (<span style="color:{{ c.getExpirationDeltaColor() }};">{{ c.getExpirationDelta() }}</span>) </td>
                   
 

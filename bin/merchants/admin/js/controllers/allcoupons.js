@@ -3,11 +3,12 @@
 angular.module('app')
 .controller('AllCouponsCtrl', ['$scope', 'toaster', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', '$timeout', function($scope, toaster, $http, $state, acsManager, $sce, $modal, $filter, $timeout) {
     $scope.user = acsManager.info();
-
-    if ($scope.user == null) {
-    	$state.go('access.signin');
-    	return;
+   
+    if (!acsManager.isAdmin()) {
+      $state.go('access.signin');
+      return;
     }
+
 
     $scope.onCouponStatusChange = function() {
     	this.c.set("isActive", this.c.isActive);

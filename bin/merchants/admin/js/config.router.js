@@ -199,6 +199,12 @@ angular.module('app')
 
 
               // Merchant Pages
+              .state('app.admincompany', {
+                url: '/company/:id',
+                templateUrl: 'tpl/admin_company_info.html',
+                controller: 'AdminCompanyInfo',
+                resolve: load(['js/services/acs.js', 'moment', 'js/controllers/companyinfo.js'])
+              })
               .state('app.allcoupons', {
                 url: '/allcoupons',
                 templateUrl: 'tpl/admin_items_list.html',

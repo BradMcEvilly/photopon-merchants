@@ -4,9 +4,10 @@ angular.module('app')
 .controller('AllLoctionsCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$timeout', function($scope, $http, $state, acsManager, $sce, $timeout) {
     $scope.user = acsManager.info();
 
-    if ($scope.user == null) {
-    	$state.go('access.signin');
-    	return;
+   
+    if (!acsManager.isAdmin()) {
+      $state.go('access.signin');
+      return;
     }
 
 
