@@ -78,7 +78,9 @@
             </div>
 
             <footer class="panel-footer text-right bg-light lter">
+              <button ng-show="isEditing" class="btn btn-primary btn-addon" ui-sref="app.qrcode({ location: locationId })"><i class="fa fa-qrcode"></i>QR Code for This Locations</button>
               <button type="submit" class="btn btn-success" ng-disabled="form.$invalid">Save</button>
+
             </footer>
           </div>
         </form>

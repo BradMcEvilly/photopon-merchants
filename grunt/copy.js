@@ -138,6 +138,12 @@ module.exports = {
             {expand: true, src: "**", cwd: 'paypal',      dest: "bin/paypal"}
         ]
     },
+    qrlanding: {
+        files: [
+            {expand: true, src: "**", cwd: 'src/qrlanding',      dest: "bin/qr"}
+        ]
+    },
+
     angulardev: {
         files: [
             {expand: true, src: "**", cwd: 'src/fonts',   dest: "angular/fonts"},

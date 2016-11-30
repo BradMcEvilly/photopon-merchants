@@ -5,7 +5,7 @@ angular.module('app')
     $scope.user = acsManager.info();
 
    
-    if (!acsManager.isAdmin()) {
+    if (!acsManager.loggedIn()) {
       $state.go('access.signin');
       return;
     }

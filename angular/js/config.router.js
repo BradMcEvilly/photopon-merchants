@@ -95,6 +95,15 @@ angular.module('app')
               })
 
 
+              .state('app.qrcode', {
+                url: '/qrcode',
+                templateUrl: 'tpl/qr_code.html',
+                controller: 'QRCodeCtrl',
+                params: { all: null, location: null },
+                resolve: load(['toaster', 'moment', 'js/services/acs.js', 'js/controllers/qrcode.js'])
+              })
+
+
               .state('app.analytics', {
                 url: '/analytics',
                 abstract: true,

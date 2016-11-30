@@ -36,6 +36,7 @@ Parse.Cloud.define("GetMerchantPhotopons", function(request, response) {
     var query = new Parse.Query("Notifications");
     query.include("assocPhotopon");
     query.include("assocPhotopon.coupon");
+    query.include("assocPhotopon.creator");
 
     query.each(function(notification) {
     	var type = notification.get("type");

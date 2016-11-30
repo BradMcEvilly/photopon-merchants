@@ -19,8 +19,8 @@ module.exports = function(grunt) {
     gtx.alias('build:angular', ['recess:less', 'clean:angular', 'copy:libs', 'copy:angular', 'recess:angular', 'concat:angular', 'uglify:angular']);
     
 
-    gtx.alias('build', ['build:dev', 'build:landing', 'build:merchanthelp', 'copy:landingbin', 'copy:merchanthelpbin', 'copy:merchantbin', 'copy:paypal', 'compress:createpackage', 'exec:uploadpackage']);
-    gtx.alias('buildnu', ['build:dev', 'build:landing', 'build:merchanthelp', 'copy:landingbin', 'copy:merchanthelpbin', 'copy:merchantbin', 'copy:paypal']);
+    gtx.alias('build', ['build:dev', 'build:landing', 'build:merchanthelp', 'copy:qrlanding', 'copy:landingbin', 'copy:merchanthelpbin', 'copy:merchantbin', 'copy:paypal', 'compress:createpackage', 'exec:uploadpackage']);
+    gtx.alias('buildnu', ['build:dev', 'build:landing', 'build:merchanthelp', 'copy:qrlanding', 'copy:landingbin', 'copy:merchanthelpbin', 'copy:merchantbin', 'copy:paypal']);
 
     gtx.alias('release', ['bower-install-simple', 'bump-commit']);
     gtx.alias('release-patch', ['bump-only:patch', 'release']);

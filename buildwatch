@@ -9,7 +9,7 @@ function puts(error, stdout, stderr) {
 
 
 function doBuild() {
-	exec("grunt build:dev", { 
+	exec("grunt buildnu", { 
 		stdio: [0,1,2] 
 	});
 

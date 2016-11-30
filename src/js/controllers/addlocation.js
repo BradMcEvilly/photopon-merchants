@@ -112,7 +112,7 @@ angular.module('app')
 .controller('EditLoctionCtrl', ['$scope', '$http', '$state', 'acsManager', '$sce', '$modal', '$stateParams', '$timeout', function($scope, $http, $state, acsManager, $sce, $modal, $stateParams, $timeout) {
     var id = $stateParams.id;
     $scope.user = acsManager.info();
-
+    $scope.locationId = id;
     $scope.isEditing = true;
     $scope.address = {};
 

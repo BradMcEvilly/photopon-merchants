@@ -5,12 +5,17 @@ var build = function() {
 	var exec = require('child_process').exec;
 	var cmd = 'grunt buildnu';
 
-	exec("say started");
+	exec("anybar_red", function(error, stdout, stderr) {
+		console.log(error);
+	  	console.log(stderr);
+		console.log(stdout);
+	});
 
 	exec(cmd, function(error, stdout, stderr) {
-	  console.log(stdout);
-	  console.log(stderr);
-		exec("say done");
+		console.log(stdout);
+		console.log(stderr);
+		exec("anybar_green");
+
 	});
 
 }
@@ -35,4 +40,5 @@ var watchThis = function(dir) {
 // Create a directory tree watcher.
 watchThis('./src/js/')
 watchThis('./src/tpl/')
+watchThis('./src/qrlanding/')
 

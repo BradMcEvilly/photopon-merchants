@@ -2699,6 +2699,15 @@ fieldset[disabled] .i-checks input + i:before {
   background-image: url('../img/tutorial/pic-invoice.jpg');
 }
 
+.qrcode-holder {
+  width: 492px;
+  padding: 40px;
+  margin: 0 auto;
+  text-align: center;
+  border: 6px solid #7266ba;
+  border-radius: 30px;
+}
+
 /*Charts*/
 
 .jqstooltip {

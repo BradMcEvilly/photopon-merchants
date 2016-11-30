@@ -4,7 +4,7 @@ angular.module('app')
 .controller('AllCouponsCtrl', ['$scope', 'toaster', '$http', '$state', 'acsManager', '$sce', '$modal', '$filter', '$timeout', function($scope, toaster, $http, $state, acsManager, $sce, $modal, $filter, $timeout) {
     $scope.user = acsManager.info();
    
-    if (!acsManager.isAdmin()) {
+    if (!acsManager.loggedIn()) {
       $state.go('access.signin');
       return;
     }
