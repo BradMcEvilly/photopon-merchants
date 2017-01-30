@@ -9,7 +9,7 @@ ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
 
-$data = 'http://photopon.co/qr/';
+$data = 'http://photopon.co/qr/#/';
 $size = '400x400';
 
 if (isset($_GET['company'])) {

@@ -77217,7 +77217,9 @@ angular.module('app')
 
 
       Parse.$ = jQuery;
-      Parse.initialize("qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN", "vJIGuBlr7sPADL5PUISygvp55PbGXtrdhst3w3Jv");
+      //Parse.initialize("qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN", "vJIGuBlr7sPADL5PUISygvp55PbGXtrdhst3w3Jv");
+      Parse.initialize("qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN");
+      Parse.serverURL = 'https://photopon.herokuapp.com/parse'
 
 
       function isSmartDevice( $window )

@@ -110,7 +110,7 @@ module.exports = {
 
             {
                 src:  [
-                    'parse/build/parse-latest.js'
+                    'parse/dist/parse.js'
                 ],
                 dest: 'angular/libs/parse',
                 cwd:  'node_modules',
