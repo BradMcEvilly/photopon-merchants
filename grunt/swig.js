@@ -58,8 +58,8 @@ module.exports = {
     init: {
         autoescape: false
     },
-    dest: 'landing/',
-    src: ['landing/*.swig'],
+    dest: 'bin/',
+    src: ['src/landing/*.swig'],
     generateSitemap: false,
     generateRobotstxt: false,
     build: true
@@ -69,8 +69,8 @@ module.exports = {
     init: {
         autoescape: false
     },
-    dest: 'merchanthelp/',
-    src: ['merchanthelp/*.swig'],
+    dest: 'bin/merchants/',
+    src: ['src/merchants/*.swig'],
     generateSitemap: false,
     generateRobotstxt: false,
     build: true

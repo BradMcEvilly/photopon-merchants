@@ -50,7 +50,7 @@ module.exports = {
                     'pdfmake/build/pdfmake.js',
                     'pdfmake/build/vfs_fonts.js'
                 ],
-                dest: 'angular/libs/angular',
+                dest: 'bin/merchants/admin/libs/angular',
                 cwd:  'bower_components',
                 expand: true
             },
@@ -91,7 +91,7 @@ module.exports = {
                     'bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
                     'jquery_appear/jquery.appear.js'
                 ],
-                dest: 'angular/libs/jquery',
+                dest: 'bin/merchants/admin/libs/jquery',
                 cwd:  'bower_components',
                 expand: true
             },
@@ -103,7 +103,7 @@ module.exports = {
                     'simple-line-icons/css/**',
                     'simple-line-icons/fonts/**'
                 ],
-                dest: 'angular/libs/assets',
+                dest: 'bin/merchants/admin/libs/assets',
                 cwd:  'bower_components',
                 expand: true
             },
@@ -112,7 +112,7 @@ module.exports = {
                 src:  [
                     'parse/dist/parse.js'
                 ],
-                dest: 'angular/libs/parse',
+                dest: 'bin/merchants/admin/libs/parse',
                 cwd:  'node_modules',
                 expand: true
             },
@@ -122,15 +122,15 @@ module.exports = {
     },
     angular: {
         files: [
-            {expand: true, src: "**", cwd: 'src/fonts',   dest: "angular/fonts"},
-            {expand: true, src: "**", cwd: 'src/api',     dest: "angular/api"},
-            {expand: true, src: "**", cwd: 'src/l10n',    dest: "angular/l10n"},
-            {expand: true, src: "**", cwd: 'src/img',     dest: "angular/img"},
-            {expand: true, src: "**", cwd: 'src/js',      dest: "angular/js"},
-            {expand: true, src: "**", cwd: 'src/tpl',     dest: "angular/tpl"},
-            {src: 'src/index.min.html', dest : 'angular/index.html'},
-            {src: 'src/zips.json', dest : 'angular/zips.json'},
-            {src: 'src/material.min.html', dest : 'angular/material.html'}
+            {expand: true, src: "**", cwd: 'src/fonts',   dest: "bin/merchants/admin/fonts"},
+            {expand: true, src: "**", cwd: 'src/api',     dest: "bin/merchants/admin/api"},
+            {expand: true, src: "**", cwd: 'src/l10n',    dest: "bin/merchants/admin/l10n"},
+            {expand: true, src: "**", cwd: 'src/img',     dest: "bin/merchants/admin/img"},
+            {expand: true, src: "**", cwd: 'src/js',      dest: "bin/merchants/admin/js"},
+            {expand: true, src: "**", cwd: 'src/tpl',     dest: "bin/merchants/admin/tpl"},
+            {src: 'src/index.min.html', dest : 'bin/merchants/admin/index.html'},
+            {src: 'src/zips.json', dest : 'bin/merchants/admin/zips.json'},
+            {src: 'src/material.min.html', dest : 'bin/merchants/admin/material.html'}
         ]
     },
     paypal: {
@@ -146,36 +146,27 @@ module.exports = {
 
     angulardev: {
         files: [
-            {expand: true, src: "**", cwd: 'src/fonts',   dest: "angular/fonts"},
-            {expand: true, src: "**", cwd: 'src/api',     dest: "angular/api"},
-            {expand: true, src: "**", cwd: 'src/l10n',    dest: "angular/l10n"},
-            {expand: true, src: "**", cwd: 'src/img',     dest: "angular/img"},
-            {expand: true, src: "**", cwd: 'src/js',      dest: "angular/js"},
-            {expand: true, src: "**", cwd: 'src/tpl',     dest: "angular/tpl"},
-            {src: 'src/index.html', dest : 'angular/index.html'},
-            {src: 'src/zips.json', dest : 'angular/zips.json'},
-            {src: 'src/material.html', dest : 'angular/material.html'}
+            {expand: true, src: "**", cwd: 'src/fonts',   dest: "bin/merchants/admin/fonts"},
+            {expand: true, src: "**", cwd: 'src/api',     dest: "bin/merchants/admin/api"},
+            {expand: true, src: "**", cwd: 'src/l10n',    dest: "bin/merchants/admin/l10n"},
+            {expand: true, src: "**", cwd: 'src/img',     dest: "bin/merchants/admin/img"},
+            {expand: true, src: "**", cwd: 'src/js',      dest: "bin/merchants/admin/js"},
+            {expand: true, src: "**", cwd: 'src/tpl',     dest: "bin/merchants/admin/tpl"},
+            {src: 'src/index.html', dest : 'bin/merchants/admin/index.html'},
+            {src: 'src/zips.json', dest : 'bin/merchants/admin/zips.json'},
+            {src: 'src/material.html', dest : 'bin/merchants/admin/material.html'}
         ]
     },
-
-    html: {
-        files: [
-            {expand: true, src: '**', cwd:'src/fonts/', dest: 'html/fonts/'},
-            {expand: true, src: "**", cwd: 'src/api',     dest: "html/api"},
-            {expand: true, src: '**', cwd:'src/img/', dest: 'html/img/'},
-            {expand: true, src: '*.css', cwd:'src/css/', dest: 'html/css/'},
-            {expand: true, src: '**', cwd:'swig/js/', dest: 'html/js/'}
-        ]
-    },
-
 
 
     landing: {
         files: [
-            {expand: true, src:'**', cwd:'src/fonts/', dest: 'landing/fonts/'},
-            {expand: true, src:'*.css', cwd:'src/css/', dest: 'landing/css/'},
-            {expand: true, src: "**", cwd: 'src/img',     dest: "landing/img"},
-            {src:'html/css/app.min.css', dest: 'landing/css/app.min.css'},
+            {expand: true, src:'**', cwd:'src/fonts/', dest: 'bin/fonts/'},
+            {expand: true, src:'*.css', cwd:'src/css/', dest: 'bin/css/'},
+            {expand: true, src: "**", cwd: 'src/img',     dest: "bin/img"},
+
+            {src:'src/landing/landing.js', dest: 'bin/landing.js'},
+            {src:'html/css/app.min.css', dest: 'bin/css/app.min.css'},
             {
                 src:  [
                     'angular/angular.js',
@@ -222,7 +213,7 @@ module.exports = {
                     'videogular-poster/poster.min.js',
                     'videogular-ima-ads/ima-ads.min.js'
                 ],
-                dest: 'landing/libs/angular',
+                dest: 'bin/libs/angular',
                 cwd:  'bower_components',
                 expand: true
             },
@@ -263,7 +254,7 @@ module.exports = {
                     'bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
                     'jquery_appear/jquery.appear.js'
                 ],
-                dest: 'landing/libs/jquery',
+                dest: 'bin/libs/jquery',
                 cwd:  'bower_components',
                 expand: true
             },
@@ -275,7 +266,7 @@ module.exports = {
                     'simple-line-icons/css/**',
                     'simple-line-icons/fonts/**'
                 ],
-                dest: 'landing/libs/assets',
+                dest: 'bin/libs/assets',
                 cwd:  'bower_components',
                 expand: true
             }
@@ -287,10 +278,11 @@ module.exports = {
 
     merchanthelp: {
         files: [
-            {expand: true, src:'**', cwd:'src/fonts/', dest: 'merchanthelp/fonts/'},
-            {expand: true, src:'*.css', cwd:'src/css/', dest: 'merchanthelp/css/'},
-            {expand: true, src: "**", cwd: 'src/img',     dest: "merchanthelp/img"},
-            {src:'html/css/app.min.css', dest: 'merchanthelp/css/app.min.css'},
+            {expand: true, src:'**', cwd:'src/fonts/', dest: 'bin/merchants/fonts/'},
+            {expand: true, src:'*.css', cwd:'src/css/', dest: 'bin/merchants/css/'},
+            {expand: true, src: "**", cwd: 'src/img',     dest: "bin/merchants/img"},
+            {src:'src/merchants/landing.js', dest: 'bin/merchants/landing.js'},
+            {src:'html/css/app.min.css', dest: 'bin/merchants/css/app.min.css'},
             {
                 src:  [
                     'angular/angular.js',
@@ -337,7 +329,7 @@ module.exports = {
                     'videogular-poster/poster.min.js',
                     'videogular-ima-ads/ima-ads.min.js'
                 ],
-                dest: 'merchanthelp/libs/angular',
+                dest: 'bin/merchants/libs/angular',
                 cwd:  'bower_components',
                 expand: true
             },
@@ -378,7 +370,7 @@ module.exports = {
                     'bootstrap-tagsinput/dist/bootstrap-tagsinput.css',
                     'jquery_appear/jquery.appear.js'
                 ],
-                dest: 'merchanthelp/libs/jquery',
+                dest: 'bin/merchants/libs/jquery',
                 cwd:  'bower_components',
                 expand: true
             },
@@ -390,7 +382,7 @@ module.exports = {
                     'simple-line-icons/css/**',
                     'simple-line-icons/fonts/**'
                 ],
-                dest: 'merchanthelp/libs/assets',
+                dest: 'bin/merchants/libs/assets',
                 cwd:  'bower_components',
                 expand: true
             }
@@ -398,25 +390,7 @@ module.exports = {
         ]
     },
 
-
-    landingbin: {
-        files: [
-            {expand: true, src: "**", cwd: 'landing/',   dest: "bin/"}
-        ]
-    },
-
-    merchanthelpbin: {
-        files: [
-            {expand: true, src: "**", cwd: 'merchanthelp/',   dest: "bin/merchants/"}
-        ]
-    },
     
-    merchantbin: {
-        files: [
-            {expand: true, src: "**", cwd: 'angular/',   dest: "bin/merchants/admin/"}
-        ]
-    }
-
 
 
 

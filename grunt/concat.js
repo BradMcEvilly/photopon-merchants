@@ -38,14 +38,6 @@ module.exports = {
       'src/js/filters/*.js',
       'src/js/controllers/bootstrap.js'
     ],
-    dest:'angular/js/app.src.js'
-  },
-  html:{
-    src:[
-      'libs/jquery/jquery/dist/jquery.js',
-      'libs/jquery/bootstrap/dist/js/bootstrap.js',
-      'html/js/*.js'
-    ],
-    dest:'html/js/app.src.js'
+    dest:'bin/merchants/admin/js/app.src.js'
   }
 }
