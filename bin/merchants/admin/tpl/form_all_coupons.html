@@ -6,9 +6,32 @@
  
 <toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
 
+      <div class="row" ng-show="coupons" style="display: flex;
+                                                flex-wrap: wrap; 
+                                                justify-content: space-around;">
+
+          <div ng-repeat="c in coupons" class="coupon-box">   
+          
+          <span class="coupon-box-title">{{c.get('title')}}</span>
+          <span class="coupon-box-location">{{c.getLocationTitle()}}</span>
+
+          <span class="coupon-box-isactive">
+            <label class="i-checks m-b-none">
+              <input type="checkbox" ng-model="c.isActive" ng-change="onCouponStatusChange()"><i></i>
+            </label>
+          </span>
+
+          <span class="coupon-box-image" ng-style="c.getImageStyle()"></span>
+
+          <span class="coupon-box-givetoget">GTG: {{c.getGiveToGet()}}</span>
+          <span class="coupon-box-expiration">{{c.getExpiration()}} (<span style="color:{{ c.getExpirationDeltaColor() }};">{{ c.getExpirationDelta() }}</span>)</span>
+
+          </div>
+
+      </div>
 
 <!-- Coupons -->
-      <div class="row" ng-show="coupons">
+      <div class="row" ng-show="false">
         <div class="col-sm-12">
           <div class="panel panel-default">
             <div class="panel-heading">

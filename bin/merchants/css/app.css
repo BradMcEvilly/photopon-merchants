@@ -2850,6 +2850,74 @@ fieldset[disabled] .i-checks input + i:before {
   display: block;
 }
 
+.content-box-holder {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.coupon-box {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  height: 300px;
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.coupon-box-isactive {
+  position: absolute;
+  right: 10px;
+}
+
+.coupon-box-title {
+  position: absolute;
+  right: 0;
+  bottom: 50px;
+  left: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.coupon-box-location {
+  position: absolute;
+  right: 0;
+  bottom: 30px;
+  left: 0;
+  height: 20px;
+  overflow: hidden;
+  font-size: 1em;
+  text-align: center;
+}
+
+.coupon-box-image {
+  position: absolute;
+  top: 50px;
+  right: 20px;
+  left: 20px;
+  height: 160px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.coupon-box-givetoget {
+  position: absolute;
+  font-size: 0.8em;
+}
+
+.coupon-box-expiration {
+  position: absolute;
+  right: 0;
+  bottom: 15px;
+  left: 0;
+  font-size: 0.8em;
+  text-align: center;
+}
+
 .form-validation .form-control.ng-dirty.ng-invalid {
   border-color: #f05050;
 }

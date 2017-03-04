@@ -218,6 +218,20 @@ angular.module('app')
 
 
 
+						results[i].getImageStyle = function() {
+							var imgObj = this.get("company").get("image");
+
+							var img = "img/icon-discount.png";
+							if (imgObj) {
+								img = imgObj.url();
+							}
+
+							return {
+								'background-image': 'url("' + img + '")'
+							};
+
+						};
+
 						results[i].getExpirationDelta = function() {
 							var exp = moment(this.get("expiration"));
 							
