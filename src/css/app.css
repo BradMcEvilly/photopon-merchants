@@ -2918,6 +2918,62 @@ fieldset[disabled] .i-checks input + i:before {
   text-align: center;
 }
 
+.location-box {
+  position: relative;
+  display: inline-block;
+  width: 200px;
+  height: 300px;
+  padding: 10px;
+  margin: 10px;
+  background-color: white;
+  border: 1px solid #ddd;
+}
+
+.location-box-title {
+  position: absolute;
+  top: 10px;
+  right: 0;
+  left: 0;
+  height: 1.2em;
+  overflow: hidden;
+  font-size: 1.2em;
+  font-weight: bold;
+  text-align: center;
+}
+
+.location-box-location {
+  position: absolute;
+  right: 5px;
+  bottom: 50px;
+  left: 5px;
+  height: 40px;
+  overflow: hidden;
+  font-size: 1em;
+  text-align: center;
+}
+
+.location-box-image {
+  position: absolute;
+  top: 40px;
+  right: 20px;
+  left: 20px;
+  height: 160px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+.location-box-phone {
+  position: absolute;
+  right: 5px;
+  bottom: 10px;
+  left: 5px;
+  height: 20px;
+  overflow: hidden;
+  font-size: 1em;
+  text-align: center;
+}
+
 .form-validation .form-control.ng-dirty.ng-invalid {
   border-color: #f05050;
 }
