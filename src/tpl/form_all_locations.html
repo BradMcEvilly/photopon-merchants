@@ -6,11 +6,11 @@
     
       <div class="row" ng-show="locations" style="display: flex;
                                                 flex-wrap: wrap; 
-                                                justify-content: space-around;">
+                                                justify-content: center;">
 
           <div ng-repeat="c in locations" class="location-box">   
 
-            <span class="location-box-title">{{c.get('name')}}</span>
+            <span class="location-box-title" ui-sref="app.editlocation({ id: '{{c.id}}' })">{{c.get('name')}}</span>
             <span class="location-box-location">{{c.get('address')}}</span>
             <span class="location-box-image" ng-style="c.getImageMapStyle()"></span>
             <span class="location-box-phone"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;{{c.get('phoneNumber') | toPhoneNumber}}</span>

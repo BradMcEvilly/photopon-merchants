@@ -8,11 +8,11 @@
 
       <div class="row" ng-show="coupons" style="display: flex;
                                                 flex-wrap: wrap; 
-                                                justify-content: space-around;">
+                                                justify-content: center;">
 
           <div ng-repeat="c in coupons" class="coupon-box">   
           
-          <span class="coupon-box-title">{{c.get('title')}}</span>
+          <span class="coupon-box-title" ui-sref="app.editcoupon({ id: '{{c.id}}' })" >{{c.get('title')}}</span>
           <span class="coupon-box-location">{{c.getLocationTitle()}}</span>
 
           <span class="coupon-box-isactive">
