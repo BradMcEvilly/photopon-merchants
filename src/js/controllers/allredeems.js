@@ -10,10 +10,10 @@ var ControllerFunction = function($scope, $http, $state, acsManager, $sce, $time
 
 
    
-    if (!acsManager.isAdmin()) {
-      $state.go('access.signin');
-      return;
-    }
+    //if (!acsManager.isAdmin()) {
+    //  $state.go('access.signin');
+    //  return;
+    //}
 
 
 
