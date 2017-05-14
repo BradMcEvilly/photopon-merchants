@@ -110,6 +110,15 @@ angular.module('app')
                 template: '<ui-view/>'
               })
 
+              .state('app.analytics.activeusers', {
+                url: '/activeusers',
+                templateUrl: 'tpl/active_users.html',
+                controller: 'ActiveUsersCtrl',
+                resolve: load(['js/app/map/load-google-maps.js', 'js/app/map/ui-map.js', 'toaster', 'moment', 'js/services/acs.js', 'js/controllers/activeusers.js'], function() { 
+                  return loadGoogleMaps(); 
+                })
+              })
+
               .state('app.analytics.allcoupons', {
                 url: '/allcoupons',
                 templateUrl: 'tpl/company_statistics.html',

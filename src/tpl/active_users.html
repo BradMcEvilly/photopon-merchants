@@ -1,0 +1,38 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">Active users</h1>
+</div>
+<div class="wrapper-md">
+  <div>
+    
+      <div class="row" ng-show="redeems">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Current active users
+            </div>
+            
+            <div id="map_canvas" style="min-height:400px" ui-map="myMap"
+                 ui-options="mapOptions">
+            </div>
+
+            <div ng-repeat="marker in myMarkers" ui-map-marker="myMarkers[$index]"
+                 ui-event="{'map-click': 'openMarkerInfo(marker)'}">
+            </div>
+            
+            <!--
+            <div ui-map-info-window="myInfoWindow">
+              <div class="m-b-sm"><strong>Redeem</strong></div>
+              <div class="m-b-sm">Title: {{currentMarker.redeem.get('coupon').get('title')}}</div>
+              <div class="m-b-sm">Expiration: {{currentMarker.redeem.getExpiration()}}</div>
+              <div class="m-b-sm">Time: {{currentMarker.redeem.getCreateTime()}}</div>
+            </div>
+            -->
+
+          </div>
+        </div>
+      </div>
+
+
+  </div>
+
+</div>
