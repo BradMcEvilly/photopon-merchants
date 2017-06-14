@@ -1,0 +1,87 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">All Coupons</h1>
+</div>
+<div class="wrapper-md">
+  <div>
+ 
+<toaster-container toaster-options="{'time-out': 3000}"></toaster-container>
+
+      <div class="row" ng-show="coupons" style="display: flex;
+                                                flex-wrap: wrap; 
+                                                justify-content: center;">
+
+          <div ng-repeat="c in coupons" class="coupon-box">   
+          
+          <span class="coupon-box-title" ui-sref="app.editcoupon({ id: '{{c.id}}' })" >{{c.get('title')}}</span>
+          <span class="coupon-box-location">{{c.getLocationTitle()}}</span>
+
+          <span class="coupon-box-isactive">
+            <label class="i-checks m-b-none">
+              <input type="checkbox" ng-model="c.isActive" ng-change="onCouponStatusChange()"><i></i>
+            </label>
+          </span>
+
+          <span class="coupon-box-image" ng-style="c.getImageStyle()"></span>
+
+          <span class="coupon-box-givetoget">GTG: {{c.getGiveToGet()}}</span>
+          <span class="coupon-box-expiration">{{c.getExpiration()}} (<span style="color:{{ c.getExpirationDeltaColor() }};">{{ c.getExpirationDelta() }}</span>)</span>
+
+          </div>
+
+      </div>
+
+<!-- Coupons -->
+      <div class="row" ng-show="false">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              All Coupons
+            </div>
+            <table class="table table-striped m-b-none">
+              <thead>
+                <tr>
+                  <th>Is active</th>
+                  <th>Title</th>
+                  <th>Locations</th>
+                  <th>Give To Get</th>
+                  <th>Expiration</th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr ng-repeat="c in coupons">   
+
+                  <td>
+                    <label class="i-checks m-b-none">
+                      <input type="checkbox" ng-model="c.isActive" ng-change="onCouponStatusChange()"><i></i>
+                    </label>
+                  </td>                 
+                  
+                  <td  ui-sref="app.editcoupon({ id: '{{c.id}}' })">{{c.get('title')}}</td>
+                  <td  ui-sref="app.editcoupon({ id: '{{c.id}}' })">{{c.getLocationTitle()}}</td>
+                  <td  ui-sref="app.editcoupon({ id: '{{c.id}}' })">{{c.getGiveToGet()}}</td>
+
+                  <td>{{c.getExpiration()}} (<span style="color:{{ c.getExpirationDeltaColor() }};">{{ c.getExpirationDelta() }}</span>) </td>
+                  
+                  
+                </tr>
+
+
+              </tbody>
+            </table>
+
+
+            <footer class="panel-footer text-right bg-light lter">
+              <button type="submit" class="btn btn-success" ui-sref="app.addcoupon">New Coupon</button>
+            </footer>
+          </div>
+        </div>
+      </div>
+<!-- /Coupons -->
+
+
+
+  </div>
+
+</div>

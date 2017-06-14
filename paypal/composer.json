@@ -1,0 +1,6 @@
+{
+  "require" : {
+    "parse/php-sdk" : "*",
+    "paypal/rest-api-sdk-php" : "*"
+  }
+}

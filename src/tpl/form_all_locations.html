@@ -1,0 +1,65 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">All Locations</h1>
+</div>
+<div class="wrapper-md">
+  <div>
+    
+      <div class="row" ng-show="locations" style="display: flex;
+                                                flex-wrap: wrap; 
+                                                justify-content: center;">
+
+          <div ng-repeat="c in locations" class="location-box">   
+
+            <span class="location-box-title" ui-sref="app.editlocation({ id: '{{c.id}}' })">{{c.get('name')}}</span>
+            <span class="location-box-location">{{c.get('address')}}</span>
+            <span class="location-box-image" ng-style="c.getImageMapStyle()"></span>
+            <span class="location-box-phone"><i class="fa fa-phone" aria-hidden="true"></i>&nbsp;{{c.get('phoneNumber') | toPhoneNumber}}</span>
+
+          </div>
+      </div>
+
+
+<!-- Locations -->
+      <div class="row" ng-show="false">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              All Locations
+            </div>
+            <table class="table table-striped m-b-none">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Phone</th>
+                  <th>Coordinates</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr ng-repeat="c in locations" ui-sref="app.editlocation({ id: '{{c.id}}' })">                    
+                  <td>{{c.get('name')}}</td>
+                  <td>{{c.get('address')}}</td>
+                  <td>{{c.get('phoneNumber') | toPhoneNumber}}</td>
+                  <td>({{c.get('location').latitude}}, {{c.get('location').longitude}})</td>
+                  
+                </tr>
+
+
+              </tbody>
+            </table>
+
+            <footer class="panel-footer text-right bg-light lter">
+              <button class="btn btn-primary btn-addon" ui-sref="app.qrcode({ all: true })"><i class="fa fa-qrcode"></i>QR Code for All Locations</button>
+              <button class="btn btn-success btn-addon" ui-sref="app.addlocation"><i class="fa fa-plus"></i>Add Location</button>
+            </footer>
+
+          </div>
+        </div>
+      </div>
+<!-- /Locations -->
+
+
+  </div>
+
+</div>

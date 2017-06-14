@@ -1,0 +1,145 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">Available Locations</h1>
+</div>
+<div class="wrapper-md">
+  <div>
+    
+      <div class="row" ng-show="isLoadFinished">
+        <div class="col-sm-8">
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  Availability area map
+                </div>
+                
+                <div id="map_canvas" style="min-height:400px" ui-map="myMap"
+                     ui-options="mapOptions" ui-event="{'map-click': 'findZipCode($event, $params)'}">
+                </div>
+
+                <div ng-repeat="p in polys" ui-map-polygon="polys[$index]">
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <div class="col-sm-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                  All enabled areas
+                </div>
+                
+                <div class="wrapper-sm">
+                  <a ng-click="onNoteClicked()" class="text-info" ng-repeat="c in zipCodes">{{c.get('zipcode')}}{{$last ? '' : ', '}}</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+
+        </div>
+
+        <div class="col-sm-4">
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Add new zip code
+            </div>
+            
+            <div class="wrapper-md">
+
+                <input type="text" class="form-control" placeholder="Zip Code" ng-model="newZipCode" ng-change="evaluateInput()">
+                            
+            </div>
+          </div>
+
+
+          
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Batch Add Zip codes (comma separated)
+            </div>
+            
+            <div class="wrapper-md">
+
+                <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Zip Codes" ng-model="newZipCodesBatch" ng-disabled="batchProgress">
+                  <span class="input-group-btn">
+                    <button class="btn btn-default" type="button" ng-click="batchAddZipCodes()">Add</button>
+                  </span>
+                </div>
+                <p ng-show="batchProgress">{{batchProgress}}</p>
+            </div>
+          </div>
+
+
+
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Areas
+            </div>
+            
+            <div class="wrapper-sm text-mutted" ng-show="resultCount > 10">
+              There are {{resultCount}} results. Please be more specific
+            </div>
+
+            <table class="table table-striped m-b-none" ng-show="filteredAreas.length != 0">
+             
+              <tbody>
+
+                <tr ng-repeat="c in filteredAreas">   
+
+                  <td ng-click="centerArea()">{{c.properties.zip}}</td>
+                  <td class="text-right">
+                    <button  class="btn btn-sm btn-success" ng-click="enableArea()" ng-show="!c.isEnabled">Enable</button>
+                    <button  class="btn btn-sm btn-danger" ng-click="removeZipCode()" ng-show="c.isEnabled">Disable</button>
+                    
+                  </td>
+                  
+                  
+                </tr>
+
+
+              </tbody>
+            </table>
+
+            
+            
+            <div class="wrapper-sm" ng-hide="filteredAreas.length != 0 || newZipCode.length != 0">
+              Please start typing zip code above to see results.
+            </div>
+
+            <div class="wrapper-sm" ng-hide="filteredAreas.length != 0 || newZipCode.length == 0">
+              Nothing found for your query.
+            </div>
+
+
+          </div>
+
+
+        </div>
+
+
+
+      </div>
+
+
+      <div class="row" ng-show="!isLoadFinished">
+        <div class="col-12 wrapper-md">
+          Please wait while US zip code information is loading...
+        </div>
+
+      </div>
+
+
+  </div>
+
+</div>
+
+<toaster-container toaster-options="{'time-out': 6000}"></toaster-container>

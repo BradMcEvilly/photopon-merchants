@@ -1,0 +1,82 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">Statistics</h1>
+</div>
+<div class="wrapper-md">
+  <div class="row">
+    <div class="col-sm-4">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          Current Period
+        </div>
+        <table class="table table-striped m-b-none">
+          <thead>
+            <tr>
+              <tr>
+                <td>Total Shares</td>
+                <td>{{totalShares}}</td>
+              </tr>
+              <tr>
+                <td>Total Redeems</td>
+                <td>{{totalRedeems}}</td>
+              </tr>
+              <tr>
+                <td>Current Shares</td>
+                <td>{{currentShared}}</td>
+              </tr>
+              <tr>
+                <td>Current Redeems</td>
+                <td>{{currentRedeemed}}</td>
+              </tr>
+              <tr>
+                <td>Total</td>
+                <td>${{currentTotal}}</td>
+              </tr>
+              
+            </tr>
+          </thead>
+          <tbody>
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="col-sm-8">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <span class="label bg-danger pull-right m-t-xs" ng-hide="totalDue == 0">Amount due ${{totalDue / 100}}</span>
+          Invoices
+        </div>
+        <table class="table table-striped m-b-none">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Amount</th>
+              <th>Status</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+
+            <tr ng-repeat="c in invoices">                    
+              <td>{{c.dateText}}</td>
+              <td>${{c.totalAmount / 100}}</td>
+              <td>{{c.get('status')}}</td>
+              <td class="text-right">
+
+              <button class="btn btn-primary btn-addon btn-sm" ng-click="payInvoice(this)" ng-show="c.get('status') == 'DUE'"><i class="fa fa-paypal"></i>Pay</button>
+
+              <button class="btn btn-success btn-addon btn-sm" ng-click="downloadInvoice(this)"><i class="fa fa-download"></i>Download</button>
+
+              </td>
+              
+            </tr>
+
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

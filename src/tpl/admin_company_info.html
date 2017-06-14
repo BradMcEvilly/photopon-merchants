@@ -1,0 +1,178 @@
+<div class="bg-light lt b-b wrapper-md">
+  <div class="row">
+    <div class="col-sm-6 col-xs-12">
+      <h1 class="m-n font-thin h3 text-black" name="admin_dashboard_title">{{companyName || 'Loading Company Info...'}}</h1>
+    </div>
+  </div>
+</div>
+
+<div class="hbox hbox-auto-xs hbox-auto-sm">
+
+
+  <!-- main -->
+  <div class="col">
+    <!-- / main header -->
+    <div class="wrapper-md">
+   
+<!-- Coupons -->
+      <div class="row" ng-show="coupons">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              All Coupons
+            </div>
+            <table class="table table-striped m-b-none">
+              <thead>
+                <tr>
+                  <th>Title</th>
+                  <th>Locations</th>
+
+                  <th>Num Redeems</th>
+                  <th>Num Shares</th>
+
+                  <th>GTG</th>
+                  <th>Expiration</th>
+                 
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr ng-repeat="c in coupons">                    
+                  <td>{{c.get('title')}}</td>
+                  <td>{{c.getLocationTitle()}}</td>
+                  
+                  <td>{{c.numRedeemedRaw}}</td>
+                  <td>{{c.get('numShared') || 0 }}</td>
+                  
+                  <td>{{c.get('givetoget') || 0}}</td>
+                  <td>{{c.getExpiration()}} (<span style="color:{{ c.getExpirationDeltaColor() }};">{{ c.getExpirationDelta() }}</span>) </td>
+                  
+
+                  
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+<!-- /Coupons -->
+
+
+
+
+
+<!-- Locations -->
+      <div class="row" ng-show="locations">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              All Locations
+            </div>
+            <table class="table table-striped m-b-none">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>Address</th>
+                  <th>Coordinates</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr ng-repeat="c in locations">                    
+                  <td>{{c.get('name')}}</td>
+                  <td>{{c.get('address')}}</td>
+                  <td>({{c.get('location').latitude}}, {{c.get('location').longitude}})</td>
+                  
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+<!-- /Locations -->
+
+
+
+
+
+<!-- Photopons -->
+      <div class="row" ng-show="photoponRedeems || photoponShares">
+        <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Last Photopon Redeems
+            </div>
+            <table class="table table-striped m-b-none">
+              <thead>
+                <tr>
+                  <th>Creator</th>
+                  <th>Coupon Title</th>
+                  <th>Num Redeems</th>
+                  <th>Redeemed At</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr ng-repeat="c in photoponRedeems">                    
+                  <td>{{c.get('creator').get('username')}}</td>
+                  <td>{{c.get('coupon').get('title')}}</td>
+                  <td>{{c.get('numRedeemed') || 0}}</td>
+                  <td>{{c.createdAt | beautifulTime}}</td>
+                  
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        
+
+        <div class="col-sm-6">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              Last Photopon Shares
+            </div>
+            <table class="table table-striped m-b-none">
+              <thead>
+                <tr>
+                  <th>Creator</th>
+                  <th>Coupon Title</th>
+                  <th>Num Redeems</th>
+                  <th>Shared At</th>
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr ng-repeat="c in photoponShares">                    
+                  <td>{{c.get('creator').get('username')}}</td>
+                  <td>{{c.get('coupon').get('title')}}</td>
+                  <td>{{c.get('numRedeemed') || 0}}</td>
+                  <td>{{c.createdAt | beautifulTime}}</td>
+                  
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+<!-- /Photopons -->
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+
+</div>
