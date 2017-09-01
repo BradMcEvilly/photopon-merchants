@@ -595,19 +595,11 @@ angular.module('app')
 
 						obj.companyName = "Loading...";
 
-						var query2 = new Parse.Query("Company");
-						query2.equalTo("merchant", merchant);
-
-						query2.find({
-							success: function(company) {
-								obj.companyName = company[0].get("name");
+						AcsGetCompany((company) => {
+								obj.companyName = company.get("name");
 								if (uiupdater) uiupdater();		
-							},
-							error: function(error) {
-								obj.companyName = "Not Found!";
-								if (uiupdater) uiupdater();		
-							}
-						});
+						}, merchant);
+						
 					};
 
 
@@ -744,12 +736,49 @@ angular.module('app')
  ######   #######  ##     ## ##        ##     ## ##    ##    ##    
 */
 
+	var companyCache = {};
 
-	var AcsGetCompany = function(callback) {
-		
+	var AcsGetCompany = function(callback, merchant) {
+
 		var query = new Parse.Query("Company");
-		query.equalTo("merchant", Parse.User.current());
+
+
+		var cached = companyCache[merchant.id];
+		if (cached && cached.object) {
+			callback(null, cached.object);
+			return;
+		}
+
+
+		if (cached) {
+			cached.queue.push(callback);
+			return;
+		}
+		
+
+		companyCache[merchant.id] = {
+			queue: [],
+			object: null
+		};
+		cached = companyCache[merchant.id];
+
+
+		if (merchant) {
+			query.equalTo("merchant", merchant);
+		} else {
+			query.equalTo("merchant", Parse.User.current());
+		}
+
+
+
 		query.first().then(function(results) {
+
+			cached.object = results;
+			cached.queue.forEach((cb) => {
+				cb(results);
+			});
+			cached.queue = [];
+			
 			callback(null, results);			
 		});
 
