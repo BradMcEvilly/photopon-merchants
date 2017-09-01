@@ -856,31 +856,31 @@ angular.module('app')
 			image = file;	
 		}
 
-		AcsGetCompany(function(err, company) {
+		//AcsGetCompany(function(err, company) {
 
-			var CompanyClass = Parse.Object.extend("Company");
-			var company = new CompanyClass();
+		var CompanyClass = Parse.Object.extend("Company");
+		var company = new CompanyClass();
 
-			var tuser = new Parse.User();
-			tuser.id = userId;
-
-
-
-			company.set("name", name);
-			company.set("image", image);
-			company.set("merchant", tuser);
+		var tuser = new Parse.User();
+		tuser.id = userId;
 
 
-			company.save(null, {
-				success: function(company) {
-					callback(company);
-				},
-				error: function(company, error) {
-					alert("Failed to save object.");
-				}
-			});
 
+		company.set("name", name);
+		company.set("image", image);
+		company.set("merchant", tuser);
+
+
+		company.save(null, {
+			success: function(company) {
+				callback(company);
+			},
+			error: function(company, error) {
+				alert("Failed to save object.");
+			}
 		});
+
+		//});
 	};
 
 	var AcsSaveCompanyInfo = function(name, file, callback) {
