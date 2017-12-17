@@ -18,3 +18,5 @@ after execution you can find bin directory in photopon-merchants it contains
 - landing (landing page)
 - merchant (merchant dashboard)
 
+
+Run any http daemon (MAMP, apache, WAMP, anything else) with root dir pointing to bin folder and enjoy
