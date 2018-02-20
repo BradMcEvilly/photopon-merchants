@@ -57,13 +57,18 @@ angular.module('app')
 
 	var AcsForgot = function(email, callback) {
 				
-		Parse.User.requestPasswordReset(email, {
+		/*Parse.User.requestPasswordReset(email, {
 		  success: function() {
 			callback(null);
 		  },
 		  error: function(error) {
 			callback(new Error('Failed to reset password.'));
 		  }
+		});*/
+		Parse.Cloud.run('resetPhotoponUserClient', { email: email }).then(function() {
+		    callback(null);
+		}, function(error){
+			callback(error);
 		});
 	};
 

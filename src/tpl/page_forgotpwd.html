@@ -5,6 +5,9 @@
       <strong>Input your email to reset your password</strong>
     </div>
     <form name="reset" ng-init="isCollapsed=true">
+       <div class="text-danger wrapper text-center" ng-show="authError">
+          {{authError}}
+      </div>
       <div class="list-group list-group-sm">
         <div class="list-group-item">
           <input type="email" placeholder="Email" ng-model="email" class="form-control no-border" required>
@@ -14,7 +17,7 @@
     </form>
     <div collapse="isCollapsed" class="m-t">
       <div class="alert alert-success">
-        <p>A reset link sent to your email address, please check it in 7 days. <a ui-sref="access.signin" class="btn btn-sm btn-success">Sign in</a></p>
+        <p>A temporary password sent to your email address. <a ui-sref="access.signin" class="btn btn-sm btn-success">Sign in</a></p>
       </div>
     </div>
   </div>

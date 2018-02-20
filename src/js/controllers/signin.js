@@ -49,11 +49,20 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', 'acsManager
 app.controller('ForgotPasswordFormController', ['$scope', '$http', '$state', 'acsManager', '$timeout', function($scope, $http, $state, acsManager, $timeout) {
 
 	$scope.resetPassword = function() {
-
+		$scope.authError = null;
 		acsManager.forgot($scope.email, function(err) {
-			$timeout(function () {
-		    	$scope.isCollapsed = !$scope.isCollapsed;
-    		}, 0);
+			if(err){
+				$timeout(function () {
+					$scope.authError = err.message;
+	    		}, 0);
+				return;
+			}else{
+				$timeout(function () {
+					$scope.isCollapsed = !$scope.isCollapsed;
+				}, 0);
+    		}
+			
+			
 		});
 	};
 
