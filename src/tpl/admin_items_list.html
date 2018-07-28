@@ -143,6 +143,68 @@
       </div>
 <!-- /Photopons -->
 
+
+<!-- Merchants-->
+      <div class="row" ng-show="merchants">
+        <div class="col-sm-12">
+          <div class="panel panel-default">
+            <div class="panel-heading">
+              <span class="label bg-danger pull-right m-t-xs">Total: {{merchants.length}}</span>
+              <h4>Merchants</h4>
+            </div>
+              <ul class="list-group list-group-lg m-b-none" ng-hide="merchants.length">
+
+
+                <li class="list-group-item" >
+                  <a href class="thumb-sm m-r">
+                    
+                    <i class="icon-bell fa-fw" style="
+                        font-size: 26px;
+                        vertical-align: middle;
+                    "></i>
+
+                  </a>
+                  
+                  <a href style="display: inline-block; vertical-align: middle;">
+                    <span>You have no merchants.</span>
+                  </a>
+                </li>
+
+
+              </ul>  
+            <table class="table table-striped m-b-none" ng-hide="!merchants.length">
+              <thead>
+                <tr>
+                  <th>Name</th>
+                  <th>TaxID</th>
+                  <th>Username</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Created At</th>
+                  
+                  
+                </tr>
+              </thead>
+              <tbody>
+
+                <tr ng-repeat="r in merchants">                    
+                  <td>{{r.get("name")}}</td>
+                  <td>{{r.get("taxID")}}</td>
+                	<td>{{r.get("merchant").get("username")}}</td>
+                  <td>{{r.get("merchant").get("email")}}</td>
+                  <td>{{r.get("merchant").get("phone")}}</td>
+                  <td>{{ r.getCreationDate() }}</td>
+
+                </tr>
+
+
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+<!-- /Merchants -->
+
 <!-- Merchant Requests-->
       <div class="row" ng-show="requests">
         <div class="col-sm-12">

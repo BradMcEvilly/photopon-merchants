@@ -1213,28 +1213,29 @@ angular.module('app')
 				callback(new Error('Failed to get merchant requests'));
 			});;
 		
+	};
+	
+	
+	var AcsGetMerchants = function(callback) {
 		
-		/*var query = new Parse.Query("MerchantRequests");
-		query.include("user");
 		
-		
-		
-		query.find().then(function(results) {
+		Parse.Cloud.run("getMerchants").then(function(results) {
 			
 			for (var i = 0; i < results.length; i++) {
-      // This does not require a network access.
-      var userr = results[i].get("user");
-      console.log(results[i].get("businessName"));
-      if(userr) console.log(userr.get("email"));
+      				results[i].getCreationDate = function() {
+							var exp = moment(this.get("createdAt"));
+							
+							return exp.calendar();
+						};
 
-    }
-				callback(null, results);			
-			}).catch(function(error) {
-				callback(new Error('Failed to get merchant requests'));
-			});
+    		}
+    
+    callback(null, results);			
+		}).catch(function(error) {
+				callback(new Error('Failed to get merchants'));
+			});;
 		
-*/
-	};
+	}
 
 
 
@@ -1749,6 +1750,7 @@ angular.module('app')
 		getUserStats: AcsGetUserStats,
 		getTotalStats: AcsGetTotalStats,
 		getMerchantRequests: AcsGetMerchantRequests,
+		getMerchants: AcsGetMerchants,
 		denyMerchantRequest: AcsDenyMerchantRequest,
 		acceptMerchantRequest: AcsAcceptMerchantRequest,
 		createMerchantRequest: AcsCreateMerchantRequest,

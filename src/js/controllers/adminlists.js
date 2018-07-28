@@ -107,3 +107,27 @@ angular.module('app')
 
 
 }]);
+
+
+angular.module('app')
+.controller('ManageMerchantsCtrl', ['$scope', '$http', '$state', 'acsManager', '$timeout', function($scope, $http, $state, acsManager, $timeout) {
+    $scope.user = acsManager.info();
+
+    if ($scope.user == null) {
+      $state.go('access.signin');
+      return;
+    }
+    
+    
+
+    $scope.pageTitle = "All Merchants";
+    
+    acsManager.getMerchants(function(err, merchants) {
+         $timeout(function() {
+         	
+            $scope.merchants = merchants;
+        }, 0);
+    });
+
+
+}]);

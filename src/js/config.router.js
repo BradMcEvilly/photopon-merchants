@@ -257,7 +257,7 @@ angular.module('app')
               })
               .state('app.managemerchants', {
                 url: '/managemerchants',
-                templateUrl: 'tpl/merchant_item_list.html',
+                templateUrl: 'tpl/admin_items_list.html',
                 controller: 'ManageMerchantsCtrl',
                 resolve: load(['js/services/acs.js', 'moment', 'js/controllers/adminlists.js'])
             })
