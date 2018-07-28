@@ -70,5 +70,33 @@ app.controller('ForgotPasswordFormController', ['$scope', '$http', '$state', 'ac
 }]);
 
 
+app.controller('ValidateEmailController', ['$scope', '$http', '$state', 'acsManager', '$timeout','$stateParams', function($scope, $http, $state, acsManager, $timeout,$stateParams) {
+
+	var token;
+    if ($stateParams) {
+        $scope.token = $stateParams.token;
+    }
+
+	
+	acsManager.validateEmail($scope.token, function(err) {
+			console.log(err);
+			if(err){
+				$timeout(function () {
+					$scope.validToken = false
+					$scope.errMessage = err.message;
+	    		}, 0);
+				return;
+			}else{
+				$timeout(function () {
+					$scope.validToken = true;
+				}, 0);
+    		}
+			
+			
+	});
+
+
+}]);
+
 
 

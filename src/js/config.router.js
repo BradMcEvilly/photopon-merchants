@@ -18,7 +18,7 @@ angular.module('app')
           var layout = "tpl/app.html";
           if(window.location.href.indexOf("material") > 0){
             layout = "tpl/blocks/material.layout.html";
-					}
+			}
 					
             $urlRouterProvider
               .otherwise('/access/signin');
@@ -37,7 +37,7 @@ angular.module('app')
                   url: '/dashboard-super',
                   templateUrl: 'tpl/app_dashboard_super.html',
                 controller: 'DashboardSuperCtrl',
-                resolve: load(['js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboardsuper.js', 'js/controllers/header.js', 'js/controllers/aside.js'])
+                resolve: load(['moment','js/services/acs.js', 'js/controllers/chart.js', 'js/controllers/dashboardsuper.js', 'js/controllers/header.js', 'js/controllers/aside.js'])
               })
 
 							
@@ -77,6 +77,12 @@ angular.module('app')
                 resolve: load(['ngImgCrop', 'ui.select', 'js/services/acs.js', 'js/controllers/addcoupon.js'])
               })
 
+			.state('app.change_password', {
+                url: '/change/password',
+                templateUrl: 'tpl/form_change_password.html',
+                controller: 'ChangePasswordCtrl',
+                resolve: load(['js/services/acs.js', 'js/controllers/change_password.js'])
+              })
 
 
 
@@ -125,6 +131,8 @@ angular.module('app')
                 controller: 'CompanyStatsCtrl',
                 resolve: load(['js/services/acs.js', 'js/controllers/companystats.js'])
               })
+              
+              
 
               .state('app.analytics.redeems', {
                 url: '/redeems/all',
@@ -214,7 +222,13 @@ angular.module('app')
                   templateUrl: 'tpl/page_404.html'
               })
 
-
+			.state('access.validateEmail', {
+                url: '/validateEmail/:token',
+                templateUrl: 'tpl/page_validate_email.html',
+                resolve: load([  'toaster', 'moment', 'js/services/acs.js','js/controllers/signin.js'], function() { 
+                 
+                })
+              })
 
               // Merchant Pages
               .state('app.admincompany', {
@@ -245,8 +259,14 @@ angular.module('app')
                 url: '/managemerchants',
                 templateUrl: 'tpl/merchant_item_list.html',
                 controller: 'ManageMerchantsCtrl',
-                resolve: load(['js/services/acs.js', 'js/controllers/managemerchants.js'])
-              })
+                resolve: load(['js/services/acs.js', 'moment', 'js/controllers/adminlists.js'])
+            })
+              .state('app.allmerchantrequests', {
+                url: '/allmerchantrequests',
+                templateUrl: 'tpl/admin_items_list.html',
+                controller: 'AllMerchantRequestsCtrl',
+                resolve: load(['js/services/acs.js', 'moment', 'js/controllers/adminlists.js'])
+           })
               .state('app.acceptrequest', {
                 url: '/acceptrequest',
                 templateUrl: 'tpl/admin_accept_request.html',
@@ -270,6 +290,7 @@ angular.module('app')
                 })
               })
 
+			
 
 
 

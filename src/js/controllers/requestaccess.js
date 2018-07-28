@@ -18,10 +18,14 @@ app.controller('RequestFormController', ['$scope', '$http', '$state', 'acsManage
 
 //$scope.myCroppedImage
   $scope.signout = function() {
-    acsManager.logout();
-    $state.go($state.current, {}, {
+    acsManager.logout(function(){
+    
+     $state.go($state.current, {}, {
       reload: true
     });
+    
+    });
+   
   };
 
 
@@ -127,8 +131,10 @@ app.controller('RequestFormController', ['$scope', '$http', '$state', 'acsManage
               doneCallback(true);
               return;
             }
-            acsManager.logout();
-            doneCallback();
+            acsManager.logout(function(){
+            	doneCallback();
+            });
+            
           }, 0);
         });
       };

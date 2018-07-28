@@ -43,6 +43,7 @@ angular.module('app')
       return;
     }
 
+	
     $scope.pageTitle = "All Locations";
 
     acsManager.getAllLocations(function(err, locations) {
@@ -83,4 +84,26 @@ angular.module('app')
 
 
 
+angular.module('app')
+.controller('AllMerchantRequestsCtrl', ['$scope', '$http', '$state', 'acsManager', '$timeout', function($scope, $http, $state, acsManager, $timeout) {
+    $scope.user = acsManager.info();
 
+    if ($scope.user == null) {
+      $state.go('access.signin');
+      return;
+    }
+    
+     $scope.reviewRequest = function() {
+        $state.go("app.acceptrequest", { obj: this.r });
+    };
+
+    $scope.pageTitle = "All Merchant Requests";
+    
+    acsManager.getMerchantRequests(function(err, requests) {
+         $timeout(function() {
+            $scope.requests = requests;
+        }, 0);
+    });
+
+
+}]);

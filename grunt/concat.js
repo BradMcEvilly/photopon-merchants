@@ -21,6 +21,7 @@ module.exports = {
       'angular/libs/angular/angular-bootstrap/ui-bootstrap-tpls.js',
      
       'angular/libs/angular/oclazyload/dist/ocLazyLoad.js',
+      'angular/libs/angular/angular-country-picker/country-picker.js',
      
       'angular/libs/angular/angular-translate/angular-translate.js',
       'angular/libs/angular/angular-translate-loader-static-files/angular-translate-loader-static-files.js',
@@ -31,6 +32,9 @@ module.exports = {
 
       'angular/libs/angular/pdfmake/build/pdfmake.min.js',
       'angular/libs/angular/pdfmake/build/vfs_fonts.js',
+      
+      
+     
 
       'src/js/*.js',
       'src/js/directives/*.js',

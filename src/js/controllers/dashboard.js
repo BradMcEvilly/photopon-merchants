@@ -35,7 +35,7 @@ angular.module('app')
         }
 
         if ($scope.coupons.length == 1 && $scope.locations.length > 0) {
-            ShowOverlayFor($document.find(".tutorial-analytics-nav"), $scope);
+            //ShowOverlayFor($document.find(".tutorial-analytics-nav"), $scope);
         }
     };
 

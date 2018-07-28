@@ -16,5 +16,11 @@ angular.module('app')
     		console.log($scope.stats);
     	}, 0);
     });
+    
+    acsManager.getMerchantRequests(function(err, requests) {
+         $timeout(function() {
+            $scope.requests = requests;
+        }, 0);
+    });
 
 }]);

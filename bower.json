@@ -108,6 +108,7 @@
     "videogular-ima-ads": "~0.7.0",
     "videogular-overlay-play": "~0.7.0",
     "videogular-poster": "~0.7.0",
-    "waves": "~0.7.2"
+    "waves": "~0.7.2",
+    "ng-country-select": "^0.1.4"
   }
 }
