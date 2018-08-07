@@ -46,6 +46,7 @@
     "angular-bootstrap": "~0.12.0",
     "angular-bootstrap-nav-tree": "*",
     "angular-cookies": "1.4.3",
+    "angular-country-picker": "*",
     "angular-file-upload": "~1.1.1",
     "angular-material": "~0.10.0",
     "angular-messages": "1.4.3",
@@ -54,10 +55,10 @@
     "angular-skycons": "~2.0.0",
     "angular-smart-table": "~1.4.9",
     "angular-touch": "1.4.3",
-    "angular-translate": "~2.5.2",
-    "angular-translate-loader-static-files": "~2.5.2",
-    "angular-translate-storage-cookie": "~2.5.2",
-    "angular-translate-storage-local": "~2.5.2",
+    "angular-translate": "~2.15.2",
+    "angular-translate-loader-static-files": "~2.15.2",
+    "angular-translate-storage-cookie": "~2.15.2",
+    "angular-translate-storage-local": "~2.15.2",
     "angular-ui-calendar": "latest",
     "angular-ui-grid": "~3.0.0-rc.16",
     "angular-ui-router": "~0.2.11",
@@ -110,5 +111,12 @@
     "videogular-poster": "~0.7.0",
     "waves": "~0.7.2",
     "ng-country-select": "^0.1.4"
+  },
+  "resolutions": {
+    "angular": "^1.3.10",
+    "angular-sanitize": "1.4.3",
+    "angular-touch": "1.4.3",
+    "fullcalendar": "~2.7.1",
+    "moment": ">=2.5.0"
   }
 }
