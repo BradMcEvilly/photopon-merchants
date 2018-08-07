@@ -156,7 +156,7 @@
                 <li class="list-group-item" ng-repeat="c in coupons">
                   <a ui-sref="app.editcoupon({ id: '{{c.id}}' })">
                     <span href class="thumb-sm m-r">
-                      <img src=" {{c.get('company').get('image').url() }} " class="r r-2x">
+                      <img ng-src="{{c.get('company').get('image').url()}}" class="r r-2x">
                     </span>
                     <span class="pull-right label bg-primary inline m-t-sm" title="{{c.getLocationTitleFull()}}">{{c.getLocationTitle()}}</span>
                     <span>{{c.get('title')}}</span>
