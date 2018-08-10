@@ -5,21 +5,24 @@
 
 # Project setup
 
-To setup project loaccly run following commands 
+To setup project locally run following commands 
 
     git clone https://github.com/BradMcEvilly/photopon-merchants.git
     cd photopon-merchants
     npm install -g grunt-cli
     npm install
     grunt bower-install-simple
-    grunt buildnu
+    grunt build
     
 after execution you can find bin directory in photopon-merchants it contains
 - landing (landing page)
 - merchant (merchant dashboard)
 
-
 Run any http daemon (MAMP, apache, WAMP, anything else) with root dir pointing to bin folder and enjoy
+
+## deploy
+
+    grunt deploy
 
 ## additional mac step, may be needed for xcrun, etc, esp on High Sierra:
 

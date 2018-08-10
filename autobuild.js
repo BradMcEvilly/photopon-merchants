@@ -3,7 +3,7 @@ hound = require('hound')
 
 var build = function() {
 	var exec = require('child_process').exec;
-	var cmd = 'grunt buildnu';
+	var cmd = 'grunt build';
 
 	exec("anybar_red", function(error, stdout, stderr) {
 		console.log(error);

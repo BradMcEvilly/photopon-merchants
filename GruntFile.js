@@ -14,26 +14,15 @@ module.exports = function(grunt) {
     gtx.alias('build:landing', ['copy:landing', 'swig:landing']);
     gtx.alias('build:merchanthelp', ['copy:merchanthelp', 'swig:merchanthelp']);
     
-
     gtx.alias('build', ['build:dev',
                         'build:landing',
                         'build:merchanthelp',
                         'copy:qrlanding',
-//                        'copy:landingbin',
-//                        'copy:merchanthelpbin',
-//                        'copy:merchantbin',
-                        'copy:paypal',
+                        'copy:paypal']);
+
+    gtx.alias('deploy', ['build',
                         'compress:createpackage',
                         'exec:uploadpackage']);
-
-    gtx.alias('buildnu', ['build:dev',
-                        'build:landing',
-                        'build:merchanthelp',
-                        'copy:qrlanding',
-//                        'copy:landingbin',
-//                        'copy:merchanthelpbin',
-//                        'copy:merchantbin',
-                        'copy:paypal']);
 
     gtx.finalise();
 }
