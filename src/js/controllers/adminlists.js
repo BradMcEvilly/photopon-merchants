@@ -9,6 +9,7 @@ angular.module('app')
       return;
     }
 
+    $scope.foo = "squiddly" //parseConfig //"ossifrage"
     $scope.pageTitle = "All Coupons";
     
     acsManager.getAllCoupons(function(err, coupons) {
