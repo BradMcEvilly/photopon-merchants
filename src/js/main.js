@@ -3,8 +3,8 @@
 /* Controllers */
 
 angular.module('app')
-  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 
-    function(              $scope,   $translate,   $localStorage,   $window ) {
+  .controller('AppCtrl', ['$scope', '$translate', '$localStorage', '$window', 'ENV',
+    function(              $scope,   $translate,   $localStorage,   $window,   ENV ) {
       // add 'ie' classes to html
       var isIE = !!navigator.userAgent.match(/MSIE/i);
       isIE && angular.element($window.document.body).addClass('ie');
@@ -69,9 +69,9 @@ angular.module('app')
 
 
       Parse.$ = jQuery;
-      //Parse.initialize("qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN", "vJIGuBlr7sPADL5PUISygvp55PbGXtrdhst3w3Jv");
-      Parse.initialize("qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN");
-      Parse.serverURL = 'https://photopon.herokuapp.com/parse'
+      //Parse.initialize(ENV.parse.app_id, ENV.parse.master_key);
+      Parse.initialize(ENV.parse.app_id);
+      Parse.serverURL = ENV.parse.server_url;
 
 
       function isSmartDevice( $window )
