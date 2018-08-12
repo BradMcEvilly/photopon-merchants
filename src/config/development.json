@@ -1,9 +1,9 @@
 {
   "ENV" : {
     "parse" : {
-      "server_url" : "https://photopon.herokuapp.com/parse",
-      "app_id" : "qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN",
-      "master_key" : "2sVDZTTVJnQ7oX5p81wOPOsB5R7ci929Q3WIOcOs"
+      "server_url" : "https://stephancom-photopon.herokuapp.com/parse",
+      "app_id" : "poland-gammon-exhume-accurate",
+      "master_key" : "slacker-cloth-joey-pan"
     }
   }
 }
