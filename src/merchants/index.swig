@@ -140,7 +140,7 @@
             <div class="row">
               <div class="col-sm-12">
                 
-                <a href="./admin/#/access/request" class="btn btn-lg btn-success btn-rounded m-t-xxl m-b-xxl" name="request_more_info"><strong>Request More Info</strong></a>
+                <a href="./admin/#/access/request" class="btn btn-lg btn-success btn-rounded m-t-xxl m-b-xxl" name="request_more_info"><strong>Request Merchant Access</strong></a>
 
               </div>
             </div>

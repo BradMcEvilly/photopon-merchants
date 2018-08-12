@@ -53,17 +53,57 @@ angular.module('app')
 	};
 
 
+	var AcsChangePassword = function(password, callback) {
+		
+		var user = Parse.User.current();
+        user.set("password", password);
+        user.set("isTempPassword", false);
+       
+        
+       
+        user.save().then(function() {
+		    callback(null);
+		}, function(error){
+			callback(error);
+		});
+
+		
+	};
 
 
 	var AcsForgot = function(email, callback) {
 				
-		Parse.User.requestPasswordReset(email, {
+		/*Parse.User.requestPasswordReset(email, {
 		  success: function() {
 			callback(null);
 		  },
 		  error: function(error) {
 			callback(new Error('Failed to reset password.'));
 		  }
+		});*/
+		Parse.Cloud.run('resetPhotoponUserClient', { email: email }).then(function() {
+		    callback(null);
+		}, function(error){
+			callback(error);
+		});
+	};
+	
+	
+	var AcsValidateEmail = function(token, callback) {
+				
+		/*Parse.User.requestPasswordReset(email, {
+		  success: function() {
+			callback(null);
+		  },
+		  error: function(error) {
+			callback(new Error('Failed to reset password.'));
+		  }
+		});*/
+		
+		Parse.Cloud.run('validateEmailClient', { token: token }).then(function() {
+		    callback(null);
+		}, function(error){
+			callback(error);
 		});
 	};
 
@@ -78,7 +118,8 @@ angular.module('app')
 
 
 	var AcsGetInfo = function() {
-		return Parse.User.current();
+		var currentUser = Parse.User.current();
+		return currentUser;
 	};
 
 
@@ -95,8 +136,10 @@ angular.module('app')
 	    return true;
 	};
 
-	var AcsLogout = function() {
-		Parse.User.logOut();
+	var AcsLogout = function(callback) {
+		Parse.User.logOut().then(function(){
+			if(callback) callback();
+		});
 		console.log("Logging out from parse");
 		
 	};
@@ -650,6 +693,9 @@ angular.module('app')
 		location.set("address", data.address);
 		location.set("location", point);
 		location.set("owner", Parse.User.current());
+		location.set("countryID", data.countryID);
+		location.set("isNational", data.isNational);
+
 
 
 		location.save(null, {
@@ -680,6 +726,9 @@ angular.module('app')
 				object.set("phoneNumber", data.phoneNumber);
 				object.set("address", data.address);
 				object.set("location", point);
+				object.set("countryID", data.countryID);
+				object.set("isNational", data.isNational);
+
 
 
 				object.save(null, {
@@ -1146,20 +1195,47 @@ angular.module('app')
 
 
 	var AcsGetMerchantRequests = function(callback) {
-		var query = new Parse.Query("MerchantRequests");
-		query.include("user");
 		
-		query.find({
-			success: function(results) {
-				callback(null, results);			
-			},
+		
+		Parse.Cloud.run("getMerchantRequests").then(function(results) {
 
-			error: function(error) {
+			for (var i = 0; i < results.length; i++) {
+      				results[i].getCreationDate = function() {
+							var exp = moment(this.get("createdAt"));
+							
+							return exp.calendar();
+						};
+
+    		}
+    
+    callback(null, results);			
+		}).catch(function(error) {
 				callback(new Error('Failed to get merchant requests'));
-			}
-		});
-
+			});;
+		
 	};
+	
+	
+	var AcsGetMerchants = function(callback) {
+		
+		
+		Parse.Cloud.run("getMerchants").then(function(results) {
+			
+			for (var i = 0; i < results.length; i++) {
+      				results[i].getCreationDate = function() {
+							var exp = moment(this.get("createdAt"));
+							
+							return exp.calendar();
+						};
+
+    		}
+    
+    callback(null, results);			
+		}).catch(function(error) {
+				callback(new Error('Failed to get merchants'));
+			});;
+		
+	}
 
 
 
@@ -1171,8 +1247,12 @@ angular.module('app')
 
 		query.get(id, {
 			success: function(obj) {
-				obj.destroy();
-				callback();
+				obj.set("isAccepted", false);
+				obj.save().then(function(){
+					callback();
+				
+				});
+				
 			},
 			error: function(object, error) {
 				callback(new Error('Failed to deny merchant request'));
@@ -1188,8 +1268,10 @@ angular.module('app')
 		query.get(id, {
 			success: function(obj) {
 				obj.set("isAccepted", true);
-				obj.save();
-				callback();
+				obj.save().then(function(){
+					callback();
+				
+				});
 
 			},
 			error: function(object, error) {
@@ -1221,7 +1303,7 @@ angular.module('app')
                     callback();
                 },
                 error: function(req, error) {
-                     callback("Failed to send request");
+                     callback(error.message);
                 }
             });
 
@@ -1624,6 +1706,8 @@ angular.module('app')
 		logout: AcsLogout,
 		info: AcsGetInfo,
 		isAdmin: AcsIsAdmin,
+		validateEmail: AcsValidateEmail,
+		changePassword: AcsChangePassword,
 
 
 		
@@ -1666,6 +1750,7 @@ angular.module('app')
 		getUserStats: AcsGetUserStats,
 		getTotalStats: AcsGetTotalStats,
 		getMerchantRequests: AcsGetMerchantRequests,
+		getMerchants: AcsGetMerchants,
 		denyMerchantRequest: AcsDenyMerchantRequest,
 		acceptMerchantRequest: AcsAcceptMerchantRequest,
 		createMerchantRequest: AcsCreateMerchantRequest,

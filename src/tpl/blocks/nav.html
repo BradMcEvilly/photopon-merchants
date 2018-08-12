@@ -74,6 +74,13 @@
       <span class="font-bold"  tooltip="Manage banned numbers." tooltip-append-to-body="true" tooltip-placement="right">Security</span>
     </a>
   </li>
+  
+  <li ui-sref-active="active">
+    <a ui-sref="app.companyinfo">
+      <i class="glyphicon glyphicon-info-sign icon text-info-lter"></i>
+      <span class="font-bold"  tooltip="Manage your company info." tooltip-append-to-body="true" tooltip-placement="right">Company Profile</span>
+    </a>
+  </li>
 
 
 </ul>
@@ -113,14 +120,21 @@
       <span class="font-bold">Sales Reps</span>
     </a>
   </li>
-
+  
   <li ui-sref-active="active">
-    <a ui-sref="app.managemerchants">
+    <a ui-sref="app.allmerchantrequests">
       <i class="glyphicon glyphicon-user icon text-info-lter"></i>
-      <span class="font-bold">Manage Merchants</span>
+      <span class="font-bold">All Requests</span>
+      <b class="badge bg-light pull-right">{{requests.length}}</b>
     </a>
   </li>
 
+  <li ui-sref-active="active">
+    <a ui-sref="app.managemerchants">
+      <i class="glyphicon glyphicon-book icon text-info-lter"></i>
+      <span class="font-bold">Manage Merchants</span>
+    </a>
+  </li>
   <li ui-sref-active="active">
     <a ui-sref="app.manageregions">
       <i class="glyphicon glyphicon-globe icon text-info-lter"></i>

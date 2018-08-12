@@ -32,7 +32,22 @@
                     <input type="text" class="form-control" ui-mask="(999) 999-9999" ng-model="location_phone" required>
                   </div>
 
+				<div class="form-group">
+                    <div class="checkbox">
+                      <label class="i-checks">
+                        <input type="checkbox" value="" ng-model="isNational">
+                        <i></i>
+                        Is Whole Country?
+                      </label>
+                    </div>
+                </div>
+                
+                <div class="form-group"  ng-show="isNational">
+    				<label for="country" >Country</label>
+    				<select class="form-control" ng-model="countryID" pvp-country-picker placeholder="Pick a Country" ng-required="isNational"></select>
+				</div>
 
+				 <div  ng-show="!isNational" >
                   <div class="form-group">
                     <label>Address</label>
 
@@ -73,7 +88,8 @@
 
 
                 </div>
-                <div class="col-sm-6">
+                </div>
+                <div class="col-sm-6" ng-show="!isNational">
 
 
 

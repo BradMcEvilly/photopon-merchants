@@ -45,7 +45,7 @@
             <h3 class="text-black font-bold">
               <i class="glyphicon glyphicon-ok-sign icon text-info-dker"></i>
               Attach it to coupon</h3>
-              <p class="h4 l-h-1x">Attack it to one of the coupons offered from that restaurant.</p>
+              <p class="h4 l-h-1x">Attach it to one of the coupons offered from that restaurant.</p>
       
             
            

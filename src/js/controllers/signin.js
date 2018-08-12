@@ -49,17 +49,54 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', 'acsManager
 app.controller('ForgotPasswordFormController', ['$scope', '$http', '$state', 'acsManager', '$timeout', function($scope, $http, $state, acsManager, $timeout) {
 
 	$scope.resetPassword = function() {
-
+		$scope.authError = null;
 		acsManager.forgot($scope.email, function(err) {
-			$timeout(function () {
-		    	$scope.isCollapsed = !$scope.isCollapsed;
-    		}, 0);
+			if(err){
+				$timeout(function () {
+					$scope.authError = err.message;
+	    		}, 0);
+				return;
+			}else{
+				$timeout(function () {
+					$scope.isCollapsed = !$scope.isCollapsed;
+				}, 0);
+    		}
+			
+			
 		});
 	};
 
 
 }]);
 
+
+app.controller('ValidateEmailController', ['$scope', '$http', '$state', 'acsManager', '$timeout','$stateParams', function($scope, $http, $state, acsManager, $timeout,$stateParams) {
+
+	var token;
+    if ($stateParams) {
+        $scope.token = $stateParams.token;
+    }
+
+	
+	acsManager.validateEmail($scope.token, function(err) {
+			console.log(err);
+			if(err){
+				$timeout(function () {
+					$scope.validToken = false
+					$scope.errMessage = err.message;
+	    		}, 0);
+				return;
+			}else{
+				$timeout(function () {
+					$scope.validToken = true;
+				}, 0);
+    		}
+			
+			
+	});
+
+
+}]);
 
 
 

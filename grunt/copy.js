@@ -48,7 +48,8 @@ module.exports = {
                     'videogular-ima-ads/ima-ads.min.js',
                     'pdfmake/build/pdfmake.min.js',
                     'pdfmake/build/pdfmake.js',
-                    'pdfmake/build/vfs_fonts.js'
+                    'pdfmake/build/vfs_fonts.js',
+                    'angular-country-picker/country-picker.js'
                 ],
                 dest: 'bin/merchants/admin/libs/angular',
                 cwd:  'bower_components',
@@ -130,7 +131,8 @@ module.exports = {
             {expand: true, src: "**", cwd: 'src/tpl',     dest: "bin/merchants/admin/tpl"},
             {src: 'src/index.min.html', dest : 'bin/merchants/admin/index.html'},
             {src: 'src/zips.json', dest : 'bin/merchants/admin/zips.json'},
-            {src: 'src/material.min.html', dest : 'bin/merchants/admin/material.html'}
+            {src: 'src/material.min.html', dest : 'bin/merchants/admin/material.html'},
+            {src: 'src/css/font.css', dest : 'bin/merchants/admin/css/font.css'}
         ]
     },
     paypal: {
@@ -154,7 +156,8 @@ module.exports = {
             {expand: true, src: "**", cwd: 'src/tpl',     dest: "bin/merchants/admin/tpl"},
             {src: 'src/index.html', dest : 'bin/merchants/admin/index.html'},
             {src: 'src/zips.json', dest : 'bin/merchants/admin/zips.json'},
-            {src: 'src/material.html', dest : 'bin/merchants/admin/material.html'}
+            {src: 'src/material.html', dest : 'bin/merchants/admin/material.html'},
+            {src: 'src/css/font.css', dest : 'bin/merchants/admin/css/font.css'}
         ]
     },
 
@@ -211,7 +214,8 @@ module.exports = {
                     'videogular-buffering/buffering.min.js',
                     'videogular-overlay-play/overlay-play.min.js',
                     'videogular-poster/poster.min.js',
-                    'videogular-ima-ads/ima-ads.min.js'
+                    'videogular-ima-ads/ima-ads.min.js',
+                    'angular-country-picker/country-picker.js'
                 ],
                 dest: 'bin/libs/angular',
                 cwd:  'bower_components',
@@ -327,7 +331,8 @@ module.exports = {
                     'videogular-buffering/buffering.min.js',
                     'videogular-overlay-play/overlay-play.min.js',
                     'videogular-poster/poster.min.js',
-                    'videogular-ima-ads/ima-ads.min.js'
+                    'videogular-ima-ads/ima-ads.min.js',
+                    'angular-country-picker/country-picker.js'
                 ],
                 dest: 'bin/merchants/libs/angular',
                 cwd:  'bower_components',

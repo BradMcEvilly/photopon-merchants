@@ -40,13 +40,13 @@ angular.module('app')
     $scope.acceptRequest = function() {
       
       //acsManager.newCompany($scope.provided.get("name"), $scope.myCroppedImage, $scope.provided.get("user").id, function(c) {
-      acsManager.newCompany($scope.provided.get("businessName"), $scope.provided.get("logo"), $scope.provided.get("user").id, function(c) {
+      //acsManager.newCompany($scope.provided.get("businessName"), $scope.provided.get("logo"), $scope.provided.get("user").id, function(c) {
         acsManager.acceptMerchantRequest($scope.provided.id, function() {
           $state.go("app.dashboard-super", {}, {
             reload: true
           });
         });
-      }, true);
+      //}, true);
 
     };
 

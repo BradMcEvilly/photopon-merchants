@@ -7,16 +7,22 @@ angular.module('app')
         $state.go('access.signin');
         return;
     }
+   
+	if(user.get("isTempPassword")){
+		$state.go('app.change_password');
+	}
 
     var file = user.get("image");
 
     $scope.user = user;
 
     $scope.logoutUser = function(){
-        acsManager.logout();
-    	$state.go('access.signin');
+        acsManager.logout(function(){
+        	$state.go('access.signin');
+        });
+    	
     };
 
-
+	
 
 }]);

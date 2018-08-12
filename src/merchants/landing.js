@@ -12,7 +12,6 @@ jQuery.extend( jQuery.easing,
 !function ($) {
 
   $(function(){
-
     Parse.$ = jQuery;
     Parse.initialize("qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN", "vJIGuBlr7sPADL5PUISygvp55PbGXtrdhst3w3Jv");
 

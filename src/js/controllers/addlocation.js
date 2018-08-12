@@ -9,6 +9,7 @@ angular.module('app')
     	return;
     }
 
+	$scope.countryID  = "US";
 
 	$scope.trustSrc = function(src) {
 		return $sce.trustAsResourceUrl(src);
@@ -79,7 +80,9 @@ angular.module('app')
     		phoneNumber: $scope.location_phone,
 			address: $scope.address.selected.formatted_address,
 			latitude: $scope.address.selected.geometry.location.lat,
-			longitude: $scope.address.selected.geometry.location.lng
+			longitude: $scope.address.selected.geometry.location.lng,
+			isNational: $scope.isNational,
+			countryID: $scope.countryID 
 		}, function() {
 			$state.go("app.dashboard-merchant");
 		});
@@ -127,6 +130,8 @@ angular.module('app')
 
             $scope.location_title = location.get("name");
             $scope.location_phone = location.get("phoneNumber");
+            $scope.countryID =  location.get("countryID");
+            $scope.isNational =  location.get("isNational");
             $scope.address.selected = {
                 geometry: {
                     location: {}
@@ -192,7 +197,9 @@ angular.module('app')
             phoneNumber: $scope.location_phone,
             address: $scope.address.selected.formatted_address,
             latitude: parseFloat($scope.address.selected.geometry.location.lat),
-            longitude: parseFloat($scope.address.selected.geometry.location.lng)
+            longitude: parseFloat($scope.address.selected.geometry.location.lng),
+            isNational: $scope.isNational,
+            countryID: $scope.countryID
         }, function() {
             $state.go("app.locations", {}, {
                 reload: true
