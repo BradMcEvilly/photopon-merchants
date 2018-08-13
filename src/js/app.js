@@ -2,6 +2,7 @@
 
 
 angular.module('app', [
+    'photoponConstants',
     'ngAnimate',
     'ngAria',
     'ngCookies',

@@ -5,21 +5,28 @@
 
 # Project setup
 
-To setup project loaccly run following commands 
+To setup project locally run following commands 
 
     git clone https://github.com/BradMcEvilly/photopon-merchants.git
     cd photopon-merchants
     npm install -g grunt-cli
     npm install
     grunt bower-install-simple
-    grunt buildnu
+    grunt build
     
 after execution you can find bin directory in photopon-merchants it contains
 - landing (landing page)
 - merchant (merchant dashboard)
 
-
 Run any http daemon (MAMP, apache, WAMP, anything else) with root dir pointing to bin folder and enjoy
+
+## configure
+
+  Modify the files in src/config/*
+
+## deploy
+
+    grunt deploy
 
 ## additional mac step, may be needed for xcrun, etc, esp on High Sierra:
 
@@ -30,7 +37,7 @@ Run any http daemon (MAMP, apache, WAMP, anything else) with root dir pointing t
 ## admin
 
 * npm install -g parse-dashboard
-* parse-dashboard --appId qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN --masterKey 2sVDZTTVJnQ7oX5p81wOPOsB5R7ci929Q3WIOcOs --serverURL "https://photopon.herokuapp.com/parse" --appName Photopon
+* parse-dashboard --appId APP_ID --masterKey MASTER_KEY --serverURL "SERVER_URL" --appName Photopon
 
 ## apache configuration
 
@@ -58,6 +65,7 @@ The following apache configuration worked on High Sierra.
     RewriteEngine on
     RewriteRule ^\/?$ /landing/index.html
     RewriteRule ^/merchants\/?$ /merchants/merchants/index.html
+    RewriteRule ^/admin\/?$ /merchants/admin/ [R,L]
     RewriteRule ^/merchants/admin\/?$ /merchants/admin/index.html
 
     <Directory "/Users/stephan/dev/photopon/merchants/bin">

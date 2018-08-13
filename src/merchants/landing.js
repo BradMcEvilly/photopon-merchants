@@ -1,3 +1,9 @@
+//      _                               _           _ ___
+//   __| | ___ _ __  _ __ ___  ___ __ _| |_ ___  __| |__ \
+//  / _` |/ _ \ '_ \| '__/ _ \/ __/ _` | __/ _ \/ _` | / /
+// | (_| |  __/ |_) | | |  __/ (_| (_| | ||  __/ (_| ||_|
+//  \__,_|\___| .__/|_|  \___|\___\__,_|\__\___|\__,_|(_)
+//            |_|
 jQuery.extend( jQuery.easing,
 {
     def: 'easeOutQuad',
@@ -13,7 +19,8 @@ jQuery.extend( jQuery.easing,
 
   $(function(){
     Parse.$ = jQuery;
-    Parse.initialize("qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN", "vJIGuBlr7sPADL5PUISygvp55PbGXtrdhst3w3Jv");
+    // commented out to intentionally force an error
+    // Parse.initialize("qyY21OT36AiP5hIEdrzrBvbOS1HgXzIK52oyzrAN", "vJIGuBlr7sPADL5PUISygvp55PbGXtrdhst3w3Jv");
 
     if (window.location.hash == "#requestsent") {
         $("#requestsenttext").removeClass("hidden");
