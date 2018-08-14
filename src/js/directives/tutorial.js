@@ -8,6 +8,7 @@ var ShowOverlayFor = function($element, $scope) {
     var hintHeight = $($element).outerHeight() * hScale;
  
     var hintBottom = $($element).attr("hint-bottom");
+    var hintLeft = $($element).attr("hint-left");
 
     var d = $("<div>").addClass("tutorial-shadow")
                 .css("left", $($element).offset().left)
@@ -58,6 +59,9 @@ var ShowOverlayFor = function($element, $scope) {
     if (hintBottom) {
         hintArrow.css("transform", "scaleY(-1)");
     }
+    if (hintLeft) {
+        hintArrow.css("transform", "scaleX(-1)");
+    }
 
     var oldLeft = 0;
     var oldTop = 0;
@@ -100,8 +104,11 @@ var ShowOverlayFor = function($element, $scope) {
             bottomShadow.css("width", d.outerWidth());
             bottomShadow.css("top", d.offset().top + d.outerHeight());
 
-
-            hintArrow.css("left", d.offset().left + ow - 10);
+            if (hintLeft) {
+                hintArrow.css("left", d.offset().left      - hintArrow.outerWidth() + 10);
+            } else {
+                hintArrow.css("left", d.offset().left + ow - 10);
+            }
 
             if (hintBottom) {
                 hintArrow.css("top", d.offset().top + hintArrow.outerHeight() - oh / 2);
@@ -109,7 +116,11 @@ var ShowOverlayFor = function($element, $scope) {
                 hintArrow.css("top", d.offset().top - hintArrow.outerHeight() + oh / 2);
             }
 
-            hintText.css("left", hintArrow.offset().left + hintArrow.outerWidth() - hintText.outerWidth() / 2);
+            if (hintLeft) {
+                hintText.css("left", hintArrow.offset().left                          - hintText.outerWidth() / 2);
+            } else {
+                hintText.css("left", hintArrow.offset().left + hintArrow.outerWidth() - hintText.outerWidth() / 2);
+            }
 
             if (hintBottom) {
                 hintText.css("top", d.offset().top + d.outerHeight() + hintArrow.outerHeight());
