@@ -13,6 +13,7 @@ angular.module('app', [
     'ngStorage',
     'ui.router',
     'ui.bootstrap',
+    'ui.bootstrap.tpls',
     'ui.utils',
     'ui.load',
     'ui.jq',

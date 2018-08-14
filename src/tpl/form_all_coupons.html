@@ -15,7 +15,7 @@
           <span class="coupon-box-title" ui-sref="app.editcoupon({ id: '{{c.id}}' })" >{{c.get('title')}}  <a class="btn btn-success btn-xs"><i class=" glyphicon glyphicon-pencil"></i></a></span>
           <span class="coupon-box-location">{{c.getLocationTitle()}}</span>
 
-          <span class="coupon-box-isactive">
+          <span class="coupon-box-isactive" tooltip="{{c.isActive?'active':'inactive'}}">
             <label class="i-checks m-b-none">
               <input type="checkbox" ng-model="c.isActive" ng-change="onCouponStatusChange()"><i></i>
             </label>
