@@ -18,7 +18,8 @@ module.exports = {
       'angular/libs/angular/ngstorage/ngStorage.js',
       'angular/libs/angular/angular-ui-utils/ui-utils.js',
 
-      'angular/libs/angular/angular-bootstrap/ui-bootstrap-tpls.js',
+      'angular/libs/angular/angular-bootstrap/ui-bootstrap-tpls.min.js',
+      'angular/libs/angular/angular-bootstrap/ui-bootstrap.min.js',
      
       'angular/libs/angular/oclazyload/dist/ocLazyLoad.js',
       'angular/libs/angular/angular-country-picker/country-picker.js',
