@@ -1,0 +1,10 @@
+{
+  "ENV" : {
+    "parse" : {
+      "server_url" : "http://photopon.local:1337/parse",
+      "app_id" : "arbor-gamesome-beaked-aquiline",
+      "master_key" : "praetor-gash-pantie-immobile"
+    },
+    "qr_base" : "http://photopon.local:5000/"
+  }
+}
