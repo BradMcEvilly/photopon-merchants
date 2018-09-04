@@ -22,6 +22,12 @@ module.exports = function(grunt) {
                         'copy:qrlanding',
                         'copy:paypal']);
 
+    gtx.alias('build:local', ['ngconstant:local',
+                        'build:dev',
+                        'build:landing',
+                        'build:merchanthelp',
+                        'copy:qrlanding',
+                        'copy:paypal']);
     gtx.alias('build:production', ['ngconstant:production',
                         'build:dev',
                         'build:landing',

@@ -5,6 +5,6 @@
       "app_id" : "poland-gammon-exhume-accurate",
       "master_key" : "slacker-cloth-joey-pan"
     },
-    "qr_base" : "https://stephancom-photopon-api.herokuapp.com/qrcode"
+    "qr_base" : "https://stephancom-photopon-api.herokuapp.com/"
   }
 }

@@ -4,6 +4,9 @@ module.exports = {
     dest: 'src/js/constants.js',
     constants: 'src/config/default.json'
   },
+  local: {
+    constants: 'src/config/local.json'
+  },
   development: {
     constants: 'src/config/development.json'
   },
