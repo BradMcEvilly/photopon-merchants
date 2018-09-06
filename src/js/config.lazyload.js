@@ -121,49 +121,6 @@ angular.module('app')
           ]
       },
       {
-          name: 'vr.directives.slider',
-          files: [
-              './libs/angular/venturocket-angular-slider/build/angular-slider.min.js',
-              './libs/angular/venturocket-angular-slider/build/angular-slider.css'
-          ]
-      },
-      {
-          name: 'com.2fdevs.videogular',
-          files: [
-              './libs/angular/videogular/videogular.min.js'
-          ]
-      },
-      {
-          name: 'com.2fdevs.videogular.plugins.controls',
-          files: [
-              './libs/angular/videogular-controls/controls.min.js'
-          ]
-      },
-      {
-          name: 'com.2fdevs.videogular.plugins.buffering',
-          files: [
-              './libs/angular/videogular-buffering/buffering.min.js'
-          ]
-      },
-      {
-          name: 'com.2fdevs.videogular.plugins.overlayplay',
-          files: [
-              './libs/angular/videogular-overlay-play/overlay-play.min.js'
-          ]
-      },
-      {
-          name: 'com.2fdevs.videogular.plugins.poster',
-          files: [
-              './libs/angular/videogular-poster/poster.min.js'
-          ]
-      },
-      {
-          name: 'com.2fdevs.videogular.plugins.imaads',
-          files: [
-              './libs/angular/videogular-ima-ads/ima-ads.min.js'
-          ]
-      },
-      {
           name: 'xeditable',
           files: [
               './libs/angular/angular-xeditable/dist/js/xeditable.min.js',
