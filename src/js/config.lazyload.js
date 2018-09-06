@@ -114,13 +114,6 @@ angular.module('app')
           ]
       },
       {
-          name: 'textAngular',
-          files: [
-              './libs/angular/textAngular/dist/textAngular-sanitize.min.js',
-              './libs/angular/textAngular/dist/textAngular.min.js'
-          ]
-      },
-      {
           name: 'xeditable',
           files: [
               './libs/angular/angular-xeditable/dist/js/xeditable.min.js',

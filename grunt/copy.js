@@ -39,7 +39,6 @@ module.exports = {
                     'ngImgCrop/compile/minified/**',
                     'ngstorage/ngStorage.js',
                     'oclazyload/dist/**',
-                    'textAngular/dist/**',
                     'pdfmake/build/pdfmake.min.js',
                     'pdfmake/build/pdfmake.js',
                     'pdfmake/build/vfs_fonts.js',
@@ -202,7 +201,6 @@ module.exports = {
                     'ngImgCrop/compile/minified/**',
                     'ngstorage/ngStorage.js',
                     'oclazyload/dist/**',
-                    'textAngular/dist/**',
                     'angular-country-picker/country-picker.js'
                 ],
                 dest: 'bin/libs/angular',
@@ -313,7 +311,6 @@ module.exports = {
                     'ngImgCrop/compile/minified/**',
                     'ngstorage/ngStorage.js',
                     'oclazyload/dist/**',
-                    'textAngular/dist/**',
                     'angular-country-picker/country-picker.js'
                 ],
                 dest: 'bin/merchants/libs/angular',
