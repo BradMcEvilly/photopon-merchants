@@ -69,7 +69,7 @@ module.exports = {
     init: {
         autoescape: false
     },
-    dest: 'bin/merchants/',
+    dest: 'bin/',
     src: ['src/merchants/*.swig'],
     generateSitemap: false,
     generateRobotstxt: false,
