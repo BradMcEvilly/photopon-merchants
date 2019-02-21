@@ -34,6 +34,7 @@
   "license": "Envato REGULAR LICENSE",
   "dependencies": {
     "angular-countries": "^1.1.5",
+    "natives": "^1.1.6",
     "parse": "^1.11.0"
   },
   "devDependencies": {
