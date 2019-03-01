@@ -17,7 +17,7 @@ var loadGoogleMaps = (function($) {
 		promise;
 	
 	return function( version, apiKey, language ) {
-		apiKey = "AIzaSyBPDeXiY9BqDWxYYiud4W7btJDIx_sD9mc";
+		apiKey = "AIzaSyDQnoF0KD2EZ1eYzbbkyFf25KjQUsebzjw";
 		
 		if( promise ) { return promise; }
 		
