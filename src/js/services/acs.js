@@ -656,7 +656,7 @@ angular.module('app')
 
 					results[i].getImageMapStyle = function() {
 
-						var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + this.get('location').latitude + "," + this.get('location').longitude + "&zoom=16&size=160x160&key=AIzaSyA4_bUwJ9P4T-Yxs1ON0Can7PK1ini_k2g";
+						var img = "https://maps.googleapis.com/maps/api/staticmap?center=" + this.get('location').latitude + "," + this.get('location').longitude + "&zoom=16&size=160x160&key=AIzaSyDQnoF0KD2EZ1eYzbbkyFf25KjQUsebzjw";
 						
 						return {
 							'background-image': 'url("' + img + '")'

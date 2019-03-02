@@ -18,7 +18,8 @@ angular.module('app')
     $scope.address = {};
     $scope.refreshAddresses = function(address) {
     	var params = {
-    		address: address + ", United States", 
+    		address: address + ", United States",
+            key: "AIzaSyDQnoF0KD2EZ1eYzbbkyFf25KjQUsebzjw",
     		sensor: false
     	};
     	return $http.get('https://maps.googleapis.com/maps/api/geocode/json', {
@@ -156,7 +157,8 @@ angular.module('app')
 
     $scope.updateAddress = function() {
         var params = {
-            latlng: $scope.address.selected.geometry.location.lat + "," + $scope.address.selected.geometry.location.lng
+            latlng: $scope.address.selected.geometry.location.lat + "," + $scope.address.selected.geometry.location.lng,
+            key: "AIzaSyDQnoF0KD2EZ1eYzbbkyFf25KjQUsebzjw"
         };
         return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
             params: params
@@ -175,7 +177,8 @@ angular.module('app')
 
     $scope.refreshAddresses = function(address) {
         var params = {
-            address: address + ", United States", 
+            address: address + ", United States",
+            key: "AIzaSyDQnoF0KD2EZ1eYzbbkyFf25KjQUsebzjw",
             sensor: false
         };
         return $http.get('http://maps.googleapis.com/maps/api/geocode/json', {
